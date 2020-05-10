@@ -34,16 +34,16 @@ namespace ElongatedBreathing
         private static readonly int ACTUATOR_INTERVAL = 6000;
         private static readonly int SLOW_HEARTBEAT_INTERVAL = 900;
         private static readonly int FAST_HEARTBEAT_INTERVAL = 700;
-        private int heartbeatInterval = 900;
+        private int heartbeatInterval = SLOW_HEARTBEAT_INTERVAL;
 
         private DateTime prevBreathTime = DateTime.Now;
         private DateTime prevHeartbeatTime = DateTime.Now;
         private DateTime curTime;
 
         //Audio
-        MediaPlayer breathPlayer = new MediaPlayer();
-        MediaPlayer slowHeartbeatPlayer = new MediaPlayer();
-        MediaPlayer fastHeartbeatPlayer = new MediaPlayer();
+        private readonly MediaPlayer breathPlayer = new MediaPlayer();
+        private readonly MediaPlayer slowHeartbeatPlayer = new MediaPlayer();
+        private readonly MediaPlayer fastHeartbeatPlayer = new MediaPlayer();
 
         //Misc
         private static bool dynamicHeartbeat = true;

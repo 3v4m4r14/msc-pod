@@ -42,6 +42,7 @@ namespace ElongatedBreathing
         private static int fastHeartbeatInterval = 700;
 
         private bool breathingIn = false;
+        private static bool dynamicHeartbeat = true;
         
         public App()
         {
@@ -69,7 +70,7 @@ namespace ElongatedBreathing
             }
             if (TimeForHeartbeat())
             {
-                if (breathingIn) { PlayFastHeartbeatAudio(); }
+                if (dynamicHeartbeat && breathingIn) { PlayFastHeartbeatAudio(); }
                 else { PlaySlowHeartbeatAudio(); }
             }
         }

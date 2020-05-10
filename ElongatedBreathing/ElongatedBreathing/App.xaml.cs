@@ -29,23 +29,26 @@ namespace ElongatedBreathing
 
 
         MediaPlayer breathPlayer = new MediaPlayer();
-        MediaPlayer steadyHeartbeatPlayer = new MediaPlayer();
+        MediaPlayer slowHeartbeatPlayer = new MediaPlayer();
+        MediaPlayer fastHeartbeatPlayer = new MediaPlayer();
 
         private DateTime prevBreathTime = DateTime.Now;
         private DateTime curTime;
         private DateTime prevHeartbeatTime = DateTime.Now;
-        private DateTime curHeartbeatTime;
-        private int breathingInterval = 14000;
-        private int actuatorInterval = 6000;
+        private static int breathingInterval = 14000;
+        private static int actuatorInterval = 6000;
         private int heartbeatInterval = 900;
+        private static int slowHeartbeatInterval = 900;
+        private static int fastHeartbeatInterval = 700;
 
-        private bool actuatorIsOn = false;
+        private bool breathingIn = false;
         
         public App()
         {
             //Client = new SimpleTcpClient().Connect("127.0.0.1",3000);
             breathPlayer.Open(new System.Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\single-breath-long.wav"));
-            steadyHeartbeatPlayer.Open(new System.Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\bpm_0_70.wav"));
+            slowHeartbeatPlayer.Open(new Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\bpm_0_70.wav"));
+            fastHeartbeatPlayer.Open(new Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\bpm_0_100.wav"));
 
             Console.WriteLine("Hello, WOrld");
 
@@ -56,35 +59,76 @@ namespace ElongatedBreathing
         {
             curTime = DateTime.Now;
 
-            if ((curTime - prevBreathTime).TotalMilliseconds > breathingInterval)
+            if (TimeToBreatheIn())
             {
-                breathPlayer.Stop();
-                Console.WriteLine("ON");
-                //TurnHeatOn();
-                //TurnFanOn();
-                //TurnLightOn();
-                actuatorIsOn = true;
-
-                breathPlayer.Play();
-
-                prevBreathTime = curTime;
+                BreatheIn();
             }
-            if (actuatorIsOn && (curTime - prevBreathTime).TotalMilliseconds > actuatorInterval)
+            if (TimeToBreatheOut())
             {
-                Console.WriteLine("OFF");
-                //TurnHeatOff();
-                //TurnFanOff();
-                //TurnLightOff();
-
-                actuatorIsOn = false;
+                BreatheOut();
             }
-            if ((curTime - prevHeartbeatTime).TotalMilliseconds > heartbeatInterval)
+            if (TimeForHeartbeat())
             {
-                steadyHeartbeatPlayer.Stop();
-                steadyHeartbeatPlayer.Play();
-
-                prevHeartbeatTime = curTime;
+                if (breathingIn) { PlayFastHeartbeatAudio(); }
+                else { PlaySlowHeartbeatAudio(); }
             }
+        }
+
+        private void PlaySlowHeartbeatAudio()
+        {
+            slowHeartbeatPlayer.Stop();
+            slowHeartbeatPlayer.Play();
+
+            heartbeatInterval = slowHeartbeatInterval;
+            prevHeartbeatTime = curTime;
+        }
+
+        private void PlayFastHeartbeatAudio()
+        {
+            fastHeartbeatPlayer.Stop();
+            fastHeartbeatPlayer.Play();
+
+            heartbeatInterval = fastHeartbeatInterval;
+            prevHeartbeatTime = curTime;
+        }
+
+        private void BreatheOut()
+        {
+            Console.WriteLine("OFF");
+            //TurnHeatOff();
+            //TurnFanOff();
+            //TurnLightOff();
+
+            breathingIn = false;
+        }
+
+        private void BreatheIn()
+        {
+            breathPlayer.Stop();
+            Console.WriteLine("ON");
+            //TurnHeatOn();
+            //TurnFanOn();
+            //TurnLightOn();
+            breathingIn = true;
+
+            breathPlayer.Play();
+
+            prevBreathTime = curTime;
+        }
+
+        private bool TimeForHeartbeat()
+        {
+            return (curTime - prevHeartbeatTime).TotalMilliseconds > heartbeatInterval;
+        }
+
+        private bool TimeToBreatheOut()
+        {
+            return breathingIn && (curTime - prevBreathTime).TotalMilliseconds > actuatorInterval;
+        }
+
+        private bool TimeToBreatheIn()
+        {
+            return (curTime - prevBreathTime).TotalMilliseconds > breathingInterval;
         }
 
         private void TurnHeatOn()

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using SimpleTCP;
 using NormalBreathing.Properties;
 
@@ -26,19 +27,23 @@ namespace NormalBreathing
         private int w = 1;
 
 
-        System.Media.SoundPlayer player;
+        MediaPlayer breathPlayer = new MediaPlayer();
+        MediaPlayer steadyHeartbeatPlayer = new MediaPlayer();
 
-        private DateTime prevTimestamp = DateTime.Now;
-        private DateTime curTimestamp;
-        private TimeSpan breathingInterval = new TimeSpan(0, 0, 4);
-        private TimeSpan actuatorInterval = new TimeSpan(0, 0, 1);
+        private DateTime prevBreathTime = DateTime.Now;
+        private DateTime curTime;
+        private DateTime prevHeartbeatTime = DateTime.Now;
+        private int breathingInterval = 4000;
+        private int actuatorInterval = 1000;
+        private int heartbeatInterval = 900;
 
         private bool actuatorIsOn = false;
 
         public App()
         {
             //Client = new SimpleTcpClient().Connect("127.0.0.1",3000);
-            player = new System.Media.SoundPlayer(NormalBreathing.Properties.Resources.singleBreathNormal);
+            breathPlayer.Open(new System.Uri(@"C:\Users\eva\Desktop\msc-pod\NormalBreathing\NormalBreathing\audio\single-breath-normal.wav"));
+            steadyHeartbeatPlayer.Open(new System.Uri(@"C:\Users\eva\Desktop\msc-pod\NormalBreathing\NormalBreathing\audio\bpm_0_70.wav"));
 
 
             Console.WriteLine("Hello, WOrld");
@@ -48,29 +53,67 @@ namespace NormalBreathing
 
         private void StartLoop()
         {
-            curTimestamp = DateTime.Now;
-            if (curTimestamp - prevTimestamp > breathingInterval)
+            curTime = DateTime.Now;
+
+            if (TimeToBreatheIn())
             {
-
-                Console.WriteLine("ON");
-                //TurnHeatOn();
-                //TurnFanOn();
-                //TurnLightOn();
-                actuatorIsOn = true;
-
-                player.Play();
-
-                prevTimestamp = curTimestamp;
+                BreatheIn();
             }
-            if (actuatorIsOn && curTimestamp - prevTimestamp > actuatorInterval)
+            if (TimeToBreatheOut())
             {
-                Console.WriteLine("OFF");
-                //TurnHeatOff();
-                //TurnFanOff();
-                //TurnLightOff();
-
-                actuatorIsOn = false;
+                BreatheOut();
             }
+            if (TimeForHeartbeat())
+            {
+                PlayHeartbeatAudio();
+            }
+        }
+
+        private void PlayHeartbeatAudio()
+        {
+            steadyHeartbeatPlayer.Stop();
+            steadyHeartbeatPlayer.Play();
+
+            prevHeartbeatTime = curTime;
+        }
+
+        private void BreatheOut()
+        {
+            Console.WriteLine("OFF");
+            //TurnHeatOff();
+            //TurnFanOff();
+            //TurnLightOff();
+
+            actuatorIsOn = false;
+        }
+
+        private void BreatheIn()
+        {
+            breathPlayer.Stop();
+            Console.WriteLine("ON");
+            //TurnHeatOn();
+            //TurnFanOn();
+            //TurnLightOn();
+            actuatorIsOn = true;
+
+            breathPlayer.Play();
+
+            prevBreathTime = curTime;
+        }
+
+        private bool TimeForHeartbeat()
+        {
+            return (curTime - prevHeartbeatTime).TotalMilliseconds > heartbeatInterval;
+        }
+
+        private bool TimeToBreatheOut()
+        {
+            return actuatorIsOn && (curTime - prevBreathTime).TotalMilliseconds > actuatorInterval;
+        }
+
+        private bool TimeToBreatheIn()
+        {
+            return (curTime - prevBreathTime).TotalMilliseconds > breathingInterval;
         }
 
         private void TurnHeatOn()

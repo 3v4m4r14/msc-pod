@@ -63,6 +63,15 @@ namespace ElongatedBreathing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream bmp70 {
+            get {
+                return ResourceManager.GetStream("bmp70", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream singleBreathLong {
             get {
                 return ResourceManager.GetStream("singleBreathLong", resourceCulture);

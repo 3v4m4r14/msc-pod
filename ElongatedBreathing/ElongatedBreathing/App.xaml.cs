@@ -5,8 +5,10 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using SimpleTCP;
 using ElongatedBreathing.Properties;
+
 
 namespace ElongatedBreathing
 {
@@ -26,20 +28,24 @@ namespace ElongatedBreathing
         private int w = 1;
 
 
-        System.Media.SoundPlayer player;
+        MediaPlayer breathPlayer = new MediaPlayer();
+        MediaPlayer steadyHeartbeatPlayer = new MediaPlayer();
 
-        private DateTime prevTimestamp = DateTime.Now;
-        private DateTime curTimestamp;
-        private TimeSpan breathingInterval = new TimeSpan(0, 0, 14);
-        private TimeSpan actuatorInterval = new TimeSpan(0, 0, 6);
+        private DateTime prevBreathTime = DateTime.Now;
+        private DateTime curTime;
+        private DateTime prevHeartbeatTime = DateTime.Now;
+        private DateTime curHeartbeatTime;
+        private int breathingInterval = 14000;
+        private int actuatorInterval = 6000;
+        private int heartbeatInterval = 900;
 
         private bool actuatorIsOn = false;
-
+        
         public App()
         {
             //Client = new SimpleTcpClient().Connect("127.0.0.1",3000);
-            player = new System.Media.SoundPlayer(ElongatedBreathing.Properties.Resources.singleBreathLong);
-
+            breathPlayer.Open(new System.Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\single-breath-long.wav"));
+            steadyHeartbeatPlayer.Open(new System.Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\bpm_0_70.wav"));
 
             Console.WriteLine("Hello, WOrld");
 
@@ -48,21 +54,22 @@ namespace ElongatedBreathing
 
         private void StartLoop()
         {
-            curTimestamp = DateTime.Now;
-            if (curTimestamp - prevTimestamp > breathingInterval)
-            {
+            curTime = DateTime.Now;
 
+            if ((curTime - prevBreathTime).TotalMilliseconds > breathingInterval)
+            {
+                breathPlayer.Stop();
                 Console.WriteLine("ON");
                 //TurnHeatOn();
                 //TurnFanOn();
                 //TurnLightOn();
                 actuatorIsOn = true;
 
-                player.Play();
+                breathPlayer.Play();
 
-                prevTimestamp = curTimestamp;
+                prevBreathTime = curTime;
             }
-            if (actuatorIsOn && curTimestamp - prevTimestamp > actuatorInterval)
+            if (actuatorIsOn && (curTime - prevBreathTime).TotalMilliseconds > actuatorInterval)
             {
                 Console.WriteLine("OFF");
                 //TurnHeatOff();
@@ -70,6 +77,13 @@ namespace ElongatedBreathing
                 //TurnLightOff();
 
                 actuatorIsOn = false;
+            }
+            if ((curTime - prevHeartbeatTime).TotalMilliseconds > heartbeatInterval)
+            {
+                steadyHeartbeatPlayer.Stop();
+                steadyHeartbeatPlayer.Play();
+
+                prevHeartbeatTime = curTime;
             }
         }
 

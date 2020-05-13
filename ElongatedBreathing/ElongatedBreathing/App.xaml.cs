@@ -8,7 +8,8 @@ using System.Windows;
 using System.Windows.Media;
 using SimpleTCP;
 using ElongatedBreathing.Properties;
-
+using System.IO;
+using System.Reflection;
 
 namespace ElongatedBreathing
 {
@@ -20,17 +21,17 @@ namespace ElongatedBreathing
         SimpleTcpClient Client;
 
         //Actuator parameters
-        private static readonly int HEATER_INTENSITY_WHEN_TURNED_OFF = 0;
-        private static readonly int HEATER_INTENSITY_WHEN_TURNED_ON = 1;
-        private static readonly int FAN_INTENSITY_WHEN_TURNED_OFF = 0;
-        private static readonly int FAN_INTENSITY_WHEN_TURNED_ON = 1;
-        private static readonly int RED = 1;
-        private static readonly int GREEN = 1;
-        private static readonly int BLUE = 1;
-        private static readonly int WHITE = 1;
+        private static readonly float HEATER_INTENSITY_WHEN_INHALING = 0;
+        private static readonly float HEATER_INTENSITY_WHEN_EXHALING = 0.2f;
+        private static readonly float FAN_INTENSITY_WHEN_INHALING = 0.5f;
+        private static readonly float FAN_INTENSITY_WHEN_EXHALING = 0f;
+        private static readonly float RED = 0.3f;
+        private static readonly float GREEN = 0f;
+        private static readonly float BLUE = 0f;
+        private static readonly float WHITE = 0.1f;
 
         //Timing
-        private static readonly int BREATHING_INTERVAL = 14000;
+        private static readonly int BREATHING_INTERVAL = 12000;
         private static readonly int ACTUATOR_INTERVAL = 6000;
         private static readonly int SLOW_HEARTBEAT_INTERVAL = 900;
         private static readonly int FAST_HEARTBEAT_INTERVAL = 700;
@@ -46,17 +47,24 @@ namespace ElongatedBreathing
         private readonly MediaPlayer fastHeartbeatPlayer = new MediaPlayer();
 
         //Misc
-        private static bool dynamicHeartbeat = true;
+        private static readonly bool WITH_HEARTBEAT = true;
+        private static readonly bool DYNAMIC_HEARTBEAT = true;
         private bool breathingIn = false;
 
         public App()
         {
-            //Client = new SimpleTcpClient().Connect("127.0.0.1",3000);
-            breathPlayer.Open(new Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\single-breath-long.wav"));
-            slowHeartbeatPlayer.Open(new Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\bpm_0_70.wav"));
-            fastHeartbeatPlayer.Open(new Uri(@"C:\Users\eva\Desktop\msc-pod\ElongatedBreathing\ElongatedBreathing\audio\bpm_0_100.wav"));
+            Client = new SimpleTcpClient().Connect("127.0.0.1",3000);
+            String audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "audio");
 
-            Console.WriteLine("Hello, WOrld");
+            Console.WriteLine(audioPath);
+            LightInhale();
+            
+
+            breathPlayer.Open(new Uri(Path.Combine(audioPath, "single-breath-long.wav")));
+            slowHeartbeatPlayer.Open(new Uri(Path.Combine(audioPath, "bpm_0_70.wav")));
+            fastHeartbeatPlayer.Open(new Uri(Path.Combine(audioPath, "bpm_0_100.wav")));
+
+            Console.WriteLine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
 
             while (true) { StartLoop(); }
         }
@@ -67,15 +75,15 @@ namespace ElongatedBreathing
 
             if (TimeToBreatheIn())
             {
-                BreatheIn();
+                Inhale();
             }
             if (TimeToBreatheOut())
             {
-                BreatheOut();
+                Exhale();
             }
-            if (TimeForHeartbeat())
+            if (WITH_HEARTBEAT && TimeForHeartbeat())
             {
-                if (dynamicHeartbeat && breathingIn) { PlayFastHeartbeatAudio(); }
+                if (DYNAMIC_HEARTBEAT && breathingIn) { PlayFastHeartbeatAudio(); }
                 else { PlaySlowHeartbeatAudio(); }
             }
         }
@@ -98,23 +106,25 @@ namespace ElongatedBreathing
             prevHeartbeatTime = curTime;
         }
 
-        private void BreatheOut()
+        private void Exhale()
         {
             Console.WriteLine("OFF");
-            //TurnHeatOff();
-            //TurnFanOff();
-            //TurnLightOff();
+            HeatExhale();
+            FanExhale();
+            //LightExhale();
 
             breathingIn = false;
         }
 
-        private void BreatheIn()
+        private void Inhale()
         {
             breathPlayer.Stop();
             Console.WriteLine("ON");
-            //TurnHeatOn();
-            //TurnFanOn();
-            //TurnLightOn();
+            HeatInhale();
+            FanInhale();
+            //LightInhale();
+
+
             breathingIn = true;
 
             breathPlayer.Play();
@@ -137,47 +147,47 @@ namespace ElongatedBreathing
             return (curTime - prevBreathTime).TotalMilliseconds > BREATHING_INTERVAL;
         }
 
-        private void TurnHeatOn()
+        private void HeatExhale()
         {
-            Client.WriteLine("SetHeaterIntensity|LEFT|" + HEATER_INTENSITY_WHEN_TURNED_ON);
-            Client.WriteLine("SetHeaterIntensity|RIGHT|" + HEATER_INTENSITY_WHEN_TURNED_ON);
-            Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + HEATER_INTENSITY_WHEN_TURNED_ON);
-            Client.WriteLine("SetHeaterIntensity|SEAT_RIGHT|" + HEATER_INTENSITY_WHEN_TURNED_ON);
-            Client.WriteLine("SetHeaterIntensity|FRONT|" + HEATER_INTENSITY_WHEN_TURNED_ON);
+            Client.WriteLine("SetHeaterIntensity|LEFT|" + HEATER_INTENSITY_WHEN_EXHALING);
+            Client.WriteLine("SetHeaterIntensity|RIGHT|" + HEATER_INTENSITY_WHEN_EXHALING);
+            Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + HEATER_INTENSITY_WHEN_EXHALING);
+            Client.WriteLine("SetHeaterIntensity|SEAT_RIGHT|" + HEATER_INTENSITY_WHEN_EXHALING);
+            Client.WriteLine("SetHeaterIntensity|FRONT|" + HEATER_INTENSITY_WHEN_EXHALING);
         }
 
-        private void TurnHeatOff()
+        private void HeatInhale()
         {
-            Client.WriteLine("SetHeaterIntensity|LEFT|" + HEATER_INTENSITY_WHEN_TURNED_OFF);
-            Client.WriteLine("SetHeaterIntensity|RIGHT|" + HEATER_INTENSITY_WHEN_TURNED_OFF);
-            Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + HEATER_INTENSITY_WHEN_TURNED_OFF);
-            Client.WriteLine("SetHeaterIntensity|SEAT_RIGHT|" + HEATER_INTENSITY_WHEN_TURNED_OFF);
-            Client.WriteLine("SetHeaterIntensity|FRONT|" + HEATER_INTENSITY_WHEN_TURNED_OFF);
+            Client.WriteLine("SetHeaterIntensity|LEFT|" + HEATER_INTENSITY_WHEN_INHALING);
+            Client.WriteLine("SetHeaterIntensity|RIGHT|" + HEATER_INTENSITY_WHEN_INHALING);
+            Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + HEATER_INTENSITY_WHEN_INHALING);
+            Client.WriteLine("SetHeaterIntensity|SEAT_RIGHT|" + HEATER_INTENSITY_WHEN_INHALING);
+            Client.WriteLine("SetHeaterIntensity|FRONT|" + HEATER_INTENSITY_WHEN_INHALING);
         }
 
-        private void TurnFanOn()
+        private void FanInhale()
         {
-            Client.WriteLine("SetFanIntensity|FRONT_LEFT|" + FAN_INTENSITY_WHEN_TURNED_ON);
-            Client.WriteLine("SetFanIntensity|FRONT_RIGHT|" + FAN_INTENSITY_WHEN_TURNED_ON);
-            Client.WriteLine("SetFanIntensity|REAR_LEFT|" + FAN_INTENSITY_WHEN_TURNED_ON);
-            Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + FAN_INTENSITY_WHEN_TURNED_ON);
+            Client.WriteLine("SetFanIntensity|FRONT_LEFT|" + FAN_INTENSITY_WHEN_INHALING);
+            Client.WriteLine("SetFanIntensity|FRONT_RIGHT|" + FAN_INTENSITY_WHEN_INHALING);
+            Client.WriteLine("SetFanIntensity|REAR_LEFT|" + FAN_INTENSITY_WHEN_INHALING);
+            Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + FAN_INTENSITY_WHEN_INHALING);
         }
 
-        private void TurnFanOff()
+        private void FanExhale()
         {
-            Client.WriteLine("SetFanIntensity|FRONT_LEFT|" + FAN_INTENSITY_WHEN_TURNED_OFF);
-            Client.WriteLine("SetFanIntensity|FRONT_RIGHT|" + FAN_INTENSITY_WHEN_TURNED_OFF);
-            Client.WriteLine("SetFanIntensity|REAR_LEFT|" + FAN_INTENSITY_WHEN_TURNED_OFF);
-            Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + FAN_INTENSITY_WHEN_TURNED_OFF);
+            Client.WriteLine("SetFanIntensity|FRONT_LEFT|" + FAN_INTENSITY_WHEN_EXHALING);
+            Client.WriteLine("SetFanIntensity|FRONT_RIGHT|" + FAN_INTENSITY_WHEN_EXHALING);
+            Client.WriteLine("SetFanIntensity|REAR_LEFT|" + FAN_INTENSITY_WHEN_EXHALING);
+            Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + FAN_INTENSITY_WHEN_EXHALING);
         }
 
-        private void TurnLightOn()
+        private void LightInhale()
         {
             Client.WriteLine(String.Format("SetLightColor|LEFT|{0}|{1}|{2}|{3}", RED, GREEN, BLUE, WHITE));
-            Client.WriteLine(String.Format("SetLightColor|LEFT|{0}|{1}|{2}|{3}", RED, GREEN, BLUE, WHITE));
+            Client.WriteLine(String.Format("SetLightColor|RIGHT|{0}|{1}|{2}|{3}", RED, GREEN, BLUE, WHITE));
         }
 
-        private void TurnLightOff()
+        private void LightExhale()
         {
             Client.WriteLine("SetLightColor|LEFT|0|0|0|0");
             Client.WriteLine("SetLightColor|RIGHT|0|0|0|0");

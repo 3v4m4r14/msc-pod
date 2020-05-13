@@ -124,18 +124,20 @@ namespace HeartbeatGraph.ViewModel
         public MainViewModel()
         {
             Client = new SimpleTcpClient().Connect("127.0.0.1", 3000);
+            Client.WriteLine(String.Format("SetLightColor|LEFT|{0}|{1}|{2}|{3}", 1, 1, 1, 1));
+            Client.WriteLine(String.Format("SetLightColor|LEFT|{0}|{1}|{2}|{3}", 1, 1, 1, 1));
             Options = new ObservableCollection<string>();
-            //graphModel.Title = "Heartrate";
-            //graphModel.Series.Add(lines);
+            graphModel.Title = "Heartrate";
+            graphModel.Series.Add(lines);
             //
             ////setup the y-axis
-            //graphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 150, MajorStep = 20, MinorStep = 5 });
+            graphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 150, MajorStep = 20, MinorStep = 5 });
             
             //starts the graph at 0 it's not nessasary but i just like it
-            //allPoints = new List<DataPoint>
-            //{
-            //    new DataPoint(0,0)
-            //};
+            allPoints = new List<DataPoint>
+            {
+                new DataPoint(0,0)
+            };
             //get available comports
             GetComPorts();
             if (noSensorMode)
@@ -227,22 +229,22 @@ namespace HeartbeatGraph.ViewModel
             else
             {
                 //random data for nosensormode
-                curHeartrate = rnd.Next(60, 80);
+                curHeartrate = 0;
             }
 
-            ControlPod(curHeartrate);
+            //ControlPod(curHeartrate);
 
             //get x point
             time += (float)milisecondInterval / 1000;
             //add points to graph
-            //AddPoint(time, curHeartrate); 
+            AddPoint(time, curHeartrate); 
         }
 
         private void ControlPod(int currentHeartrate)
         {
             if (prevHeartrate < curHeartrate)
             {
-                intensity = 0.2f;
+                intensity = 1;
 
                 prevHeartrate = curHeartrate;
                 Console.WriteLine(intensity);
@@ -255,8 +257,11 @@ namespace HeartbeatGraph.ViewModel
                 Console.WriteLine(intensity);
             }
 
-            Client.WriteLine(String.Format("SetLightColor|LEFT|{0}|{1}|{2}|{3}", intensity, intensity, intensity, intensity));
-            Client.WriteLine(String.Format("SetLightColor|RIGHT|{0}|{1}|{2}|{3}", intensity, intensity, intensity, intensity));
+            Client.WriteLine("SetHeaterIntensity|LEFT|" + intensity);
+            Client.WriteLine("SetHeaterIntensity|RIGHT|" + intensity);
+            Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + intensity);
+            Client.WriteLine("SetHeaterIntensity|SEAT_RIGHT|" + intensity);
+            Client.WriteLine("SetHeaterIntensity|FRONT|" + intensity);
 
         }
 

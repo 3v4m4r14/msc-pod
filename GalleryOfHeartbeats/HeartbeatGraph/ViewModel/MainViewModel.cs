@@ -33,7 +33,6 @@ namespace GalleryOfHeartbeats.ViewModel
         private float time = 0.0f;
         private int milisecondInterval = 500;
 
-        private bool noSensorMode = false;
         private Random rnd = new Random();
 
         public string CurrentHeartbeat
@@ -135,17 +134,6 @@ namespace GalleryOfHeartbeats.ViewModel
             
             
             
-            //setup the y-axis
-            //graphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 150, MajorStep = 20, MinorStep = 5 });
-            
-            //starts the graph at 0 it's not nessasary but i just like it
-            //allPoints = new List<DataPoint>
-            //{
-            //    new DataPoint(0,0)
-            //};
-            
-            
-            
         }
 
        
@@ -199,28 +187,5 @@ namespace GalleryOfHeartbeats.ViewModel
             //add points to graph
             Graph.AddPoint(time, heartrate); 
         }
-
-        ////add point to graph
-        //private void AddPoint(float x ,int pointValue)
-        //{
-        //    AllPoints.Add(new DataPoint(x, pointValue));
-        //    lines.Points.Clear();
-        //
-        //    if (allPoints.Count > maxPointsShownAtOnce)
-        //    {
-        //        for (int i = AllPoints.Count - maxPointsShownAtOnce; i < allPoints.Count; i++)
-        //        {
-        //            lines.Points.Add(allPoints[i]); 
-        //        }
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < allPoints.Count; i++)
-        //        {
-        //            lines.Points.Add(allPoints[i]);;
-        //        }
-        //    }
-        //    graphModel.InvalidatePlot(true);
-        //}
     }
 }

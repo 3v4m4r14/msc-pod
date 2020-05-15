@@ -11,7 +11,7 @@ namespace GalleryOfHeartbeats.Model
 {
     public class Graph : INotifyPropertyChanged
     {
-        private static readonly int MAX_DATA_POINTS_SHOWN_AT_ONCE = 20;
+        private static readonly int MAX_DATA_POINTS_SHOWN_AT_ONCE = 200;
 
         OxyPlot.Series.LineSeries lines = new OxyPlot.Series.LineSeries();
 

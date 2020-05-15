@@ -192,7 +192,7 @@ namespace GalleryOfHeartbeats.ViewModel
             else
             {
                 //random data for nosensormode
-                heartrate = rnd.Next(60, 80);
+                heartrate = 0;
             }
             //get x point
             time += (float)milisecondInterval / 1000;

@@ -118,7 +118,7 @@ namespace GalleryOfHeartbeats.Model
                 string val = Encoding.UTF8.GetString(output, 0, output.Length);
                 return val;
             }
-            return "CAN'T READ PORT";
+            return "";
         }
 
         #region INotifyPropertyChanged Members

@@ -1,0 +1,74 @@
+﻿<Window x:Class="GalleryOfHeartbeats.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GalleryOfHeartbeats" 
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:viewmodel="clr-namespace:GalleryOfHeartbeats.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <StackPanel 
+                Margin="0,10,0,0" 
+                Orientation="Horizontal">
+                
+                <Label>Comport:</Label>
+                
+                <ComboBox 
+                    ItemsSource="{Binding Options}" 
+                    SelectedItem="{Binding SelectedPort}" 
+                    VerticalAlignment="Top" 
+                    Height="20" 
+                    Width="95">
+                </ComboBox>
+                
+            </StackPanel>
+            
+            <StackPanel Margin="0,50,0,0">
+                
+                <Label>Max x-axis points</Label>
+
+                <Slider 
+                    Margin="5" 
+                    Minimum="10" 
+                    Maximum="300" 
+                    Value="{Binding MaxPointsShownAtOnce}">
+                </Slider>
+                
+                <Button 
+                    x:Name="btnStartRecording" 
+                    Command="{Binding CommandStartRecording}" 
+                    Content="Start"
+                    IsEnabled="{Binding StartBtnIsEnabled}"/>
+                
+                <Button 
+                    x:Name="btnStopRecording" 
+                    Command="{Binding CommandStopRecording}" 
+                    Content="Stop"
+                    IsEnabled="{Binding StopBtnIsEnabled}"/>
+                
+            </StackPanel>
+
+            <Label 
+                VerticalAlignment="Bottom" 
+                Content="{Binding CurrentHeartbeat}">
+            </Label>
+            
+        </Grid>
+        
+        <Grid Grid.Column="1">
+            
+            <oxy:PlotView Model="{Binding GraphModel}"/>
+            
+        </Grid>
+    </Grid>
+</Window>

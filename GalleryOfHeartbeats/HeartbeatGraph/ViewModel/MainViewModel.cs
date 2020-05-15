@@ -36,18 +36,11 @@ namespace GalleryOfHeartbeats.ViewModel
         private bool noSensorMode = false;
         private Random rnd = new Random();
 
-        //max amount of datapoints able to be shown at once
-        private int maxPointsShownAtOnce = 20;
-        public int MaxPointsShownAtOnce
+        public string CurrentHeartbeat
         {
             get
             {
-                return maxPointsShownAtOnce;
-            }
-            set
-            {
-                maxPointsShownAtOnce = value;
-                RaisePropertyChanged("MaxPointsShownAtOnce");
+                return "heartrate: " + heartrate;
             }
         }
 
@@ -81,42 +74,31 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         #endregion
 
-        public string CurrentHeartbeat
-        {
-            get
-            {
-                return "heartrate: " + heartrate;
-            }
-        }
+        public Graph Graph { get; }
 
-        
-
-        //all datapoints
-        private IList<DataPoint> allPoints; 
+        //all datapoints 
         public IList<DataPoint> AllPoints
         {
             get
             {
-                return allPoints;
+                return Graph.AllPoints;
             }
             set
             {
-                allPoints = value;
+                Graph.AllPoints = value;
             }
         }
 
         //model for the graph
-        private PlotModel graphModel = new PlotModel();
         public PlotModel GraphModel
         {
             get
             {
-                return graphModel;
+                return Graph.GraphModel;
             }
             set
             {
-                graphModel = value;
-                RaisePropertyChanged("GraphModel");
+                Graph.GraphModel = value;
             }
         }
 
@@ -128,7 +110,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             Console.WriteLine("Start");
 
-            
+            InitTimer();
    
         }
 
@@ -136,7 +118,6 @@ namespace GalleryOfHeartbeats.ViewModel
         private void StopRecording()
         {
             Console.WriteLine("Stop");
-
 
         }
 
@@ -146,29 +127,25 @@ namespace GalleryOfHeartbeats.ViewModel
         public MainViewModel()
         {
             Connection = new Connection();
-            
+            Graph = new Graph("Heartrate");
             
 
             CommandStartRecording = new RelayCommand(StartRecording);
             CommandStopRecording = new RelayCommand(StopRecording);
-            //
-            //Options = new ObservableCollection<string>();
-            //graphModel.Title = "Heartrate";
-            //graphModel.Series.Add(lines);
-            //
-            ////setup the y-axis
+            
+            
+            
+            //setup the y-axis
             //graphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 150, MajorStep = 20, MinorStep = 5 });
-            //
-            ////starts the graph at 0 it's not nessasary but i just like it
+            
+            //starts the graph at 0 it's not nessasary but i just like it
             //allPoints = new List<DataPoint>
             //{
             //    new DataPoint(0,0)
             //};
             
-            //if (noSensorMode)
-            //{
-            //    InitTimer();
-            //}
+            
+            
         }
 
        
@@ -186,39 +163,30 @@ namespace GalleryOfHeartbeats.ViewModel
         //event that runs every milisecondinterval
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //check if serialport is usable
-            if (mySerialPort != null)
+            string val = Connection.ReadFromPort();
+            Console.WriteLine(val);
+            if (!string.IsNullOrEmpty(val))
             {
-                if (mySerialPort.IsOpen)
+                //get first value
+                int ibiValue = 0;
+                string firstval = "";
+                for (int j = 0; j < val.Length; j++)
                 {
-                    //read serialport
-                    byte[] output = new byte[mySerialPort.BytesToRead];
-                    mySerialPort.Read(output, 0, output.Length);
-                    string val = Encoding.UTF8.GetString(output, 0, output.Length);
-                    if (!string.IsNullOrEmpty(val))
+                    if(val[j] != '\n')
                     {
-                        //get first value
-                        int ibiValue = 0;
-                        string firstval = "";
-                        for (int j = 0; j < val.Length; j++)
-                        {
-                            if(val[j] != '\n')
-                            {
-                                firstval += val[j];
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        int.TryParse(firstval, out ibiValue);
-                        //convert ibi value to heartrate
-                        if (ibiValue > 0)
-                        {
-                            heartrate = (60000 / ibiValue);
-                            RaisePropertyChanged("CurrentHeartbeat");
-                        }
+                        firstval += val[j];
                     }
+                    else
+                    {
+                        break;
+                    }
+                }
+                int.TryParse(firstval, out ibiValue);
+                //convert ibi value to heartrate
+                if (ibiValue > 0)
+                {
+                    heartrate = (60000 / ibiValue);
+                    RaisePropertyChanged("CurrentHeartbeat");
                 }
             }
             else
@@ -229,30 +197,30 @@ namespace GalleryOfHeartbeats.ViewModel
             //get x point
             time += (float)milisecondInterval / 1000;
             //add points to graph
-            AddPoint(time, heartrate); 
+            Graph.AddPoint(time, heartrate); 
         }
 
-        //add point to graph
-        private void AddPoint(float x ,int pointValue)
-        {
-            AllPoints.Add(new DataPoint(x, pointValue));
-            lines.Points.Clear();
-
-            if (allPoints.Count > maxPointsShownAtOnce)
-            {
-                for (int i = AllPoints.Count - maxPointsShownAtOnce; i < allPoints.Count; i++)
-                {
-                    lines.Points.Add(allPoints[i]); 
-                }
-            }
-            else
-            {
-                for (int i = 0; i < allPoints.Count; i++)
-                {
-                    lines.Points.Add(allPoints[i]);;
-                }
-            }
-            graphModel.InvalidatePlot(true);
-        }
+        ////add point to graph
+        //private void AddPoint(float x ,int pointValue)
+        //{
+        //    AllPoints.Add(new DataPoint(x, pointValue));
+        //    lines.Points.Clear();
+        //
+        //    if (allPoints.Count > maxPointsShownAtOnce)
+        //    {
+        //        for (int i = AllPoints.Count - maxPointsShownAtOnce; i < allPoints.Count; i++)
+        //        {
+        //            lines.Points.Add(allPoints[i]); 
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < allPoints.Count; i++)
+        //        {
+        //            lines.Points.Add(allPoints[i]);;
+        //        }
+        //    }
+        //    graphModel.InvalidatePlot(true);
+        //}
     }
 }

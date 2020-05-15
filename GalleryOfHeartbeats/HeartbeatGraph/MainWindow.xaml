@@ -32,18 +32,9 @@
                 </ComboBox>
                 
             </StackPanel>
-            
-            <StackPanel Margin="0,50,0,0">
-                
-                <Label>Max x-axis points</Label>
 
-                <Slider 
-                    Margin="5" 
-                    Minimum="10" 
-                    Maximum="300" 
-                    Value="{Binding MaxPointsShownAtOnce}">
-                </Slider>
-                
+            <StackPanel Margin="0,50,0,0">
+
                 <Button 
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 

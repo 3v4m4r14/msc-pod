@@ -25,15 +25,14 @@ namespace GalleryOfHeartbeats.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private SerialPort mySerialPort;
-
-        
-
         public int heartrate;
         private float time = 0.0f;
-        private int milisecondInterval = 500;
+        private int pollingInterval = 1000;
 
-        private Random rnd = new Random();
+
+        FileReaderWriter toFile;
+        Gallery gallery;
+
 
         public string CurrentHeartbeat
         {
@@ -73,6 +72,7 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         #endregion
 
+        #region Graph of HR
         public Graph Graph { get; }
 
         //all datapoints 
@@ -100,6 +100,7 @@ namespace GalleryOfHeartbeats.ViewModel
                 Graph.GraphModel = value;
             }
         }
+        #endregion
 
         public bool StartBtnIsEnabled = true;
         public bool StopButtonIsEnabled = false;
@@ -109,25 +110,47 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             Console.WriteLine("Start");
 
-            InitTimer();
-   
+            toFile.WriteToFile(gallery);
+            
         }
 
         public ICommand CommandStopRecording { get; private set; }
         private void StopRecording()
         {
             Console.WriteLine("Stop");
-
+            Console.WriteLine(toFile.ReadFromFile());
         }
-
-
-        OxyPlot.Series.LineSeries lines = new OxyPlot.Series.LineSeries();
 
         public MainViewModel()
         {
             Connection = new Connection();
             Graph = new Graph("Heartrate");
-            
+            toFile = new FileReaderWriter("gallery.json");
+            gallery = new Gallery();
+
+            GalleryItem item0 = new GalleryItem()
+            {
+                Name = "Eva",
+                TimeOfRecording = DateTime.Now.ToString(),
+                PollingRate = pollingInterval,
+                Data = new List<int>() {
+                    60, 64, 68, 76, 90, 84, 71, 59
+                }
+            };
+
+            GalleryItem item1 = new GalleryItem()
+            {
+                Name = "Maria",
+                TimeOfRecording = DateTime.Now.ToString(),
+                PollingRate = pollingInterval,
+                Data = new List<int>() {
+                    10, 23, 24, 29, 34, 35, 45, 50
+                }
+            };
+
+            gallery.GalleryItems.Add(item0);
+            gallery.GalleryItems.Add(item1);
+
 
             CommandStartRecording = new RelayCommand(StartRecording);
             CommandStopRecording = new RelayCommand(StopRecording);
@@ -144,7 +167,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             System.Timers.Timer aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(timer1_Tick);
-            aTimer.Interval = milisecondInterval;
+            aTimer.Interval = pollingInterval;
             aTimer.Enabled = true;
         }
 
@@ -153,39 +176,49 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             string val = Connection.ReadFromPort();
             Console.WriteLine(val);
+
             if (!string.IsNullOrEmpty(val))
             {
-                //get first value
-                int ibiValue = 0;
-                string firstval = "";
-                for (int j = 0; j < val.Length; j++)
-                {
-                    if(val[j] != '\n')
-                    {
-                        firstval += val[j];
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                int.TryParse(firstval, out ibiValue);
-                //convert ibi value to heartrate
-                if (ibiValue > 0)
-                {
-                    heartrate = (60000 / ibiValue);
-                    RaisePropertyChanged("CurrentHeartbeat");
-                }
+                ParseOutHeartrateFromConnectionData(val);
             }
             else
             {
-                //random data for nosensormode
                 heartrate = 0;
             }
+
             //get x point
-            time += (float)milisecondInterval / 1000;
+            time += (float)pollingInterval / 1000;
+
             //add points to graph
             Graph.AddPoint(time, heartrate); 
+        }
+
+        private void ParseOutHeartrateFromConnectionData(string val)
+        {
+            //get first value
+            int ibiValue = 0;
+            string firstval = "";
+
+            for (int j = 0; j < val.Length; j++)
+            {
+                if (val[j] != '\n')
+                {
+                    firstval += val[j];
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            int.TryParse(firstval, out ibiValue);
+
+            //convert ibi value to heartrate
+            if (ibiValue > 0)
+            {
+                heartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
+                RaisePropertyChanged("CurrentHeartbeat");
+            }
         }
     }
 }

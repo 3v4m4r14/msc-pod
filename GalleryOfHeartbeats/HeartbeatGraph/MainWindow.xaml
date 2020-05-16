@@ -36,16 +36,27 @@
             <StackPanel Margin="0,50,0,0">
 
                 <Button 
+                    x:Name="btnShowGraph" 
+                    Command="{Binding CommandShowGraph}" 
+                    Content="Show heart rate"/>
+
+                <Label  
+                    Content="Recording:">
+                </Label>
+
+                <TextBox 
+                    x:Name="textBox" 
+                    Text="Name"/>
+
+                <Button 
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 
-                    Content="Start"
-                    IsEnabled="{Binding StartBtnIsEnabled}"/>
+                    Content="Start"/>
                 
                 <Button 
                     x:Name="btnStopRecording" 
                     Command="{Binding CommandStopRecording}" 
-                    Content="Stop"
-                    IsEnabled="{Binding StopBtnIsEnabled}"/>
+                    Content="Stop"/>
                 
             </StackPanel>
 
@@ -60,6 +71,7 @@
             
             <oxy:PlotView Model="{Binding GraphModel}"/>
             
+
         </Grid>
     </Grid>
 </Window>

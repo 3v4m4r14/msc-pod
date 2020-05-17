@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace GalleryOfHeartbeats.Model
 {
-    class FileReaderWriter
+    class FileHandler
     {
         private readonly string FilePath;
 
-        public FileReaderWriter(string fileName)
+        public FileHandler(string fileName)
         {
+            Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "data"));
             FilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "data", fileName);
         }
 
@@ -23,32 +24,34 @@ namespace GalleryOfHeartbeats.Model
             string objectInJson = JsonConvert.SerializeObject(jsonObject);
             Console.WriteLine("Object is: " + objectInJson);
 
-            if (!File.Exists(FilePath))
-            {
-                CreateFile();
-            }
 
             // Write the string array to a new file named "WriteLines.txt".
-            using (StreamWriter outputFile = File.AppendText(FilePath))
+            using (StreamWriter outputFile = new StreamWriter(FilePath))
             {
                 outputFile.WriteLine(objectInJson);
             }
+        }
+
+
+        public Gallery ReadFromFile()
+        {
+            string strResultJson = String.Empty;
+
+            if (!File.Exists(FilePath))
+            {
+                return new Gallery();
+            }
+
+            strResultJson = File.ReadAllText(FilePath);
+            Gallery galleryItem = JsonConvert.DeserializeObject<Gallery>(strResultJson);
+
+            return galleryItem;
         }
 
         private void CreateFile()
         {
             // Create a file to write to.
             using (StreamWriter sw = File.CreateText(FilePath)) { }
-        }
-
-        public Gallery ReadFromFile()
-        {
-            string strResultJson = String.Empty;
-
-            strResultJson = File.ReadAllText(FilePath);
-            Gallery galleryItem = JsonConvert.DeserializeObject<Gallery>(strResultJson);
-
-            return galleryItem;
         }
     }
 }

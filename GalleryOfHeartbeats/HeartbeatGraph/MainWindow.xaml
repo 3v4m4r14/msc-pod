@@ -8,9 +8,6 @@
         xmlns:viewmodel="clr-namespace:GalleryOfHeartbeats.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <viewmodel:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -46,7 +43,7 @@
 
                 <TextBox 
                     x:Name="textBox" 
-                    Text="Name"/>
+                    Text="{Binding NameOfUser, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button 
                     x:Name="btnStartRecording" 

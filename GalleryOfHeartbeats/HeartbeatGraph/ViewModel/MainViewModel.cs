@@ -1,10 +1,8 @@
-////////////////////////////////////////////
-/////////Don't look at my garbage!!/////////
-///////////Author: Lars Hulsmans////////////
-////////////////////////////////////////////
+// Gallery of Heartbeats
+// Author: Eva Maria Veitmaa
+// Date: 2020
 
 
-using GalaSoft.MvvmLight;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -18,20 +16,28 @@ using System.IO.Ports;
 using System.Text;
 using System.Windows.Input;
 using System.Security.Cryptography.X509Certificates;
-using GalaSoft.MvvmLight.Command;
 using GalleryOfHeartbeats.Model;
+using GalleryOfHeartbeats.ViewModel.Commands;
+using System.ComponentModel;
 
 namespace GalleryOfHeartbeats.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : INotifyPropertyChanged
     {
         public int heartrate;
         private float time = 0.0f;
         private int pollingInterval = 1000;
 
+        private bool isRecording = false;
+        private bool isShowingGraph = false;
 
-        FileReaderWriter toFile;
+
+        FileHandler toFile;
         Gallery gallery;
+
+        
+
+        public string NameOfUser { get; set; }
 
 
         public string CurrentHeartbeat
@@ -102,30 +108,48 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         #endregion
 
-        public bool StartBtnIsEnabled = true;
-        public bool StopButtonIsEnabled = false;
 
         public ICommand CommandStartRecording { get; private set; }
-        private void StartRecording()
+        public bool CanStartRecording(object param)
         {
-            Console.WriteLine("Start");
-
+            return !isRecording && !string.IsNullOrWhiteSpace(NameOfUser);
+        }
+        private void StartRecording(object param)
+        {
+            isRecording = true;
             toFile.WriteToFile(gallery);
-            
+            Console.WriteLine("Recording: " + isRecording);
         }
 
-        public ICommand CommandStopRecording { get; private set; }
-        private void StopRecording()
+        public RelayCommand CommandStopRecording { get; private set; }
+        public bool CanStopRecording(object param)
         {
-            Console.WriteLine("Stop");
+            return isRecording;
+        }
+        private void StopRecording(object param)
+        {
+            isRecording = false;
             Console.WriteLine(toFile.ReadFromFile());
+            Console.WriteLine("Recording: " + isRecording);
+        }
+
+        public RelayCommand CommandShowGraph { get; private set; }
+        public bool CanShowGraph(object param)
+        {
+            if (!isShowingGraph) return Connection.PortIsReady();
+            return false;
+        }
+        private void ShowGraph(object param)
+        {
+            isShowingGraph = true;
+            InitTimer();
         }
 
         public MainViewModel()
         {
             Connection = new Connection();
             Graph = new Graph("Heartrate");
-            toFile = new FileReaderWriter("gallery.json");
+            toFile = new FileHandler("gallery.json");
             gallery = new Gallery();
 
             GalleryItem item0 = new GalleryItem()
@@ -152,11 +176,12 @@ namespace GalleryOfHeartbeats.ViewModel
             gallery.GalleryItems.Add(item1);
 
 
-            CommandStartRecording = new RelayCommand(StartRecording);
-            CommandStopRecording = new RelayCommand(StopRecording);
-            
-            
-            
+            CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
+            CommandStopRecording = new RelayCommand(StopRecording, CanStopRecording);
+            CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
+
+
+
         }
 
        
@@ -165,7 +190,7 @@ namespace GalleryOfHeartbeats.ViewModel
         //start the timer for polling
         private void InitTimer()
         {
-            System.Timers.Timer aTimer = new System.Timers.Timer();
+            Timer aTimer = new Timer();
             aTimer.Elapsed += new ElapsedEventHandler(timer1_Tick);
             aTimer.Interval = pollingInterval;
             aTimer.Enabled = true;
@@ -217,8 +242,16 @@ namespace GalleryOfHeartbeats.ViewModel
             if (ibiValue > 0)
             {
                 heartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
-                RaisePropertyChanged("CurrentHeartbeat");
+                ChangeProperty("CurrentHeartbeat");
             }
         }
+
+        #region INotifyPropertyChanged Members
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void ChangeProperty(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

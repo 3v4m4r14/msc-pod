@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Gallery of Heartbeats
+// Author: Eva Maria Veitmaa
+// Date: 2020
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -78,7 +82,7 @@ namespace GalleryOfHeartbeats.Model
             }
         }
 
-        private bool PortIsReady()
+        public bool PortIsReady()
         {
             return mySerialPort != null && mySerialPort.IsOpen;
         }

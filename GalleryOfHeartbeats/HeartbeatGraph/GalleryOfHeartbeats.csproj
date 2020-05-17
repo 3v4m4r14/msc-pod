@@ -104,9 +104,9 @@
     <Compile Include="Model\Gallery.cs" />
     <Compile Include="Model\GalleryItem.cs" />
     <Compile Include="Model\Graph.cs" />
-    <Compile Include="Model\FileReaderWriter.cs" />
+    <Compile Include="Model\FileHandler.cs" />
+    <Compile Include="ViewModel\Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

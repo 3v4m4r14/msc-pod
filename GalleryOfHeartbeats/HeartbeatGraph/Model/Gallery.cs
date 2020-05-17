@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Gallery of Heartbeats
+// Author: Eva Maria Veitmaa
+// Date: 2020
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

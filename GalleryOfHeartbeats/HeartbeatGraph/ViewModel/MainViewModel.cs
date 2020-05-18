@@ -25,15 +25,17 @@ namespace GalleryOfHeartbeats.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         public int Heartrate;
+
         private float CurrentTime = 0.0f;
         private int PollingInterval = 1000;
+        private Timer GraphTimer;
 
         private bool IsRecording = false;
         private bool IsShowingGraph = false;
 
 
-        FileHandler FileHandler;
-        Gallery Gallery;
+        private FileHandler FileHandler;
+        private Gallery Gallery;
 
         
 
@@ -142,13 +144,18 @@ namespace GalleryOfHeartbeats.ViewModel
         private void ShowGraph(object param)
         {
             IsShowingGraph = true;
-            InitTimer();
+            ResetGraphTimer();
         }
 
         public MainViewModel()
         {
             Connection = new Connection();
+
             Graph = new Graph("Heartrate");
+            GraphTimer = new Timer();
+            GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
+            GraphTimer.Interval = PollingInterval;
+
             FileHandler = new FileHandler("gallery.json");
             Gallery = new Gallery();
 
@@ -188,12 +195,10 @@ namespace GalleryOfHeartbeats.ViewModel
 
 
         //start the timer for polling
-        private void InitTimer()
+        private void ResetGraphTimer()
         {
-            Timer aTimer = new Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
-            aTimer.Interval = PollingInterval;
-            aTimer.Enabled = true;
+            GraphTimer.Stop();
+            GraphTimer.Start();
         }
 
         //event that runs every milisecondinterval

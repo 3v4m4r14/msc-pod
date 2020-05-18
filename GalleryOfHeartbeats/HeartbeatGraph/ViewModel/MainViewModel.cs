@@ -31,7 +31,7 @@ namespace GalleryOfHeartbeats.ViewModel
         private Timer GraphTimer;
 
         private bool IsRecording = false;
-        private bool IsShowingGraph = false;
+        private bool GraphIsRunning = false;
 
 
         private FileHandler FileHandler;
@@ -131,6 +131,8 @@ namespace GalleryOfHeartbeats.ViewModel
         private void StopRecording(object param)
         {
             IsRecording = false;
+            GraphTimer.Stop();
+            GraphIsRunning = false;
             Console.WriteLine(FileHandler.ReadFromFile());
             Console.WriteLine("Recording: " + IsRecording);
         }
@@ -138,13 +140,13 @@ namespace GalleryOfHeartbeats.ViewModel
         public RelayCommand CommandShowGraph { get; private set; }
         public bool CanShowGraph(object param)
         {
-            if (!IsShowingGraph) return Connection.PortIsReady();
+            if (!GraphIsRunning) return Connection.PortIsReady();
             return false;
         }
         private void ShowGraph(object param)
         {
-            IsShowingGraph = true;
-            ResetGraphTimer();
+            GraphIsRunning = true;
+            RestartGraphTimer();
         }
 
         public MainViewModel()
@@ -195,7 +197,7 @@ namespace GalleryOfHeartbeats.ViewModel
 
 
         //start the timer for polling
-        private void ResetGraphTimer()
+        private void RestartGraphTimer()
         {
             GraphTimer.Stop();
             GraphTimer.Start();

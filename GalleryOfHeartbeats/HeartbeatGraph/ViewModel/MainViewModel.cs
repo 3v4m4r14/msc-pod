@@ -178,6 +178,8 @@ namespace GalleryOfHeartbeats.ViewModel
             FileHandler = new FileHandler("gallery.json");
             Gallery = FileHandler.GetGalleryFromFile();
 
+            CurrentRecordingData = new List<int>();
+
             //PopulateGalleryWithMockData();
 
             CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
@@ -236,7 +238,6 @@ namespace GalleryOfHeartbeats.ViewModel
         private void TimerEvent(object sender, EventArgs e)
         {
             string val = Connection.ReadFromPort();
-            Console.WriteLine(val);
 
             if (!string.IsNullOrEmpty(val))
             {
@@ -274,12 +275,16 @@ namespace GalleryOfHeartbeats.ViewModel
 
             int.TryParse(firstval, out ibiValue);
 
+            Console.WriteLine(ibiValue);
+
             //convert ibi value to heartrate
             if (ibiValue > 0)
             {
                 Heartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
                 ChangeProperty("CurrentHeartbeat");
             }
+
+            CurrentRecordingData.Add(ibiValue);
         }
 
         #region INotifyPropertyChanged Members

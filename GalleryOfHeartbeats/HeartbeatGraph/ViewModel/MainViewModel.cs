@@ -37,7 +37,8 @@ namespace GalleryOfHeartbeats.ViewModel
         private FileHandler FileHandler;
         private Gallery Gallery;
 
-        
+        private GalleryItem CurrentRecordingItem;
+        private List<int> CurrentRecordingData;
 
         public string NameOfUser { get; set; }
 
@@ -119,8 +120,20 @@ namespace GalleryOfHeartbeats.ViewModel
         private void StartRecording(object param)
         {
             IsRecording = true;
-            FileHandler.WriteToFile(Gallery);
+
+            CreateNewRecording();
+
             Console.WriteLine("Recording: " + IsRecording);
+        }
+
+        private void CreateNewRecording()
+        {
+            CurrentRecordingItem = new GalleryItem();
+            CurrentRecordingItem.Name = NameOfUser;
+            CurrentRecordingItem.TimeOfRecording = DateTime.Now.ToString();
+            CurrentRecordingItem.PollingRate = PollingInterval;
+
+            CurrentRecordingData = new List<int>();
         }
 
         public RelayCommand CommandStopRecording { get; private set; }
@@ -131,9 +144,16 @@ namespace GalleryOfHeartbeats.ViewModel
         private void StopRecording(object param)
         {
             IsRecording = false;
+
             GraphTimer.Stop();
             GraphIsRunning = false;
-            Console.WriteLine(FileHandler.GetGalleryFromFile());
+
+            CurrentRecordingItem.Data = CurrentRecordingData;
+            Gallery.GalleryItems.Add(CurrentRecordingItem);
+
+            FileHandler.WriteToFile(Gallery);
+
+            Console.WriteLine(CurrentRecordingItem.ToString());
             Console.WriteLine("Recording: " + IsRecording);
         }
 
@@ -158,6 +178,18 @@ namespace GalleryOfHeartbeats.ViewModel
             FileHandler = new FileHandler("gallery.json");
             Gallery = FileHandler.GetGalleryFromFile();
 
+            //PopulateGalleryWithMockData();
+
+            CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
+            CommandStopRecording = new RelayCommand(StopRecording, CanStopRecording);
+            CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
+
+
+
+        }
+
+        private void PopulateGalleryWithMockData()
+        {
             GalleryItem item0 = new GalleryItem()
             {
                 Name = "Eva",
@@ -180,14 +212,6 @@ namespace GalleryOfHeartbeats.ViewModel
 
             Gallery.GalleryItems.Add(item0);
             Gallery.GalleryItems.Add(item1);
-
-
-            CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
-            CommandStopRecording = new RelayCommand(StopRecording, CanStopRecording);
-            CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
-
-
-
         }
 
         private void GraphInit()

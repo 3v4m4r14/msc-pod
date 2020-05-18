@@ -35,12 +35,12 @@ namespace GalleryOfHeartbeats.Model
 
         public Gallery GetGalleryFromFile()
         {
-            if (!File.Exists(FilePath))
-            {
-                return new Gallery();
-            }
+            if (!File.Exists(FilePath)) { return new Gallery(); }
 
             string strResultJson = File.ReadAllText(FilePath);
+
+            if (string.IsNullOrWhiteSpace(strResultJson) || string.IsNullOrEmpty(strResultJson)) { return new Gallery(); }
+
             Gallery galleryItem = JsonConvert.DeserializeObject<Gallery>(strResultJson);
 
             return galleryItem;

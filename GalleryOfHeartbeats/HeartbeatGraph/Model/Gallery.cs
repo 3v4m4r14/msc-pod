@@ -1,4 +1,4 @@
-﻿// Gallery of Heartbeats
+// Gallery of Heartbeats
 // Author: Eva Maria Veitmaa
 // Date: 2020
 

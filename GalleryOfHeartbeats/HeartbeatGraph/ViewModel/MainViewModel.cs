@@ -81,7 +81,7 @@ namespace GalleryOfHeartbeats.ViewModel
         #endregion
 
         #region Graph of HR
-        public Graph Graph { get; }
+        public Graph Graph { get; set; }
 
         //all datapoints 
         public IList<DataPoint> AllPoints
@@ -133,7 +133,7 @@ namespace GalleryOfHeartbeats.ViewModel
             IsRecording = false;
             GraphTimer.Stop();
             GraphIsRunning = false;
-            Console.WriteLine(FileHandler.ReadFromFile());
+            Console.WriteLine(FileHandler.GetGalleryFromFile());
             Console.WriteLine("Recording: " + IsRecording);
         }
 
@@ -153,13 +153,10 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             Connection = new Connection();
 
-            Graph = new Graph("Heartrate");
-            GraphTimer = new Timer();
-            GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
-            GraphTimer.Interval = PollingInterval;
+            GraphInit();
 
             FileHandler = new FileHandler("gallery.json");
-            Gallery = new Gallery();
+            Gallery = FileHandler.GetGalleryFromFile();
 
             GalleryItem item0 = new GalleryItem()
             {
@@ -193,7 +190,15 @@ namespace GalleryOfHeartbeats.ViewModel
 
         }
 
-       
+        private void GraphInit()
+        {
+            Graph = new Graph("Heartrate");
+            GraphTimer = new Timer();
+            GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
+            GraphTimer.Interval = PollingInterval;
+        }
+
+
 
 
         //start the timer for polling

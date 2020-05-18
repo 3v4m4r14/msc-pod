@@ -21,7 +21,7 @@ namespace GalleryOfHeartbeats.Model
 
         public void WriteToFile(object jsonObject)
         {
-            string objectInJson = JsonConvert.SerializeObject(jsonObject);
+            string objectInJson = JsonConvert.SerializeObject(jsonObject, Formatting.Indented);
             Console.WriteLine("Object is: " + objectInJson);
 
 

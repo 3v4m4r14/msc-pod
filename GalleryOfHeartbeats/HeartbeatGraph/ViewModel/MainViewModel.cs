@@ -24,16 +24,16 @@ namespace GalleryOfHeartbeats.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public int heartrate;
-        private float time = 0.0f;
-        private int pollingInterval = 1000;
+        public int Heartrate;
+        private float CurrentTime = 0.0f;
+        private int PollingInterval = 1000;
 
-        private bool isRecording = false;
-        private bool isShowingGraph = false;
+        private bool IsRecording = false;
+        private bool IsShowingGraph = false;
 
 
-        FileHandler toFile;
-        Gallery gallery;
+        FileHandler FileHandler;
+        Gallery Gallery;
 
         
 
@@ -44,7 +44,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             get
             {
-                return "heartrate: " + heartrate;
+                return "heartrate: " + Heartrate;
             }
         }
 
@@ -112,36 +112,36 @@ namespace GalleryOfHeartbeats.ViewModel
         public ICommand CommandStartRecording { get; private set; }
         public bool CanStartRecording(object param)
         {
-            return !isRecording && !string.IsNullOrWhiteSpace(NameOfUser);
+            return !IsRecording && !string.IsNullOrWhiteSpace(NameOfUser);
         }
         private void StartRecording(object param)
         {
-            isRecording = true;
-            toFile.WriteToFile(gallery);
-            Console.WriteLine("Recording: " + isRecording);
+            IsRecording = true;
+            FileHandler.WriteToFile(Gallery);
+            Console.WriteLine("Recording: " + IsRecording);
         }
 
         public RelayCommand CommandStopRecording { get; private set; }
         public bool CanStopRecording(object param)
         {
-            return isRecording;
+            return IsRecording;
         }
         private void StopRecording(object param)
         {
-            isRecording = false;
-            Console.WriteLine(toFile.ReadFromFile());
-            Console.WriteLine("Recording: " + isRecording);
+            IsRecording = false;
+            Console.WriteLine(FileHandler.ReadFromFile());
+            Console.WriteLine("Recording: " + IsRecording);
         }
 
         public RelayCommand CommandShowGraph { get; private set; }
         public bool CanShowGraph(object param)
         {
-            if (!isShowingGraph) return Connection.PortIsReady();
+            if (!IsShowingGraph) return Connection.PortIsReady();
             return false;
         }
         private void ShowGraph(object param)
         {
-            isShowingGraph = true;
+            IsShowingGraph = true;
             InitTimer();
         }
 
@@ -149,14 +149,14 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             Connection = new Connection();
             Graph = new Graph("Heartrate");
-            toFile = new FileHandler("gallery.json");
-            gallery = new Gallery();
+            FileHandler = new FileHandler("gallery.json");
+            Gallery = new Gallery();
 
             GalleryItem item0 = new GalleryItem()
             {
                 Name = "Eva",
                 TimeOfRecording = DateTime.Now.ToString(),
-                PollingRate = pollingInterval,
+                PollingRate = PollingInterval,
                 Data = new List<int>() {
                     60, 64, 68, 76, 90, 84, 71, 59
                 }
@@ -166,14 +166,14 @@ namespace GalleryOfHeartbeats.ViewModel
             {
                 Name = "Maria",
                 TimeOfRecording = DateTime.Now.ToString(),
-                PollingRate = pollingInterval,
+                PollingRate = PollingInterval,
                 Data = new List<int>() {
                     10, 23, 24, 29, 34, 35, 45, 50
                 }
             };
 
-            gallery.GalleryItems.Add(item0);
-            gallery.GalleryItems.Add(item1);
+            Gallery.GalleryItems.Add(item0);
+            Gallery.GalleryItems.Add(item1);
 
 
             CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
@@ -191,13 +191,13 @@ namespace GalleryOfHeartbeats.ViewModel
         private void InitTimer()
         {
             Timer aTimer = new Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(timer1_Tick);
-            aTimer.Interval = pollingInterval;
+            aTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
+            aTimer.Interval = PollingInterval;
             aTimer.Enabled = true;
         }
 
         //event that runs every milisecondinterval
-        private void timer1_Tick(object sender, EventArgs e)
+        private void TimerEvent(object sender, EventArgs e)
         {
             string val = Connection.ReadFromPort();
             Console.WriteLine(val);
@@ -208,14 +208,14 @@ namespace GalleryOfHeartbeats.ViewModel
             }
             else
             {
-                heartrate = 0;
+                Heartrate = 0;
             }
 
             //get x point
-            time += (float)pollingInterval / 1000;
+            CurrentTime += (float)PollingInterval / 1000;
 
             //add points to graph
-            Graph.AddPoint(time, heartrate); 
+            Graph.AddPoint(CurrentTime, Heartrate); 
         }
 
         private void ParseOutHeartrateFromConnectionData(string val)
@@ -241,7 +241,7 @@ namespace GalleryOfHeartbeats.ViewModel
             //convert ibi value to heartrate
             if (ibiValue > 0)
             {
-                heartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
+                Heartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
                 ChangeProperty("CurrentHeartbeat");
             }
         }

@@ -25,18 +25,18 @@ namespace GalleryOfHeartbeats.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private static readonly float DEFAULT_TIME = 0.0f;
+        private const float DEFAULT_TIME = 0.0f;
+        private const int POLLING_INTERVAL = 1000;
+
         private static readonly object MOCK_PARAM = new object();
 
         public int Heartrate;
 
         private float CurrentTime = 0.0f;
-        private int PollingInterval = 1000;
         private Timer GraphTimer;
 
         private bool IsRecording = false;
         private bool GraphIsRunning = false;
-
 
         private FileHandler FileHandler;
         private Gallery Gallery;
@@ -59,7 +59,7 @@ namespace GalleryOfHeartbeats.ViewModel
         public Connection Connection { get; }
 
         //list of the available com ports
-        public ObservableCollection<string> Options
+        public ObservableCollection<string> ConnectionOptions
         {
             get
             {
@@ -184,7 +184,7 @@ namespace GalleryOfHeartbeats.ViewModel
             CurrentRecordingItem = new GalleryItem();
             CurrentRecordingItem.Name = NameOfUser;
             CurrentRecordingItem.TimeOfRecording = DateTime.Now.ToString();
-            CurrentRecordingItem.PollingRate = PollingInterval;
+            CurrentRecordingItem.PollingRate = POLLING_INTERVAL;
 
             CurrentRecordingData = new List<int>();
         }
@@ -249,7 +249,7 @@ namespace GalleryOfHeartbeats.ViewModel
             {
                 Name = "Eva",
                 TimeOfRecording = DateTime.Now.ToString(),
-                PollingRate = PollingInterval,
+                PollingRate = POLLING_INTERVAL,
                 Data = new List<int>() {
                     60, 64, 68, 76, 90, 84, 71, 59
                 }
@@ -259,7 +259,7 @@ namespace GalleryOfHeartbeats.ViewModel
             {
                 Name = "Maria",
                 TimeOfRecording = DateTime.Now.ToString(),
-                PollingRate = PollingInterval,
+                PollingRate = POLLING_INTERVAL,
                 Data = new List<int>() {
                     10, 23, 24, 29, 34, 35, 45, 50
                 }
@@ -273,7 +273,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             GraphTimer = new Timer();
             GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
-            GraphTimer.Interval = PollingInterval;
+            GraphTimer.Interval = POLLING_INTERVAL;
         }
 
         //start the timer for polling
@@ -303,7 +303,7 @@ namespace GalleryOfHeartbeats.ViewModel
         private void AddHeartrateToGraph()
         {
             //get x point
-            CurrentTime += (float)PollingInterval / 1000;
+            CurrentTime += (float)POLLING_INTERVAL / 1000;
 
             //add points to graph
             Graph.AddPoint(CurrentTime, Heartrate);

@@ -14,33 +14,37 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid>
-            <StackPanel 
-                Margin="5,5,5,0" 
-                Orientation="Horizontal">
-                
-                <Label>Comport:</Label>
-                
-                <ComboBox 
-                    ItemsSource="{Binding Options}" 
-                    SelectedItem="{Binding SelectedPort}" 
-                    VerticalAlignment="Top" 
-                    Height="20" 
-                    Width="90">
-                </ComboBox>
-                
-            </StackPanel>
+            
 
-            <StackPanel Margin="5,50,5,0">
+            <StackPanel Margin="5,10,5,0">
+                
+                <DockPanel>
+
+                    <Label Padding="0, 0, 5, 0">Connect:</Label>
+
+                    <ComboBox 
+                        ItemsSource="{Binding ConnectionOptions}" 
+                        SelectedItem="{Binding SelectedPort}" 
+                        VerticalAlignment="Top" 
+                        Height="20" 
+                        Width="Auto">
+                    </ComboBox>
+
+                </DockPanel>
+
+                <Separator
+                    Margin="0, 10, 0, 5"/>
 
                 <Label
                     Content="Graph"
                     FontWeight="Bold"
-                    FontSize="14">
+                    FontSize="14"
+                    Padding="0, 0, 0, 5">
                 </Label>
                 <Button 
                     x:Name="btnShowGraph" 
                     Command="{Binding CommandShowGraph}" 
-                    Content="Show heart rate"/>
+                    Content="Show"/>
 
                 <Button 
                     x:Name="btnPauseGraph" 
@@ -51,28 +55,35 @@
                     x:Name="btnClearGraph" 
                     Command="{Binding CommandClearGraph}" 
                     Content="Clear"/>
- 
+
+                <Separator
+                    Margin="0, 10, 0, 5"/>
+
                 <Label  
                     Content="Recording"
                     FontWeight="Bold"
-                    FontSize="14">
+                    FontSize="14"
+                    Padding="0, 0, 0, 0">
                 </Label>
 
-                <StackPanel 
-                    Margin="0,0,0,0"
-                    Orientation="Horizontal">
+                <DockPanel 
+                    Margin="0,5,0,5"
+                    Width="Auto">
 
                     <Label  
-                    Content="Name:">
+                        Content="Name:"
+                        Padding="0, 0, 10, 0">
                     </Label>
                     
                     <TextBox 
                         x:Name="textBox" 
                         Text="{Binding NameOfUser}"
                         Height="20" 
-                        Width="100"/>
+                        MinWidth="90"
+                        Width="Auto"/>
 
-                </StackPanel>
+                </DockPanel>
+                
                 <Button 
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 
@@ -82,13 +93,40 @@
                     x:Name="btnStopRecording" 
                     Command="{Binding CommandStopRecording}" 
                     Content="Stop"/>
-                
+
+                <Separator
+                    Margin="0, 10, 0, 5"/>
+
+                <Label  
+                    Content="Gallery"
+                    FontWeight="Bold"
+                    FontSize="14"
+                    Padding="0, 0, 0, 0">
+                </Label>
+
+                <DockPanel 
+                    Margin="0,0,0,0">
+
+                    <Label Padding="0, 0, 5, 0">Connect:</Label>
+
+                    <ComboBox 
+                    ItemsSource="{Binding HeartbeatOptions}" 
+                    SelectedItem="{Binding SelectedHeartbeat}" 
+                    VerticalAlignment="Top" 
+                    Height="20" 
+                    Width="Auto">
+                    </ComboBox>
+
+                </DockPanel>
+
             </StackPanel>
 
             <Label 
                 VerticalAlignment="Bottom" 
                 Content="{Binding CurrentHeartbeat}">
             </Label>
+            
+            
             
         </Grid>
         

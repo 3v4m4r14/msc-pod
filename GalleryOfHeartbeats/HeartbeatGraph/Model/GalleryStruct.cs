@@ -19,6 +19,11 @@ namespace GalleryOfHeartbeats.Model
             GalleryItems = new List<GalleryItem>();
         }
 
+        public GalleryStruct(Gallery gallery)
+        {
+            GalleryItems = gallery.GalleryItems;
+        }
+
         public override string ToString()
         {
             string asString = "";

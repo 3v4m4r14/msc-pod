@@ -21,7 +21,9 @@ namespace GalleryOfHeartbeats.Model
 
         public void WriteToFile(object jsonObject)
         {
-            string objectInJson = JsonConvert.SerializeObject(jsonObject, Formatting.Indented);
+            GalleryStruct toFile = new GalleryStruct((Gallery) jsonObject);
+
+            string objectInJson = JsonConvert.SerializeObject(toFile, Formatting.Indented);
             Console.WriteLine("Object is: " + objectInJson);
 
 
@@ -41,9 +43,9 @@ namespace GalleryOfHeartbeats.Model
 
             if (string.IsNullOrWhiteSpace(strResultJson) || string.IsNullOrEmpty(strResultJson)) { return new Gallery(); }
 
-            GalleryStruct galleryItem = JsonConvert.DeserializeObject<GalleryStruct>(strResultJson);
+            Gallery galleryItem = JsonConvert.DeserializeObject<Gallery>(strResultJson);
 
-            return new Gallery(galleryItem);
+            return galleryItem;
         }
 
         private void CreateFile()

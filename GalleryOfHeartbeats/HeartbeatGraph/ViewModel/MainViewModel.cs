@@ -36,11 +36,11 @@ namespace GalleryOfHeartbeats.ViewModel
         private Timer GraphTimer;
 
         private bool IsRecording = false;
+        private bool PlayingBack = false;
         private bool GraphIsRunning = false;
 
         private Connection Connection;
         private FileHandler FileHandler;
-        private GalleryStruct GalleryStruct;
         private Gallery Gallery;
 
         private GalleryItem CurrentRecordingItem;
@@ -286,8 +286,8 @@ namespace GalleryOfHeartbeats.ViewModel
                 }
             };
 
-            GalleryStruct.GalleryItems.Add(item0);
-            GalleryStruct.GalleryItems.Add(item1);
+            Gallery.GalleryItems.Add(item0);
+            Gallery.GalleryItems.Add(item1);
         }
 
         private void GraphTimerInit()
@@ -307,6 +307,27 @@ namespace GalleryOfHeartbeats.ViewModel
         //event that runs every milisecondinterval
         private void TimerEvent(object sender, EventArgs e)
         {
+            if (PlayingBack)
+            {
+                GetDataFromGallery();
+            }
+            else
+            {
+                GetDataFromSensor();
+            }
+
+            
+
+            AddHeartrateToGraph();
+        }
+
+        private void GetDataFromGallery()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GetDataFromSensor()
+        {
             string val = Connection.ReadFromPort();
 
             if (!string.IsNullOrEmpty(val))
@@ -317,8 +338,6 @@ namespace GalleryOfHeartbeats.ViewModel
             {
                 Heartrate = 0;
             }
-
-            AddHeartrateToGraph();
         }
 
         private void AddHeartrateToGraph()

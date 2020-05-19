@@ -36,7 +36,6 @@ namespace GalleryOfHeartbeats.Model
         }
 
         private GalleryItem SelectedItem = new GalleryItem();
-
         public string SelectedItemName
         {
             get
@@ -45,21 +44,33 @@ namespace GalleryOfHeartbeats.Model
             }
             set
             {
-                SetSelectedItemByName(value);
+                SetSelectedItemById(value);
                 ChangeProperty("SelectedItemName");
             }
         }
 
-        private void SetSelectedItemByName(string id)
+        private void SetSelectedItemById(string id)
         {
-            foreach (GalleryItem item in galleryItems)
+            if (String.IsNullOrEmpty(id)) {
+                Console.WriteLine("ID is empty");
+                SelectedItem = new GalleryItem(); }
+            else
             {
-                if (GetIdOf(item).Equals(id))
+                foreach (GalleryItem item in galleryItems)
                 {
-                    SelectedItem = item;
-                    break;
+                    if (GetIdOf(item).Equals(id))
+                    {
+                        SelectedItem = item;
+                        break;
+                    }
                 }
             }
+            
+        }
+
+        public void RemoveSelectedItem()
+        {
+            SelectedItem = new GalleryItem();
         }
 
         public ObservableCollection<string> GetItemsAsStrings()

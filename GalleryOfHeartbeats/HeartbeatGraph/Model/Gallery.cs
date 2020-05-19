@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,48 @@ namespace GalleryOfHeartbeats.Model
                 galleryItems = value;
                 ChangeProperty("HeartbeatOptions");
             }
+        }
+
+        private GalleryItem SelectedItem = new GalleryItem();
+
+        public string SelectedItemName
+        {
+            get
+            {
+                return SelectedItem.Name;
+            }
+            set
+            {
+                SetSelectedItemByName(value);
+                ChangeProperty("SelectedItemName");
+            }
+        }
+
+        private void SetSelectedItemByName(string id)
+        {
+            foreach (GalleryItem item in galleryItems)
+            {
+                if (GetIdOf(item).Equals(id))
+                {
+                    SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
+        public ObservableCollection<string> GetItemsAsStrings()
+        {
+            ObservableCollection<string> itemsAsStrings = new ObservableCollection<string>();
+            foreach (GalleryItem item in galleryItems)
+            {
+                itemsAsStrings.Add(GetIdOf(item));
+            }
+            return itemsAsStrings;
+        }
+
+        private static string GetIdOf(GalleryItem item)
+        {
+            return item.Name + " " + item.TimeOfRecording;
         }
 
         #region INotifyPropertyChanged Members

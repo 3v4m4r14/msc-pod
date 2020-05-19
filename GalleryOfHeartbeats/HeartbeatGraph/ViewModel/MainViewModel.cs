@@ -57,7 +57,25 @@ namespace GalleryOfHeartbeats.ViewModel
             }
         }
 
+        public ObservableCollection<string> HeartbeatOptions
+        {
+            get
+            {
+                return Gallery.GetItemsAsStrings();
+            }
+        }
 
+       public string SelectedItemName
+        {
+            get
+            {
+                return Gallery.SelectedItemName;
+            }
+            set
+            {
+                Gallery.SelectedItemName = value;
+            }
+        }
 
         #region Port Connection for HR
 
@@ -228,8 +246,6 @@ namespace GalleryOfHeartbeats.ViewModel
 
             FileHandler = new FileHandler("gallery.json");
             Gallery = FileHandler.GetGalleryFromFile();
-
-            Console.WriteLine(Gallery.ToString());
 
             CurrentRecordingData = new List<int>();
 

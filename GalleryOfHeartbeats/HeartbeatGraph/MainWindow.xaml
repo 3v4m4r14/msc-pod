@@ -119,7 +119,7 @@
 
                     <ComboBox 
                     ItemsSource="{Binding HeartbeatOptions}" 
-                    SelectedItem="{Binding SelectedHeartbeat}" 
+                    SelectedItem="{Binding SelectedItemName}" 
                     VerticalAlignment="Top" 
                     Height="20" 
                     Width="Auto">

@@ -111,13 +111,60 @@ namespace GalleryOfHeartbeats.ViewModel
                 Graph.GraphModel = value;
             }
         }
+
+        public RelayCommand CommandShowGraph { get; private set; }
+        public bool CanShowGraph(object param)
+        {
+            if (!GraphIsRunning) return Connection.PortIsReady();
+            return false;
+        }
+        private void ShowGraph(object param)
+        {
+            GraphIsRunning = true;
+            RestartGraphTimer();
+        }
+
+        public RelayCommand CommandPauseGraph { get; private set; }
+        public bool CanPauseGraph(object param)
+        {
+            return GraphIsRunning;
+        }
+        public void PauseGraph(object param)
+        {
+            if (IsRecording) { StopRecording(new object()); }
+
+            StopPlotting();
+            Console.WriteLine("Graph paused");
+        }
+
+        public RelayCommand CommandClearGraph { get; private set; }
+        public bool CanClearGraph(object param)
+        {
+            return true;
+        }
+        public void ClearGraph(object param)
+        {
+            if (IsRecording) { StopRecording(new object()); }
+
+            StopPlotting();
+
+            CurrentTime = DEFAULT_TIME;
+            Graph.ResetGraph();
+            Console.WriteLine("Graph cleared");
+        }
+
+        private void StopPlotting()
+        {
+            GraphTimer.Stop();
+            GraphIsRunning = false;
+        }
         #endregion
 
-
+        #region Recording
         public ICommand CommandStartRecording { get; private set; }
         public bool CanStartRecording(object param)
         {
-            return !IsRecording && !string.IsNullOrWhiteSpace(NameOfUser);
+            return !IsRecording && GraphIsRunning && !string.IsNullOrWhiteSpace(NameOfUser);
         }
         private void StartRecording(object param)
         {
@@ -147,7 +194,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             IsRecording = false;
 
-            StopGraph();
+            StopPlotting();
 
             CurrentRecordingItem.Data = CurrentRecordingData;
             Gallery.GalleryItems.Add(CurrentRecordingItem);
@@ -157,24 +204,11 @@ namespace GalleryOfHeartbeats.ViewModel
             Console.WriteLine(CurrentRecordingItem.ToString());
             Console.WriteLine("Recording: " + IsRecording);
         }
+        #endregion
 
-        private void StopGraph()
-        {
-            GraphTimer.Stop();
-            GraphIsRunning = false;
-        }
+        
 
-        public RelayCommand CommandShowGraph { get; private set; }
-        public bool CanShowGraph(object param)
-        {
-            if (!GraphIsRunning) return Connection.PortIsReady();
-            return false;
-        }
-        private void ShowGraph(object param)
-        {
-            GraphIsRunning = true;
-            RestartGraphTimer();
-        }
+        
 
         public MainViewModel()
         {
@@ -193,8 +227,8 @@ namespace GalleryOfHeartbeats.ViewModel
             CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
             CommandStopRecording = new RelayCommand(StopRecording, CanStopRecording);
             CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
-
-
+            CommandPauseGraph = new RelayCommand(PauseGraph, CanPauseGraph);
+            CommandClearGraph = new RelayCommand(ClearGraph, CanClearGraph);
 
         }
 
@@ -226,7 +260,6 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private void GraphTimerInit()
         {
-            
             GraphTimer = new Timer();
             GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
             GraphTimer.Interval = PollingInterval;

@@ -38,9 +38,14 @@
                     Content="Show heart rate"/>
 
                 <Button 
-                    x:Name="btnResetGraph" 
-                    Command="{Binding CommandResetGraph}" 
-                    Content="Reset"/>
+                    x:Name="btnPauseGraph" 
+                    Command="{Binding CommandPauseGraph}" 
+                    Content="Pause"/>
+
+                <Button 
+                    x:Name="btnClearGraph" 
+                    Command="{Binding CommandClearGraph}" 
+                    Content="Clear"/>
 
                 <Label  
                     Content="Recording:">

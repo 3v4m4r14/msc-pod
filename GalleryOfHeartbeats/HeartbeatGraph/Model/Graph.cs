@@ -13,12 +13,15 @@ namespace GalleryOfHeartbeats.Model
     {
         private static readonly int MAX_DATA_POINTS_SHOWN_AT_ONCE = 200;
 
-        OxyPlot.Series.LineSeries lines = new OxyPlot.Series.LineSeries();
+        OxyPlot.Series.LineSeries lines;
 
         public Graph(string title)
         {
             graphModel.Title = title;
+
+            lines = new OxyPlot.Series.LineSeries();
             graphModel.Series.Add(lines);
+
             graphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 150, MajorStep = 20, MinorStep = 5 });
 
             allPoints = new List<DataPoint> { new DataPoint(0,0) };
@@ -51,6 +54,17 @@ namespace GalleryOfHeartbeats.Model
             {
                 allPoints = value;
             }
+        }
+
+        public void ResetGraph()
+        {
+            graphModel.Series.Clear();
+            lines.Points.Clear();
+            graphModel.Series.Add(lines);
+
+            allPoints = new List<DataPoint> { new DataPoint(0, 0) };
+
+            graphModel.InvalidatePlot(true);
         }
 
         //add point to graph

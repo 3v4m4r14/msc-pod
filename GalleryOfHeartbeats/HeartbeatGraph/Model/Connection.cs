@@ -35,7 +35,7 @@ namespace GalleryOfHeartbeats.Model
             set
             {
                 options = value;
-                ChangeProperty("Options");
+                ChangeProperty("ConnectionOptions");
             }
         }
         #endregion
@@ -129,12 +129,7 @@ namespace GalleryOfHeartbeats.Model
         public event PropertyChangedEventHandler PropertyChanged;
         private void ChangeProperty(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

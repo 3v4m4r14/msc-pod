@@ -41,9 +41,9 @@ namespace GalleryOfHeartbeats.Model
 
             if (string.IsNullOrWhiteSpace(strResultJson) || string.IsNullOrEmpty(strResultJson)) { return new Gallery(); }
 
-            Gallery galleryItem = JsonConvert.DeserializeObject<Gallery>(strResultJson);
+            GalleryStruct galleryItem = JsonConvert.DeserializeObject<GalleryStruct>(strResultJson);
 
-            return galleryItem;
+            return new Gallery(galleryItem);
         }
 
         private void CreateFile()

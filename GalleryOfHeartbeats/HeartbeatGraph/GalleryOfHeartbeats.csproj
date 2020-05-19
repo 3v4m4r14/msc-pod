@@ -102,6 +102,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\Connection.cs" />
     <Compile Include="Model\Gallery.cs" />
+    <Compile Include="Model\GalleryStruct.cs" />
     <Compile Include="Model\GalleryItem.cs" />
     <Compile Include="Model\Graph.cs" />
     <Compile Include="Model\FileHandler.cs" />

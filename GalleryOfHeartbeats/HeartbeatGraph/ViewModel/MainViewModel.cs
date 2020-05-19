@@ -38,7 +38,9 @@ namespace GalleryOfHeartbeats.ViewModel
         private bool IsRecording = false;
         private bool GraphIsRunning = false;
 
+        private Connection Connection;
         private FileHandler FileHandler;
+        private GalleryStruct GalleryStruct;
         private Gallery Gallery;
 
         private GalleryItem CurrentRecordingItem;
@@ -55,8 +57,9 @@ namespace GalleryOfHeartbeats.ViewModel
             }
         }
 
+
+
         #region Port Connection for HR
-        public Connection Connection { get; }
 
         //list of the available com ports
         public ObservableCollection<string> ConnectionOptions
@@ -226,6 +229,8 @@ namespace GalleryOfHeartbeats.ViewModel
             FileHandler = new FileHandler("gallery.json");
             Gallery = FileHandler.GetGalleryFromFile();
 
+            Console.WriteLine(Gallery.ToString());
+
             CurrentRecordingData = new List<int>();
 
             //PopulateGalleryWithMockData();
@@ -265,8 +270,8 @@ namespace GalleryOfHeartbeats.ViewModel
                 }
             };
 
-            Gallery.GalleryItems.Add(item0);
-            Gallery.GalleryItems.Add(item1);
+            GalleryStruct.GalleryItems.Add(item0);
+            GalleryStruct.GalleryItems.Add(item1);
         }
 
         private void GraphTimerInit()

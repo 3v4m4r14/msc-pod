@@ -180,7 +180,8 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             Connection = new Connection();
 
-            GraphInit();
+            Graph = new Graph("Heart rate (bpm)");
+            GraphTimerInit();
 
             FileHandler = new FileHandler("gallery.json");
             Gallery = FileHandler.GetGalleryFromFile();

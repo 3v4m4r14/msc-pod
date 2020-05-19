@@ -24,6 +24,8 @@ namespace GalleryOfHeartbeats.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private static readonly float DEFAULT_TIME = 0.0f;
+
         public int Heartrate;
 
         private float CurrentTime = 0.0f;
@@ -145,8 +147,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             IsRecording = false;
 
-            GraphTimer.Stop();
-            GraphIsRunning = false;
+            StopGraph();
 
             CurrentRecordingItem.Data = CurrentRecordingData;
             Gallery.GalleryItems.Add(CurrentRecordingItem);
@@ -155,6 +156,12 @@ namespace GalleryOfHeartbeats.ViewModel
 
             Console.WriteLine(CurrentRecordingItem.ToString());
             Console.WriteLine("Recording: " + IsRecording);
+        }
+
+        private void StopGraph()
+        {
+            GraphTimer.Stop();
+            GraphIsRunning = false;
         }
 
         public RelayCommand CommandShowGraph { get; private set; }
@@ -216,9 +223,9 @@ namespace GalleryOfHeartbeats.ViewModel
             Gallery.GalleryItems.Add(item1);
         }
 
-        private void GraphInit()
+        private void GraphTimerInit()
         {
-            Graph = new Graph("Heartrate");
+            
             GraphTimer = new Timer();
             GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
             GraphTimer.Interval = PollingInterval;

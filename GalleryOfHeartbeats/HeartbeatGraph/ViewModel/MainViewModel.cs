@@ -135,7 +135,7 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         public void PauseGraph(object param)
         {
-            if (IsRecording) { StopRecording(new object()); }
+            if (IsRecording) { StopRecording(MOCK_PARAM); }
 
             StopPlotting();
             Console.WriteLine("Graph paused");
@@ -148,7 +148,7 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         public void ClearGraph(object param)
         {
-            if (IsRecording) { StopRecording(new object()); }
+            if (IsRecording) { StopRecording(MOCK_PARAM); }
 
             StopPlotting();
 

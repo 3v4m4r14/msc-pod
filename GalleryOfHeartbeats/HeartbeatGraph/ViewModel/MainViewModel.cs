@@ -20,6 +20,7 @@ using GalleryOfHeartbeats.Model;
 using GalleryOfHeartbeats.ViewModel.Commands;
 using System.ComponentModel;
 using System.Windows;
+using System.IO;
 
 namespace GalleryOfHeartbeats.ViewModel
 {
@@ -45,6 +46,10 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private GalleryItem CurrentRecordingItem;
         private List<int> CurrentRecordingData;
+
+        private GalleryItem CurrentPlaybackItem;
+        private List<int> CurrentPlaybackData;
+        private int CurrentPlaybackPointer = 0;
 
         public string NameOfUser { get; set; }
 
@@ -176,6 +181,7 @@ namespace GalleryOfHeartbeats.ViewModel
             CurrentTime = DEFAULT_TIME;
             Graph.ResetGraph();
             Console.WriteLine("Graph cleared");
+
         }
 
         private void StopPlotting()
@@ -230,9 +236,26 @@ namespace GalleryOfHeartbeats.ViewModel
             Console.WriteLine("Recording: " + IsRecording);
 
             MessageBox.Show(String.Format("Recording saved as '{0} {1}'", CurrentRecordingItem.Name, CurrentRecordingItem.TimeOfRecording));
+
+            Gallery = FileHandler.GetGalleryFromFile();
+
         }
         #endregion
 
+        public RelayCommand CommandStartPlayback { get; private set; }
+        public bool CanStartPlayback(object param)
+        {
+            return !IsRecording && !GraphIsRunning && !string.IsNullOrEmpty(Gallery.SelectedItemName);
+        }
+        private void StartPlayback(object param)
+        {
+            Console.WriteLine("Playback started: " + Gallery.SelectedItemName);
+
+            PlayingBack = true;
+            CurrentTime = DEFAULT_TIME;
+            GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
+            RestartGraphTimer();
+        }
         
 
         
@@ -262,6 +285,7 @@ namespace GalleryOfHeartbeats.ViewModel
             CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
             CommandPauseGraph = new RelayCommand(PauseGraph, CanPauseGraph);
             CommandClearGraph = new RelayCommand(ClearGraph, CanClearGraph);
+            CommandStartPlayback = new RelayCommand(StartPlayback, CanStartPlayback);
         }
 
         private void PopulateGalleryWithMockData()
@@ -309,6 +333,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             if (PlayingBack)
             {
+                Console.WriteLine("Playing back");
                 GetDataFromGallery();
             }
             else
@@ -323,7 +348,9 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private void GetDataFromGallery()
         {
-            throw new NotImplementedException();
+            Heartrate = Gallery.GetSelectedItemDataValAt(CurrentPlaybackPointer);
+            Console.WriteLine("Data from gallery is: " + Heartrate);
+            CurrentPlaybackPointer++;
         }
 
         private void GetDataFromSensor()
@@ -378,7 +405,7 @@ namespace GalleryOfHeartbeats.ViewModel
                 ChangeProperty("CurrentHeartbeat");
             }
 
-            CurrentRecordingData.Add(ibiValue);
+            CurrentRecordingData.Add(Heartrate);
         }
 
         #region INotifyPropertyChanged Members

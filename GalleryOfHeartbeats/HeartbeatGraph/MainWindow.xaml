@@ -113,19 +113,29 @@
                 </Label>
 
                 <DockPanel 
-                    Margin="0,0,0,0">
+                    Margin="0,0,0,5">
 
-                    <Label Padding="0, 0, 5, 0">Connect:</Label>
+                    <Label Padding="0, 0, 5, 0">Selected:</Label>
 
                     <ComboBox 
                     ItemsSource="{Binding HeartbeatOptions}" 
-                    SelectedItem="{Binding SelectedItemName}" 
+                    SelectedItem="{Binding SelectedItemName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     VerticalAlignment="Top" 
                     Height="20" 
                     Width="Auto">
                     </ComboBox>
 
                 </DockPanel>
+
+                <Button 
+                    x:Name="btnStartPlayback" 
+                    Command="{Binding CommandStartPlayback}" 
+                    Content="Start"/>
+
+                <Button 
+                    x:Name="btnStopPlayback" 
+                    Command="{Binding CommandStopPlayback}" 
+                    Content="Stop"/>
 
             </StackPanel>
 

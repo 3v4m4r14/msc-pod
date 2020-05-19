@@ -12,7 +12,6 @@ namespace GalleryOfHeartbeats.Model
     {
         public Gallery()
         {
-            GalleryItems = new List<GalleryItem>();
         }
 
         public Gallery(GalleryStruct galleryStruct)
@@ -21,7 +20,7 @@ namespace GalleryOfHeartbeats.Model
         }
 
 
-        private List<GalleryItem> galleryItems { get; set; }
+        private List<GalleryItem> galleryItems = new List<GalleryItem>();
         public List<GalleryItem> GalleryItems
         {
             get
@@ -35,7 +34,7 @@ namespace GalleryOfHeartbeats.Model
             }
         }
 
-        private GalleryItem SelectedItem = new GalleryItem();
+        public GalleryItem SelectedItem = new GalleryItem();
         public string SelectedItemName
         {
             get
@@ -61,11 +60,17 @@ namespace GalleryOfHeartbeats.Model
                     if (GetIdOf(item).Equals(id))
                     {
                         SelectedItem = item;
+                        SelectedItemName = SelectedItem.Name;
                         break;
                     }
                 }
-            }
-            
+            }         
+        }
+
+        public int GetSelectedItemDataValAt(int idx)
+        {
+            if (idx >= SelectedItem.Data.Count) { return 0; }
+            return SelectedItem.Data[idx];
         }
 
         public void RemoveSelectedItem()

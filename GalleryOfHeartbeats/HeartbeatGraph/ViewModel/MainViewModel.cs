@@ -230,12 +230,17 @@ namespace GalleryOfHeartbeats.ViewModel
 
             //PopulateGalleryWithMockData();
 
+            CommandsInit();
+
+        }
+
+        private void CommandsInit()
+        {
             CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
             CommandStopRecording = new RelayCommand(StopRecording, CanStopRecording);
             CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
             CommandPauseGraph = new RelayCommand(PauseGraph, CanPauseGraph);
             CommandClearGraph = new RelayCommand(ClearGraph, CanClearGraph);
-
         }
 
         private void PopulateGalleryWithMockData()
@@ -271,9 +276,6 @@ namespace GalleryOfHeartbeats.ViewModel
             GraphTimer.Interval = PollingInterval;
         }
 
-
-
-
         //start the timer for polling
         private void RestartGraphTimer()
         {
@@ -295,11 +297,16 @@ namespace GalleryOfHeartbeats.ViewModel
                 Heartrate = 0;
             }
 
+            AddHeartrateToGraph();
+        }
+
+        private void AddHeartrateToGraph()
+        {
             //get x point
             CurrentTime += (float)PollingInterval / 1000;
 
             //add points to graph
-            Graph.AddPoint(CurrentTime, Heartrate); 
+            Graph.AddPoint(CurrentTime, Heartrate);
         }
 
         private void ParseOutHeartrateFromConnectionData(string val)

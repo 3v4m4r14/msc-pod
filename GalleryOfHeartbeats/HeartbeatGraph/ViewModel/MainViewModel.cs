@@ -19,12 +19,14 @@ using System.Security.Cryptography.X509Certificates;
 using GalleryOfHeartbeats.Model;
 using GalleryOfHeartbeats.ViewModel.Commands;
 using System.ComponentModel;
+using System.Windows;
 
 namespace GalleryOfHeartbeats.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private static readonly float DEFAULT_TIME = 0.0f;
+        private static readonly object MOCK_PARAM = new object();
 
         public int Heartrate;
 
@@ -120,8 +122,10 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         private void ShowGraph(object param)
         {
+            ClearGraph(MOCK_PARAM);
             GraphIsRunning = true;
             RestartGraphTimer();
+            MessageBox.Show("Clip the sensor on your ear or finger.\n\nWait for the graph to stabilise before you start recording.\nA stable graph looks like seawaves.");
         }
 
         public RelayCommand CommandPauseGraph { get; private set; }
@@ -203,6 +207,8 @@ namespace GalleryOfHeartbeats.ViewModel
 
             Console.WriteLine(CurrentRecordingItem.ToString());
             Console.WriteLine("Recording: " + IsRecording);
+
+            MessageBox.Show(String.Format("Recording saved as '{0} {1}'", CurrentRecordingItem.Name, CurrentRecordingItem.TimeOfRecording));
         }
         #endregion
 

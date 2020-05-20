@@ -94,6 +94,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 Connection.Options = value;
+                ChangeProperty("ConnectionOptions");
             }
         }
 
@@ -107,6 +108,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 Connection.SelectedPort = value;
+                ChangeProperty("SelectedPort");
             }
         }
         #endregion

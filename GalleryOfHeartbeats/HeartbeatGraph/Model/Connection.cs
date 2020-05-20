@@ -35,7 +35,6 @@ namespace GalleryOfHeartbeats.Model
             set
             {
                 options = value;
-                ChangeProperty("ConnectionOptions");
             }
         }
         #endregion
@@ -64,7 +63,6 @@ namespace GalleryOfHeartbeats.Model
             {
                 selectedPort = value;
                 OnPortChange();
-                ChangeProperty("SelectedPort");
             }
         }
         #endregion

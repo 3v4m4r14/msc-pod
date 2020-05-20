@@ -137,6 +137,11 @@
                     Command="{Binding CommandStopPlayback}" 
                     Content="Stop"/>
 
+                <Button 
+                    x:Name="btnClearPlayback" 
+                    Command="{Binding CommandClearGraph}" 
+                    Content="Clear"/>
+
             </StackPanel>
 
             

@@ -27,10 +27,9 @@ namespace GalleryOfHeartbeats.Model
             {
                 return galleryItems;
             }
-            set
+            private set
             {
                 galleryItems = value;
-                ChangeProperty("HeartbeatOptions");
             }
         }
 
@@ -44,11 +43,10 @@ namespace GalleryOfHeartbeats.Model
             set
             {
                 SetSelectedItemById(value);
-                ChangeProperty("SelectedItemName");
             }
         }
 
-        private void SetSelectedItemById(string id)
+        public void SetSelectedItemById(string id)
         {
             if (String.IsNullOrEmpty(id)) {
                 Console.WriteLine("ID is empty");
@@ -93,13 +91,6 @@ namespace GalleryOfHeartbeats.Model
             return item.Name + " " + item.TimeOfRecording;
         }
 
-        #region INotifyPropertyChanged Members
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void ChangeProperty(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 
 

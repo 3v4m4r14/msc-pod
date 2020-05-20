@@ -78,7 +78,8 @@ namespace GalleryOfHeartbeats.ViewModel
             }
             set
             {
-                Gallery.SelectedItemName = value;
+                Gallery.SetSelectedItemById(value);
+                ChangeProperty("SelectedItemName");
             }
         }
 
@@ -237,10 +238,18 @@ namespace GalleryOfHeartbeats.ViewModel
             Console.WriteLine(CurrentRecordingItem.ToString());
             Console.WriteLine("Recording: " + IsRecording);
 
+            RefreshGallery();
+
             MessageBox.Show(String.Format("Recording saved as '{0} {1}'", CurrentRecordingItem.Name, CurrentRecordingItem.TimeOfRecording));
+            
 
+        }
+
+        private void RefreshGallery()
+        {
             Gallery = FileHandler.GetGalleryFromFile();
-
+            ChangeProperty("HeartbeatOptions");
+            ChangeProperty("SelectedItemName");
         }
         #endregion
 
@@ -251,6 +260,7 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         private void StartPlayback(object param)
         {
+            ClearGraph(MOCK_PARAM);
             Console.WriteLine("Playback started: " + Gallery.SelectedItemName);
 
             PlayingBack = true;

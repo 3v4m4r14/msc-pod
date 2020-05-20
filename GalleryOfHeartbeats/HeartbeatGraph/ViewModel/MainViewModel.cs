@@ -157,7 +157,7 @@ namespace GalleryOfHeartbeats.ViewModel
         public RelayCommand CommandPauseGraph { get; private set; }
         public bool CanPauseGraph(object param)
         {
-            return GraphIsRunning;
+            return GraphIsRunning && !IsRecording;
         }
         public void PauseGraph(object param)
         {
@@ -170,7 +170,7 @@ namespace GalleryOfHeartbeats.ViewModel
         public RelayCommand CommandClearGraph { get; private set; }
         public bool CanClearGraph(object param)
         {
-            return true;
+            return !IsRecording;
         }
         public void ClearGraph(object param)
         {

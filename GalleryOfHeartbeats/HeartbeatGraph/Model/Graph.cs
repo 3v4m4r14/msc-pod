@@ -41,7 +41,6 @@ namespace GalleryOfHeartbeats.Model
             GraphModel.InvalidatePlot(true);
         }
 
-        //add point to graph
         public void AddPoint(float x, int pointValue)
         {
             AllPoints.Add(new DataPoint(x, pointValue));

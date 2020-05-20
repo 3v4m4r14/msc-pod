@@ -40,6 +40,8 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private readonly Connection Connection;
         private readonly FileHandler FileHandler;
+
+        private Graph Graph;
         private Gallery Gallery;
 
         private GalleryItem CurrentRecordingItem;
@@ -104,9 +106,6 @@ namespace GalleryOfHeartbeats.ViewModel
         #endregion
 
         #region Graph of HR
-        private Graph Graph;
-
-        //all datapoints 
         public IList<DataPoint> AllPoints
         {
             get
@@ -118,8 +117,6 @@ namespace GalleryOfHeartbeats.ViewModel
                 Graph.AllPoints = value;
             }
         }
-
-        //model for the graph
         public PlotModel GraphModel
         {
             get
@@ -129,6 +126,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 Graph.GraphModel = value;
+                ChangeProperty("GraphModel");
             }
         }
 
@@ -150,7 +148,7 @@ namespace GalleryOfHeartbeats.ViewModel
         public RelayCommand CommandPauseGraph { get; private set; }
         public bool CanPauseGraph(object param)
         {
-            return GraphIsRunning && !IsRecording;
+            return GraphIsRunning && !IsRecording && !IsPlayingBack;
         }
         public void PauseGraph(object param)
         {

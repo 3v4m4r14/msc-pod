@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GalleryOfHeartbeats.Model
 {
-    public class Graph : INotifyPropertyChanged
+    public class Graph
     {
         private static readonly int MAX_DATA_POINTS_SHOWN_AT_ONCE = 200;
 
@@ -17,54 +17,28 @@ namespace GalleryOfHeartbeats.Model
 
         public Graph(string title)
         {
-            graphModel.Title = title;
+            GraphModel.Title = title;
 
             lines = new OxyPlot.Series.LineSeries();
-            graphModel.Series.Add(lines);
+            GraphModel.Series.Add(lines);
 
-            graphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 150, MajorStep = 20, MinorStep = 5 });
+            GraphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 150, MajorStep = 20, MinorStep = 5 });
 
-            allPoints = new List<DataPoint> { new DataPoint(0,0) };
+            AllPoints = new List<DataPoint> { new DataPoint(0,0) };
         }
 
-        //model for the graph
-        private PlotModel graphModel = new PlotModel();
-        public PlotModel GraphModel
-        {
-            get
-            {
-                return graphModel;
-            }
-            set
-            {
-                graphModel = value;
-                ChangeProperty("GraphModel");
-            }
-        }
-
-        //all datapoints
-        private IList<DataPoint> allPoints;
-        public IList<DataPoint> AllPoints
-        {
-            get
-            {
-                return allPoints;
-            }
-            set
-            {
-                allPoints = value;
-            }
-        }
+        public PlotModel GraphModel { get; set; } = new PlotModel();
+        public IList<DataPoint> AllPoints { get; set; }
 
         public void ResetGraph()
         {
-            graphModel.Series.Clear();
+            GraphModel.Series.Clear();
             lines.Points.Clear();
-            graphModel.Series.Add(lines);
+            GraphModel.Series.Add(lines);
 
-            allPoints = new List<DataPoint> { new DataPoint(0, 0) };
+            AllPoints = new List<DataPoint> { new DataPoint(0, 0) };
 
-            graphModel.InvalidatePlot(true);
+            GraphModel.InvalidatePlot(true);
         }
 
         //add point to graph
@@ -73,35 +47,21 @@ namespace GalleryOfHeartbeats.Model
             AllPoints.Add(new DataPoint(x, pointValue));
             lines.Points.Clear();
 
-            if (allPoints.Count > MAX_DATA_POINTS_SHOWN_AT_ONCE)
+            if (AllPoints.Count > MAX_DATA_POINTS_SHOWN_AT_ONCE)
             {
-                for (int i = AllPoints.Count - MAX_DATA_POINTS_SHOWN_AT_ONCE; i < allPoints.Count; i++)
+                for (int i = AllPoints.Count - MAX_DATA_POINTS_SHOWN_AT_ONCE; i < AllPoints.Count; i++)
                 {
-                    lines.Points.Add(allPoints[i]);
+                    lines.Points.Add(AllPoints[i]);
                 }
             }
             else
             {
-                for (int i = 0; i < allPoints.Count; i++)
+                for (int i = 0; i < AllPoints.Count; i++)
                 {
-                    lines.Points.Add(allPoints[i]); ;
+                    lines.Points.Add(AllPoints[i]); ;
                 }
             }
-            graphModel.InvalidatePlot(true);
+            GraphModel.InvalidatePlot(true);
         }
-
-
-        #region INotifyPropertyChanged Members
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void ChangeProperty(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
     }
 }

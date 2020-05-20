@@ -24,31 +24,9 @@ namespace GalleryOfHeartbeats.Model
             GetComPorts();
         }
 
-        # region Options
-        private ObservableCollection<string> options;
-        public ObservableCollection<string> Options
-        {
-            get
-            {
-                return options;
-            }
-            set
-            {
-                options = value;
-            }
-        }
+        #region Options
+        public ObservableCollection<string> Options { get; set; }
         #endregion
-
-        //get a list of all the available comports
-        private void GetComPorts()
-        {
-            string[] ports = SerialPort.GetPortNames();
-            foreach (string port in ports)
-            {
-                Options.Add(port);
-                Console.WriteLine(port);
-            }
-        }
 
         #region SelectedPort
         //selected com port
@@ -77,6 +55,18 @@ namespace GalleryOfHeartbeats.Model
             else
             {
                 Console.WriteLine("Could not connect to port " + selectedPort);
+            }
+        }
+
+
+        //get a list of all the available comports
+        private void GetComPorts()
+        {
+            string[] ports = SerialPort.GetPortNames();
+            foreach (string port in ports)
+            {
+                Options.Add(port);
+                Console.WriteLine(port);
             }
         }
 

@@ -74,6 +74,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             get
             {
+                Console.WriteLine("Selected item name is: " + Gallery.SelectedItemName);
                 return Gallery.SelectedItemName;
             }
             set
@@ -151,6 +152,7 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         private void ShowGraph(object param)
         {
+            RefreshGallery();
             ClearGraph(MOCK_PARAM);
             GraphIsRunning = true;
             RestartGraphTimer();
@@ -245,12 +247,6 @@ namespace GalleryOfHeartbeats.ViewModel
 
         }
 
-        private void RefreshGallery()
-        {
-            Gallery = FileHandler.GetGalleryFromFile();
-            ChangeProperty("HeartbeatOptions");
-            ChangeProperty("SelectedItemName");
-        }
         #endregion
 
         public RelayCommand CommandStartPlayback { get; private set; }
@@ -268,9 +264,16 @@ namespace GalleryOfHeartbeats.ViewModel
             GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
             RestartGraphTimer();
         }
-        
 
-        
+
+        private void RefreshGallery()
+        {
+            Gallery = FileHandler.GetGalleryFromFile();
+            SelectedItemName = "";
+            ChangeProperty("HeartbeatOptions");
+            ChangeProperty("SelectedItemName");
+        }
+
 
         public MainViewModel()
         {

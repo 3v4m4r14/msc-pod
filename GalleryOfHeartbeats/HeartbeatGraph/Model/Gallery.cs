@@ -50,7 +50,8 @@ namespace GalleryOfHeartbeats.Model
         {
             if (String.IsNullOrEmpty(id)) {
                 Console.WriteLine("ID is empty");
-                SelectedItem = new GalleryItem(); }
+                SelectedItem = new GalleryItem();
+            }
             else
             {
                 foreach (GalleryItem item in galleryItems)

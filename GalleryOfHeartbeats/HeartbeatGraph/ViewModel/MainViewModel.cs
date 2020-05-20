@@ -260,7 +260,9 @@ namespace GalleryOfHeartbeats.ViewModel
             Console.WriteLine("Playback started: " + Gallery.SelectedItemName);
 
             PlayingBack = true;
+            GraphIsRunning = true;
             CurrentTime = DEFAULT_TIME;
+            CurrentPlaybackPointer = 0;
             GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
             RestartGraphTimer();
         }

@@ -35,7 +35,7 @@ namespace GalleryOfHeartbeats.ViewModel
         private Timer GraphTimer;
 
         private bool IsRecording = false;
-        private bool PlayingBack = false;
+        private bool IsPlayingBack = false;
         private bool GraphIsRunning = false;
 
         private readonly Connection Connection;
@@ -47,6 +47,8 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private int CurrentPlaybackPointer = 0;
 
+
+        #region Username (ID) for the Recording
         private string nameOfUser = "";
         public string NameOfUser
         {
@@ -60,8 +62,9 @@ namespace GalleryOfHeartbeats.ViewModel
                 ChangeProperty("NameOfUser");
             }
         }
+        #endregion
 
-
+        #region Live Heartrate
         private int Heartrate;
         public string CurrentHeartrate
         {
@@ -70,32 +73,9 @@ namespace GalleryOfHeartbeats.ViewModel
                 return "Heart rate: " + Heartrate;
             }
         }
+        #endregion
 
-        public ObservableCollection<string> HeartbeatOptions
-        {
-            get
-            {
-                return Gallery.GetItemsAsStrings();
-            }
-        }
-
-       public string SelectedItemName
-        {
-            get
-            {
-                Console.WriteLine("Selected item name is: " + Gallery.SelectedItemName);
-                return Gallery.SelectedItemName;
-            }
-            set
-            {
-                Gallery.SetSelectedItemById(value);
-                ChangeProperty("SelectedItemName");
-            }
-        }
-
-        #region Port Connection for HR
-
-        //list of the available com ports
+        #region Port Connection for HR Sensor
         public ObservableCollection<string> ConnectionOptions
         {
             get
@@ -109,7 +89,6 @@ namespace GalleryOfHeartbeats.ViewModel
             }
         }
 
-        //selected com port
         public string SelectedPort
         {
             get
@@ -125,7 +104,7 @@ namespace GalleryOfHeartbeats.ViewModel
         #endregion
 
         #region Graph of HR
-        public Graph Graph { get; set; }
+        private Graph Graph;
 
         //all datapoints 
         public IList<DataPoint> AllPoints
@@ -260,6 +239,27 @@ namespace GalleryOfHeartbeats.ViewModel
 
         #endregion
 
+        #region Playback
+        public ObservableCollection<string> HeartbeatOptions
+        {
+            get
+            {
+                return Gallery.GetItemsAsStrings();
+            }
+        }
+        public string SelectedItemName
+        {
+            get
+            {
+                Console.WriteLine("Selected item name is: " + Gallery.SelectedItemName);
+                return Gallery.SelectedItemName;
+            }
+            set
+            {
+                Gallery.SetSelectedItemById(value);
+                ChangeProperty("SelectedItemName");
+            }
+        }
         public RelayCommand CommandStartPlayback { get; private set; }
         public bool CanStartPlayback(object param)
         {
@@ -270,7 +270,7 @@ namespace GalleryOfHeartbeats.ViewModel
             ClearGraph(MOCK_PARAM);
             Console.WriteLine("Playback started: " + Gallery.SelectedItemName);
 
-            PlayingBack = true;
+            IsPlayingBack = true;
             GraphIsRunning = true;
 
             CurrentTime = STARTING_TIME_IS_ZERO;
@@ -289,7 +289,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             ClearGraph(MOCK_PARAM);
         }
-
+        #endregion
 
         private void RefreshGallery()
         {
@@ -372,7 +372,7 @@ namespace GalleryOfHeartbeats.ViewModel
         //event that runs every milisecondinterval
         private void TimerEvent(object sender, EventArgs e)
         {
-            if (PlayingBack)
+            if (IsPlayingBack)
             {
                 Console.WriteLine("Playing back");
                 GetDataFromGallery();

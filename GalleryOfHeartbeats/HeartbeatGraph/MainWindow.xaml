@@ -35,7 +35,7 @@
 
                 <Label 
                     VerticalAlignment="Top" 
-                    Content="{Binding CurrentHeartbeat}"
+                    Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
                     Padding="0, 5, 0, 0">
                 </Label>
 
@@ -136,11 +136,6 @@
                     x:Name="btnStopPlayback" 
                     Command="{Binding CommandStopPlayback}" 
                     Content="Stop"/>
-
-                <Button 
-                    x:Name="btnClearPlayback" 
-                    Command="{Binding CommandClearGraph}" 
-                    Content="Clear"/>
 
             </StackPanel>
 

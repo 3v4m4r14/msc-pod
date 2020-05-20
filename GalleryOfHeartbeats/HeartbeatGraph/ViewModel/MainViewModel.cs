@@ -26,12 +26,10 @@ namespace GalleryOfHeartbeats.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private const float DEFAULT_TIME = 0.0f;
+        private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 1000;
 
         private static readonly object MOCK_PARAM = new object();
-
-        public int Heartrate;
 
         private float CurrentTime = 0.0f;
         private Timer GraphTimer;
@@ -40,15 +38,13 @@ namespace GalleryOfHeartbeats.ViewModel
         private bool PlayingBack = false;
         private bool GraphIsRunning = false;
 
-        private Connection Connection;
-        private FileHandler FileHandler;
+        private readonly Connection Connection;
+        private readonly FileHandler FileHandler;
         private Gallery Gallery;
 
         private GalleryItem CurrentRecordingItem;
         private List<int> CurrentRecordingData;
 
-        private GalleryItem CurrentPlaybackItem;
-        private List<int> CurrentPlaybackData;
         private int CurrentPlaybackPointer = 0;
 
         private string nameOfUser = "";
@@ -66,11 +62,12 @@ namespace GalleryOfHeartbeats.ViewModel
         }
 
 
-        public string CurrentHeartbeat
+        private int Heartrate;
+        public string CurrentHeartrate
         {
             get
             {
-                return "heartrate: " + Heartrate;
+                return "Heart rate: " + Heartrate;
             }
         }
 
@@ -195,7 +192,7 @@ namespace GalleryOfHeartbeats.ViewModel
 
             StopPlotting();
 
-            CurrentTime = DEFAULT_TIME;
+            CurrentTime = STARTING_TIME_IS_ZERO;
             Graph.ResetGraph();
             Console.WriteLine("Graph cleared");
 
@@ -275,10 +272,22 @@ namespace GalleryOfHeartbeats.ViewModel
 
             PlayingBack = true;
             GraphIsRunning = true;
-            CurrentTime = DEFAULT_TIME;
+
+            CurrentTime = STARTING_TIME_IS_ZERO;
             CurrentPlaybackPointer = 0;
             GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
+
             RestartGraphTimer();
+        }
+
+        public RelayCommand CommandStopPlayback { get; private set; }
+        public bool CanStopPlayback(object param)
+        {
+            return GraphIsRunning;
+        }
+        private void StopPlayback(object param)
+        {
+            ClearGraph(MOCK_PARAM);
         }
 
 
@@ -317,6 +326,7 @@ namespace GalleryOfHeartbeats.ViewModel
             CommandPauseGraph = new RelayCommand(PauseGraph, CanPauseGraph);
             CommandClearGraph = new RelayCommand(ClearGraph, CanClearGraph);
             CommandStartPlayback = new RelayCommand(StartPlayback, CanStartPlayback);
+            CommandStopPlayback = new RelayCommand(StopPlayback, CanStopPlayback);
         }
 
         private void PopulateGalleryWithMockData()

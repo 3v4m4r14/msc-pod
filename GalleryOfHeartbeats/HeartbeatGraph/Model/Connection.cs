@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GalleryOfHeartbeats.Model
 {
-    public class Connection : INotifyPropertyChanged
+    public class Connection
     {
 
         private SerialPort mySerialPort;
@@ -122,13 +122,5 @@ namespace GalleryOfHeartbeats.Model
             }
             return "";
         }
-
-        #region INotifyPropertyChanged Members
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void ChangeProperty(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

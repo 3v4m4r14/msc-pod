@@ -61,7 +61,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 nameOfUser = value;
-                ChangeProperty("NameOfUser");
+                OnPropertyChanged("NameOfUser");
             }
         }
         #endregion
@@ -87,7 +87,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 Connection.Options = value;
-                ChangeProperty("ConnectionOptions");
+                OnPropertyChanged("ConnectionOptions");
             }
         }
 
@@ -100,7 +100,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 Connection.SelectedPort = value;
-                ChangeProperty("SelectedPort");
+                OnPropertyChanged("SelectedPort");
             }
         }
         #endregion
@@ -126,7 +126,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 Graph.GraphModel = value;
-                ChangeProperty("GraphModel");
+                OnPropertyChanged("GraphModel");
             }
         }
 
@@ -255,7 +255,7 @@ namespace GalleryOfHeartbeats.ViewModel
             set
             {
                 Gallery.SetSelectedItemById(value);
-                ChangeProperty("SelectedItemName");
+                OnPropertyChanged("SelectedItemName");
             }
         }
         public RelayCommand CommandStartPlayback { get; private set; }
@@ -293,8 +293,8 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             Gallery = FileHandler.GetGalleryFromFile();
             SelectedItemName = "";
-            ChangeProperty("HeartbeatOptions");
-            ChangeProperty("SelectedItemName");
+            OnPropertyChanged("HeartbeatOptions");
+            OnPropertyChanged("SelectedItemName");
         }
 
 
@@ -441,7 +441,7 @@ namespace GalleryOfHeartbeats.ViewModel
             if (ibiValue > 0)
             {
                 Heartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
-                ChangeProperty("CurrentHeartbeat");
+                OnPropertyChanged("CurrentHeartbeat");
             }
 
             CurrentRecordingData.Add(Heartrate);
@@ -449,7 +449,7 @@ namespace GalleryOfHeartbeats.ViewModel
 
         #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
-        private void ChangeProperty(string propertyName)
+        private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

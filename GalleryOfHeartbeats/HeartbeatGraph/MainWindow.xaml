@@ -1,4 +1,4 @@
-﻿<Window x:Class="GalleryOfHeartbeats.MainWindow"
+<Window x:Class="GalleryOfHeartbeats.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:viewmodel="clr-namespace:GalleryOfHeartbeats.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinHeight="450" MinWidth="800">
+        Title="MainWindow" Height="500" Width="800" MinHeight="500" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

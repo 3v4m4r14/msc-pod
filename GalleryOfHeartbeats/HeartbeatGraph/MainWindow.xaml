@@ -85,7 +85,7 @@
                     
                     <TextBox 
                         x:Name="textBox" 
-                        Text="{Binding NameOfUser, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding NameOfUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Height="20" 
                         MinWidth="90"
                         Width="Auto"/>

@@ -51,7 +51,19 @@ namespace GalleryOfHeartbeats.ViewModel
         private List<int> CurrentPlaybackData;
         private int CurrentPlaybackPointer = 0;
 
-        public string NameOfUser { get; set; }
+        private string nameOfUser = "";
+        public string NameOfUser
+        {
+            get
+            {
+                return nameOfUser;
+            }
+            set
+            {
+                nameOfUser = value;
+                ChangeProperty("NameOfUser");
+            }
+        }
 
 
         public string CurrentHeartbeat
@@ -200,7 +212,7 @@ namespace GalleryOfHeartbeats.ViewModel
         public ICommand CommandStartRecording { get; private set; }
         public bool CanStartRecording(object param)
         {
-            return !IsRecording && GraphIsRunning && !string.IsNullOrWhiteSpace(NameOfUser);
+            return !IsRecording && GraphIsRunning && !string.IsNullOrWhiteSpace(nameOfUser);
         }
         private void StartRecording(object param)
         {
@@ -214,7 +226,7 @@ namespace GalleryOfHeartbeats.ViewModel
         private void CreateNewRecording()
         {
             CurrentRecordingItem = new GalleryItem();
-            CurrentRecordingItem.Name = NameOfUser;
+            CurrentRecordingItem.Name = nameOfUser;
             CurrentRecordingItem.TimeOfRecording = DateTime.Now.ToString();
             CurrentRecordingItem.PollingRate = POLLING_INTERVAL;
 
@@ -241,6 +253,8 @@ namespace GalleryOfHeartbeats.ViewModel
             Console.WriteLine("Recording: " + IsRecording);
 
             RefreshGallery();
+
+            NameOfUser = string.Empty;
 
             MessageBox.Show(String.Format("Recording saved as '{0} {1}'", CurrentRecordingItem.Name, CurrentRecordingItem.TimeOfRecording));
             

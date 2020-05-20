@@ -28,6 +28,8 @@ namespace GalleryOfHeartbeats.ViewModel
     {
         private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 1000;
+        private const string GRAPH_TITLE = "Heart rate (bpm)";
+        private const string FILENAME = "gallery.json";
 
         private static readonly object MOCK_PARAM = new object();
 
@@ -68,11 +70,16 @@ namespace GalleryOfHeartbeats.ViewModel
 
         #region Live Heartrate
         private int Heartrate;
-        public string CurrentHeartrate
+        public int CurrentHeartrate
         {
             get
             {
-                return "Heart rate: " + Heartrate;
+                return Heartrate;
+            }
+            set
+            {
+                Heartrate = value;
+                OnPropertyChanged("CurrentHeartrate");
             }
         }
         #endregion
@@ -133,24 +140,26 @@ namespace GalleryOfHeartbeats.ViewModel
         public RelayCommand CommandShowGraph { get; private set; }
         public bool CanShowGraph(object param)
         {
-            if (!GraphIsRunning) return Connection.PortIsReady();
+            if (!GraphIsRunning && !IsRecording) return Connection.PortIsReady();
             return false;
         }
         private void ShowGraph(object param)
         {
-            RefreshGallery();
             ClearGraph(MOCK_PARAM);
+            RefreshGallery();
+
             GraphIsRunning = true;
             RestartGraphTimer();
+
             MessageBox.Show("Clip the sensor on your ear or finger.\n\nWait for the graph to stabilise before you start recording.\nA stable graph looks like seawaves.");
         }
 
-        public RelayCommand CommandPauseGraph { get; private set; }
-        public bool CanPauseGraph(object param)
+        public RelayCommand CommandStopGraph { get; private set; }
+        public bool CanStopGraph(object param)
         {
             return GraphIsRunning && !IsRecording && !IsPlayingBack;
         }
-        public void PauseGraph(object param)
+        public void StopGraph(object param)
         {
             if (IsRecording) { StopRecording(MOCK_PARAM); }
 
@@ -170,15 +179,17 @@ namespace GalleryOfHeartbeats.ViewModel
             StopPlotting();
 
             CurrentTime = STARTING_TIME_IS_ZERO;
-            Graph.ResetGraph();
-            Console.WriteLine("Graph cleared");
 
+            Graph.ResetGraph();
+
+            Console.WriteLine("Graph cleared");
         }
 
         private void StopPlotting()
         {
             GraphTimer.Stop();
             GraphIsRunning = false;
+            IsPlayingBack = false;
         }
         #endregion
 
@@ -249,7 +260,6 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             get
             {
-                Console.WriteLine("Selected item name is: " + Gallery.SelectedItemName);
                 return Gallery.SelectedItemName;
             }
             set
@@ -266,7 +276,6 @@ namespace GalleryOfHeartbeats.ViewModel
         private void StartPlayback(object param)
         {
             ClearGraph(MOCK_PARAM);
-            Console.WriteLine("Playback started: " + Gallery.SelectedItemName);
 
             IsPlayingBack = true;
             GraphIsRunning = true;
@@ -281,13 +290,40 @@ namespace GalleryOfHeartbeats.ViewModel
         public RelayCommand CommandStopPlayback { get; private set; }
         public bool CanStopPlayback(object param)
         {
-            return GraphIsRunning;
+            return IsPlayingBack;
         }
         private void StopPlayback(object param)
         {
+            IsPlayingBack = false;
             ClearGraph(MOCK_PARAM);
         }
         #endregion
+
+        public MainViewModel()
+        {
+            Connection = new Connection();
+
+            Graph = new Graph(GRAPH_TITLE);
+            GraphTimerInit();
+
+            FileHandler = new FileHandler(FILENAME);
+            Gallery = FileHandler.GetGalleryFromFile();
+
+            CurrentRecordingData = new List<int>();
+
+            CommandsInit();
+        }
+
+        private void CommandsInit()
+        {
+            CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
+            CommandStopRecording = new RelayCommand(StopRecording, CanStopRecording);
+            CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
+            CommandStopGraph = new RelayCommand(StopGraph, CanStopGraph);
+            CommandClearGraph = new RelayCommand(ClearGraph, CanClearGraph);
+            CommandStartPlayback = new RelayCommand(StartPlayback, CanStartPlayback);
+            CommandStopPlayback = new RelayCommand(StopPlayback, CanStopPlayback);
+        }
 
         private void RefreshGallery()
         {
@@ -297,98 +333,46 @@ namespace GalleryOfHeartbeats.ViewModel
             OnPropertyChanged("SelectedItemName");
         }
 
-
-        public MainViewModel()
-        {
-            Connection = new Connection();
-
-            Graph = new Graph("Heart rate (bpm)");
-            GraphTimerInit();
-
-            FileHandler = new FileHandler("gallery.json");
-            Gallery = FileHandler.GetGalleryFromFile();
-
-            CurrentRecordingData = new List<int>();
-
-            //PopulateGalleryWithMockData();
-
-            CommandsInit();
-
-        }
-
-        private void CommandsInit()
-        {
-            CommandStartRecording = new RelayCommand(StartRecording, CanStartRecording);
-            CommandStopRecording = new RelayCommand(StopRecording, CanStopRecording);
-            CommandShowGraph = new RelayCommand(ShowGraph, CanShowGraph);
-            CommandPauseGraph = new RelayCommand(PauseGraph, CanPauseGraph);
-            CommandClearGraph = new RelayCommand(ClearGraph, CanClearGraph);
-            CommandStartPlayback = new RelayCommand(StartPlayback, CanStartPlayback);
-            CommandStopPlayback = new RelayCommand(StopPlayback, CanStopPlayback);
-        }
-
-        private void PopulateGalleryWithMockData()
-        {
-            GalleryItem item0 = new GalleryItem()
-            {
-                Name = "Eva",
-                TimeOfRecording = DateTime.Now.ToString(),
-                PollingRate = POLLING_INTERVAL,
-                Data = new List<int>() {
-                    60, 64, 68, 76, 90, 84, 71, 59
-                }
-            };
-
-            GalleryItem item1 = new GalleryItem()
-            {
-                Name = "Maria",
-                TimeOfRecording = DateTime.Now.ToString(),
-                PollingRate = POLLING_INTERVAL,
-                Data = new List<int>() {
-                    10, 23, 24, 29, 34, 35, 45, 50
-                }
-            };
-
-            Gallery.GalleryItems.Add(item0);
-            Gallery.GalleryItems.Add(item1);
-        }
-
+        #region Timer Logic
         private void GraphTimerInit()
         {
             GraphTimer = new Timer();
-            GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
             GraphTimer.Interval = POLLING_INTERVAL;
+            GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
         }
 
-        //start the timer for polling
         private void RestartGraphTimer()
         {
             GraphTimer.Stop();
             GraphTimer.Start();
         }
 
-        //event that runs every milisecondinterval
         private void TimerEvent(object sender, EventArgs e)
         {
             if (IsPlayingBack)
             {
-                Console.WriteLine("Playing back");
-                GetDataFromGallery();
+                if (Gallery.HasNoMoreData(CurrentPlaybackPointer))
+                {
+                    StopGraph(MOCK_PARAM);
+                }
+                else {
+                    GetDataFromGallery();
+
+                    //TODO: add actuator activity logic here
+                }
             }
             else
             {
                 GetDataFromSensor();
             }
 
-            
-
             AddHeartrateToGraph();
         }
+        #endregion
 
         private void GetDataFromGallery()
         {
-            Heartrate = Gallery.GetSelectedItemDataValAt(CurrentPlaybackPointer);
-            Console.WriteLine("Data from gallery is: " + Heartrate);
+            CurrentHeartrate = Gallery.GetSelectedItemDataValAt(CurrentPlaybackPointer);
             CurrentPlaybackPointer++;
         }
 
@@ -402,22 +386,18 @@ namespace GalleryOfHeartbeats.ViewModel
             }
             else
             {
-                Heartrate = 0;
+                CurrentHeartrate = 0;
             }
         }
 
         private void AddHeartrateToGraph()
         {
-            //get x point
             CurrentTime += (float)POLLING_INTERVAL / 1000;
-
-            //add points to graph
-            Graph.AddPoint(CurrentTime, Heartrate);
+            Graph.AddPoint(CurrentTime, CurrentHeartrate);
         }
 
         private void ParseOutHeartrateFromConnectionData(string val)
         {
-            //get first value
             int ibiValue = 0;
             string firstval = "";
 
@@ -435,16 +415,12 @@ namespace GalleryOfHeartbeats.ViewModel
 
             int.TryParse(firstval, out ibiValue);
 
-            Console.WriteLine(ibiValue);
-
-            //convert ibi value to heartrate
             if (ibiValue > 0)
             {
-                Heartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
-                OnPropertyChanged("CurrentHeartbeat");
+                CurrentHeartrate = (60000 / ibiValue); //http://www.psylab.com/html/default_heartrat.htm
             }
 
-            CurrentRecordingData.Add(Heartrate);
+            CurrentRecordingData.Add(CurrentHeartrate);
         }
 
         #region INotifyPropertyChanged Members

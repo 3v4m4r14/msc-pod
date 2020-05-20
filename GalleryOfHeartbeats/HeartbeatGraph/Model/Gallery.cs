@@ -68,8 +68,13 @@ namespace GalleryOfHeartbeats.Model
 
         public int GetSelectedItemDataValAt(int idx)
         {
-            if (SelectedItem.Data != null && idx >= SelectedItem.Data.Count) { return 0; }
+            if (HasNoMoreData(idx)) { return 0; }
             return SelectedItem.Data[idx];
+        }
+
+        public bool HasNoMoreData(int idx)
+        {
+            return SelectedItem.Data != null && idx >= SelectedItem.Data.Count;
         }
 
         public void RemoveSelectedItem()

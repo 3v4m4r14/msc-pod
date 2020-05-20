@@ -47,11 +47,5 @@ namespace GalleryOfHeartbeats.Model
 
             return galleryItem;
         }
-
-        private void CreateFile()
-        {
-            // Create a file to write to.
-            using (StreamWriter sw = File.CreateText(FilePath)) { }
-        }
     }
 }

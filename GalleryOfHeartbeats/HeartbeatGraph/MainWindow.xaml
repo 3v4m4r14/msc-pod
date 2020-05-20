@@ -32,12 +32,16 @@
 
                 </DockPanel>
 
-
-                <Label 
-                    VerticalAlignment="Top" 
+                <DockPanel>
+                    <Label Padding="0, 10, 5, 0">Heart rate:</Label>
+                    
+                    <Label
                     Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
-                    Padding="0, 5, 0, 0">
-                </Label>
+                    Padding="0, 10, 0, 0">
+                    </Label>
+
+                </DockPanel>
+                
 
                 <Separator
                     Margin="0, 10, 0, 5"/>
@@ -51,12 +55,12 @@
                 <Button 
                     x:Name="btnShowGraph" 
                     Command="{Binding CommandShowGraph}" 
-                    Content="Show"/>
+                    Content="Start"/>
 
                 <Button 
-                    x:Name="btnPauseGraph" 
-                    Command="{Binding CommandPauseGraph}" 
-                    Content="Pause"/>
+                    x:Name="btnStopGraph" 
+                    Command="{Binding CommandStopGraph}" 
+                    Content="Stop"/>
 
                 <Button 
                     x:Name="btnClearGraph" 

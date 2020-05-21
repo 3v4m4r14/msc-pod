@@ -21,13 +21,14 @@ using GalleryOfHeartbeats.ViewModel.Commands;
 using System.ComponentModel;
 using System.Windows;
 using System.IO;
+using System.Windows.Threading;
 
 namespace GalleryOfHeartbeats.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private const float STARTING_TIME_IS_ZERO = 0.0f;
-        private const int POLLING_INTERVAL = 1000;
+        private const int POLLING_INTERVAL = 500;
         private const string GRAPH_TITLE = "Heart rate (bpm)";
         private const string FILENAME = "gallery.json";
 
@@ -42,6 +43,8 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private readonly Connection Connection;
         private readonly FileHandler FileHandler;
+        private Actuators Actuators;
+        private AudioPlayer AudioPlayer;
 
         private Graph Graph;
         private Gallery Gallery;
@@ -50,7 +53,7 @@ namespace GalleryOfHeartbeats.ViewModel
         private List<int> CurrentRecordingData;
 
         private int CurrentPlaybackPointer = 0;
-
+        private int PreviousHeartrate = 60;
 
         #region Username (ID) for the Recording
         private string nameOfUser = "";
@@ -78,6 +81,7 @@ namespace GalleryOfHeartbeats.ViewModel
             }
             set
             {
+                PreviousHeartrate = Heartrate;
                 Heartrate = value;
                 OnPropertyChanged("CurrentHeartrate");
             }
@@ -302,6 +306,8 @@ namespace GalleryOfHeartbeats.ViewModel
         public MainViewModel()
         {
             Connection = new Connection();
+            Actuators = new Actuators();
+            AudioPlayer = new AudioPlayer();
 
             Graph = new Graph(GRAPH_TITLE);
             GraphTimerInit();
@@ -358,7 +364,10 @@ namespace GalleryOfHeartbeats.ViewModel
                 else {
                     GetDataFromGallery();
 
-                    //TODO: add actuator activity logic here
+                    //Actuators.OnHeartrateChangeBasic(PreviousHeartrate, CurrentHeartrate);
+
+
+                    AudioPlayer.PlayHeartbeatSound(Heartrate);
                 }
             }
             else

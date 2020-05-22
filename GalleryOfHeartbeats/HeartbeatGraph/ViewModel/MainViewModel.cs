@@ -28,7 +28,7 @@ namespace GalleryOfHeartbeats.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         private const float STARTING_TIME_IS_ZERO = 0.0f;
-        private const int POLLING_INTERVAL = 500;
+        private const int POLLING_INTERVAL = 100;
         private const string GRAPH_TITLE = "Heart rate (bpm)";
         private const string FILENAME = "gallery.json";
 
@@ -361,7 +361,7 @@ namespace GalleryOfHeartbeats.ViewModel
             {
                 if (Gallery.HasNoMoreData(CurrentPlaybackPointer))
                 {
-                    StopGraph(MOCK_PARAM);
+                    StopPlayback(MOCK_PARAM);
                 }
                 else {
                     GetDataFromGallery();

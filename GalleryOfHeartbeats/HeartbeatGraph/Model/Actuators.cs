@@ -3,29 +3,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace GalleryOfHeartbeats.Model
 {
     class Actuators
     {
-        SimpleTcpClient Client;
+        private SimpleTcpClient Client;
+        private Timer TimerForTurningOffActuators;
 
-        private static readonly float HEATER_INTENSITY_WHEN_INHALING = 0;
-        private static readonly float HEATER_INTENSITY_WHEN_EXHALING = 0.2f;
-        private static readonly float FAN_INTENSITY_WHEN_INHALING = 0.5f;
-        private static readonly float FAN_INTENSITY_WHEN_EXHALING = 0f;
-        private static readonly float RED = 0.3f;
-        private static readonly float GREEN = 0f;
-        private static readonly float BLUE = 0f;
-        private static readonly float WHITE = 0.1f;
+        private const int ACTUATOR_DURATION = 500;
 
-        
+        private const float HEATER_INTENSITY_WHEN_INHALING = 0;
+        private const float HEATER_INTENSITY_WHEN_EXHALING = 0.2f;
+        private const float FAN_INTENSITY_WHEN_INHALING = 0.5f;
+        private const float FAN_INTENSITY_WHEN_EXHALING = 0f;
+        private const float RED = 0.3f;
+        private const float GREEN = 0f;
+        private const float BLUE = 0f;
+        private const float WHITE = 0.1f;
 
         public Actuators()
         {
             //Client = new SimpleTcpClient().Connect("127.0.0.1", 3000);
+            TimerForTurningOffActuators = new Timer();
+            TimerForTurningOffActuators.Interval = ACTUATOR_DURATION;
+            TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(TurnOffActuators);
+        }
+
+        private void TurnOffActuators(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Actuators OFF");
+            TimerForTurningOffActuators.Stop();
         }
 
         public void OnHeartrateChangeBasic(int previous, int current)
@@ -42,9 +52,15 @@ namespace GalleryOfHeartbeats.Model
             }
         }
 
-        public void OnHeartrateChangeAdvanced(int previous, int current)
+        public void OnHeartrateChangeAdvanced()
         {
+            Console.WriteLine("Actuators ON");
+            StartActuatorTimer();
+        }
 
+        private void StartActuatorTimer()
+        {
+            TimerForTurningOffActuators.Start();
         }
 
         private void HeatExhale()

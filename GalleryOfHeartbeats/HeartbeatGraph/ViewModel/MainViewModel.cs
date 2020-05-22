@@ -43,6 +43,7 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private readonly Connection Connection;
         private readonly FileHandler FileHandler;
+        private HeartbeatTimer HeartbeatTimer;
         private Actuators Actuators;
         private AudioPlayer AudioPlayer;
 
@@ -308,6 +309,7 @@ namespace GalleryOfHeartbeats.ViewModel
             Connection = new Connection();
             Actuators = new Actuators();
             AudioPlayer = new AudioPlayer();
+            HeartbeatTimer = new HeartbeatTimer();
 
             Graph = new Graph(GRAPH_TITLE);
             GraphTimerInit();
@@ -366,8 +368,11 @@ namespace GalleryOfHeartbeats.ViewModel
 
                     //Actuators.OnHeartrateChangeBasic(PreviousHeartrate, CurrentHeartrate);
 
-
-                    AudioPlayer.PlayHeartbeatSound(Heartrate);
+                    if (HeartbeatTimer.TimeForHeartbeat(Heartrate))
+                    {
+                        Actuators.OnHeartrateChangeAdvanced();
+                        AudioPlayer.PlayHeartbeatAudio();
+                    }
                 }
             }
             else

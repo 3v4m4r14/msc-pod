@@ -28,7 +28,8 @@ namespace GalleryOfHeartbeats.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         private const float STARTING_TIME_IS_ZERO = 0.0f;
-        private const int POLLING_INTERVAL = 100;
+        private const int POLLING_INTERVAL = 500;
+        private const int POD_INTERVAL = 50;
         private const string GRAPH_TITLE = "Heart rate (bpm)";
         private const string FILENAME = "gallery.json";
 
@@ -36,6 +37,7 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private float CurrentTime = 0.0f;
         private Timer GraphTimer;
+        private Timer PlaybackTimer;
 
         private bool IsRecording = false;
         private bool IsPlayingBack = false;
@@ -290,6 +292,7 @@ namespace GalleryOfHeartbeats.ViewModel
             GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
 
             RestartGraphTimer();
+            PlaybackTimer.Start();
         }
 
         public RelayCommand CommandStopPlayback { get; private set; }
@@ -299,7 +302,10 @@ namespace GalleryOfHeartbeats.ViewModel
         }
         private void StopPlayback(object param)
         {
+            PlaybackTimer.Stop();
             IsPlayingBack = false;
+
+            GraphTimer.Interval = POLLING_INTERVAL;
             ClearGraph(MOCK_PARAM);
         }
         #endregion
@@ -313,6 +319,8 @@ namespace GalleryOfHeartbeats.ViewModel
 
             Graph = new Graph(GRAPH_TITLE);
             GraphTimerInit();
+
+            PlaybackTimerInit();
 
             FileHandler = new FileHandler(FILENAME);
             Gallery = FileHandler.GetGalleryFromFile();
@@ -341,12 +349,33 @@ namespace GalleryOfHeartbeats.ViewModel
             OnPropertyChanged("SelectedItemName");
         }
 
-        #region Timer Logic
+        #region Playback Timer Logic
+        private void PlaybackTimerInit()
+        {
+            PlaybackTimer = new Timer();
+            PlaybackTimer.Interval = POD_INTERVAL;
+            PlaybackTimer.Elapsed += new ElapsedEventHandler(PlaybackTimerEvent);
+        }
+
+        private void PlaybackTimerEvent(object sender, ElapsedEventArgs e)
+        {
+
+            //Actuators.OnHeartrateChangeBasic(PreviousHeartrate, CurrentHeartrate);
+
+            if (HeartbeatTimer.TimeForHeartbeat(CurrentHeartrate))
+            {
+                Actuators.OnHeartrateChangeAdvanced();
+                AudioPlayer.PlayHeartbeatAudio();
+            }
+        }
+        #endregion
+
+        #region Graph Timer Logic
         private void GraphTimerInit()
         {
             GraphTimer = new Timer();
             GraphTimer.Interval = POLLING_INTERVAL;
-            GraphTimer.Elapsed += new ElapsedEventHandler(TimerEvent);
+            GraphTimer.Elapsed += new ElapsedEventHandler(GraphTimerEvent);
         }
 
         private void RestartGraphTimer()
@@ -355,7 +384,7 @@ namespace GalleryOfHeartbeats.ViewModel
             GraphTimer.Start();
         }
 
-        private void TimerEvent(object sender, EventArgs e)
+        private void GraphTimerEvent(object sender, EventArgs e)
         {
             if (IsPlayingBack)
             {
@@ -365,14 +394,6 @@ namespace GalleryOfHeartbeats.ViewModel
                 }
                 else {
                     GetDataFromGallery();
-
-                    //Actuators.OnHeartrateChangeBasic(PreviousHeartrate, CurrentHeartrate);
-
-                    if (HeartbeatTimer.TimeForHeartbeat(Heartrate))
-                    {
-                        Actuators.OnHeartrateChangeAdvanced();
-                        AudioPlayer.PlayHeartbeatAudio();
-                    }
                 }
             }
             else

@@ -133,12 +133,12 @@
 
                 <Button 
                     x:Name="btnStartPlayback" 
-                    Command="{Binding CommandStartPlayback}" 
+                    Command="{Binding CommandStartPlayback, UpdateSourceTrigger=PropertyChanged}" 
                     Content="Start"/>
 
                 <Button 
                     x:Name="btnStopPlayback" 
-                    Command="{Binding CommandStopPlayback}" 
+                    Command="{Binding CommandStopPlayback, UpdateSourceTrigger=PropertyChanged}" 
                     Content="Stop"/>
 
             </StackPanel>

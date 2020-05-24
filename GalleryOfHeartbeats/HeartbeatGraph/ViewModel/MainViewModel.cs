@@ -155,6 +155,8 @@ namespace GalleryOfHeartbeats.ViewModel
             ClearGraph(MOCK_PARAM);
             RefreshGallery();
 
+            PlaybackTimer.Start();
+
             GraphIsRunning = true;
             RestartGraphTimer();
 
@@ -169,6 +171,8 @@ namespace GalleryOfHeartbeats.ViewModel
         public void StopGraph(object param)
         {
             if (IsRecording) { StopRecording(MOCK_PARAM); }
+
+            PlaybackTimer.Stop();
 
             StopPlotting();
             Console.WriteLine("Graph paused");
@@ -186,6 +190,8 @@ namespace GalleryOfHeartbeats.ViewModel
             StopPlotting();
 
             CurrentTime = STARTING_TIME_IS_ZERO;
+
+            PlaybackTimer.Stop();
 
             Graph.ResetGraph();
 
@@ -287,12 +293,13 @@ namespace GalleryOfHeartbeats.ViewModel
             IsPlayingBack = true;
             GraphIsRunning = true;
 
-            CurrentTime = STARTING_TIME_IS_ZERO;
+            
             CurrentPlaybackPointer = 0;
-            GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
-
-            RestartGraphTimer();
             PlaybackTimer.Start();
+
+            CurrentTime = STARTING_TIME_IS_ZERO;
+            GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
+            RestartGraphTimer();
         }
 
         public RelayCommand CommandStopPlayback { get; private set; }
@@ -304,6 +311,7 @@ namespace GalleryOfHeartbeats.ViewModel
         {
             PlaybackTimer.Stop();
             IsPlayingBack = false;
+            GraphIsRunning = false;
 
             GraphTimer.Interval = POLLING_INTERVAL;
             ClearGraph(MOCK_PARAM);
@@ -359,12 +367,20 @@ namespace GalleryOfHeartbeats.ViewModel
 
         private void PlaybackTimerEvent(object sender, ElapsedEventArgs e)
         {
+            ProvideFeedback();
+        }
 
+        private void ProvideFeedback()
+        {
             //Actuators.OnHeartrateChangeBasic(PreviousHeartrate, CurrentHeartrate);
 
             if (HeartbeatTimer.TimeForHeartbeat(CurrentHeartrate))
             {
-                Actuators.ActivateWhenHrIncreases(CurrentHeartrate);
+                if (IsPlayingBack)
+                {
+                    Actuators.ActivateWhenHrIncreases(CurrentHeartrate);
+                }
+
                 AudioPlayer.PlayHeartbeatAudio();
             }
         }
@@ -402,6 +418,7 @@ namespace GalleryOfHeartbeats.ViewModel
             }
 
             AddHeartrateToGraph();
+            ProvideFeedback();
         }
         #endregion
 

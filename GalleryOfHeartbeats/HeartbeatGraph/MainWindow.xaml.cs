@@ -26,5 +26,10 @@ namespace GalleryOfHeartbeats
             InitializeComponent();
             DataContext = new MainViewModel();
         }
+
+        private void btnCloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

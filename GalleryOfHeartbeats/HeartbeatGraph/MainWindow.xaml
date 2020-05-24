@@ -7,29 +7,70 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:viewmodel="clr-namespace:GalleryOfHeartbeats.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" MinHeight="500" MinWidth="800">
-    <Grid>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow"
+        Height="900"
+        Width="600"
+        MinHeight="900"
+        MinWidth="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
-        <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+
+        <Grid x:Name="MenuBar" Grid.ColumnSpan="2" Background="#FF8522BD">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
+                <Button
+                    x:Name="btnCloseWindow"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    Width="25"
+                    Height="25"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="White"
+                    Click="btnCloseWindow_Click">
+                    <materialDesign:PackIcon Kind="Power"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+
+
+
+        <Grid
+            Grid.Column="0"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Background="#FFEEEEEE">
             <StackPanel Margin="5,10,5,0">
-                
                 <DockPanel>
-
-                    <Label Padding="0, 0, 5, 0">Connect:</Label>
-
+                    <Label
+                        Padding="0, 0, 5, 0"
+                        VerticalAlignment="Center">
+                        Connect:
+                    </Label>
                     <ComboBox 
                         ItemsSource="{Binding ConnectionOptions}" 
                         SelectedItem="{Binding SelectedPort}" 
-                        VerticalAlignment="Top" 
-                        Height="20" 
+                        VerticalAlignment="Center" 
+                        Height="Auto" 
                         Width="Auto">
                     </ComboBox>
-
                 </DockPanel>
 
                 <DockPanel>
@@ -83,7 +124,7 @@
                     Width="Auto">
 
                     <Label  
-                        Content="Name:"
+                        Content="Enter name:"
                         Padding="0, 0, 10, 0">
                     </Label>
                     
@@ -91,7 +132,7 @@
                         x:Name="textBox" 
                         Text="{Binding NameOfUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Height="20" 
-                        MinWidth="90"
+                        MinWidth="40"
                         Width="Auto"/>
 
                 </DockPanel>
@@ -143,17 +184,20 @@
 
             </StackPanel>
 
-            
-            
-            
-            
-        </Grid>
-        
-        <Grid Grid.Column="1">
-            
-            <oxy:PlotView Model="{Binding GraphModel}"/>
-            
+
+
+
 
         </Grid>
+        
+        
+        <Grid Grid.Column="1" Grid.Row="1">
+            
+            <oxy:PlotView Model="{Binding GraphModel}"/>
+          
+        </Grid>
+
+
+        
     </Grid>
 </Window>

@@ -97,19 +97,19 @@
                     x:Name="btnShowGraph" 
                     Command="{Binding CommandShowGraph}" 
                     Content="Start"
-                    Margin="5"/>
+                    Margin="0, 5, 0, 5"/>
 
                 <Button 
                     x:Name="btnStopGraph" 
                     Command="{Binding CommandStopGraph}" 
                     Content="Stop"
-                    Margin="5"/>
+                    Margin="0, 5, 0, 5"/>
 
                 <Button 
                     x:Name="btnClearGraph" 
                     Command="{Binding CommandClearGraph}" 
                     Content="Clear"
-                    Margin="5"/>
+                    Margin="0, 5, 0, 5"/>
 
 
                 <Separator
@@ -144,13 +144,13 @@
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 
                     Content="Start"
-                    Margin="5"/>
+                    Margin="0, 5, 0, 5"/>
 
                 <Button 
                     x:Name="btnStopRecording" 
                     Command="{Binding CommandStopRecording}" 
                     Content="Stop"
-                    Margin="5"/>
+                    Margin="0, 5, 0, 5"/>
 
             </StackPanel>
 
@@ -192,13 +192,13 @@
                     x:Name="btnStartPlayback" 
                     Command="{Binding CommandStartPlayback, UpdateSourceTrigger=PropertyChanged}" 
                     Content="Start"
-                    Margin="5"/>
+                    Margin="0, 5, 0, 5"/>
 
                 <Button 
                     x:Name="btnStopPlayback" 
                     Command="{Binding CommandStopPlayback, UpdateSourceTrigger=PropertyChanged}" 
                     Content="Stop"
-                    Margin="5"/>
+                    Margin="0, 5, 0, 5"/>
             </StackPanel>
         </Grid>
         

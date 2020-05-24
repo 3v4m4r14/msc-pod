@@ -55,8 +55,8 @@
         <Grid
             Grid.Column="0"
             Grid.Row="1"
-            Grid.RowSpan="2"
-            Background="#FFEEEEEE">
+            Grid.RowSpan="1"
+            Background="LightGray">
             <StackPanel Margin="5,10,5,0">
                 <DockPanel>
                     <Label
@@ -96,17 +96,20 @@
                 <Button 
                     x:Name="btnShowGraph" 
                     Command="{Binding CommandShowGraph}" 
-                    Content="Start"/>
+                    Content="Start"
+                    Margin="5"/>
 
                 <Button 
                     x:Name="btnStopGraph" 
                     Command="{Binding CommandStopGraph}" 
-                    Content="Stop"/>
+                    Content="Stop"
+                    Margin="5"/>
 
                 <Button 
                     x:Name="btnClearGraph" 
                     Command="{Binding CommandClearGraph}" 
-                    Content="Clear"/>
+                    Content="Clear"
+                    Margin="5"/>
 
 
                 <Separator
@@ -140,16 +143,29 @@
                 <Button 
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 
-                    Content="Start"/>
-                
+                    Content="Start"
+                    Margin="5"/>
+
                 <Button 
                     x:Name="btnStopRecording" 
                     Command="{Binding CommandStopRecording}" 
-                    Content="Stop"/>
+                    Content="Stop"
+                    Margin="5"/>
 
-                <Separator
-                    Margin="0, 10, 0, 5"/>
+            </StackPanel>
 
+
+
+
+
+        </Grid>
+
+        <Grid 
+            Grid.Column="0" 
+            Grid.Row="2"
+            Grid.RowSpan="1"
+            Background="LightGray">
+            <StackPanel Margin="5,10,5,0">
                 <Label  
                     Content="Gallery"
                     FontWeight="Bold"
@@ -175,19 +191,15 @@
                 <Button 
                     x:Name="btnStartPlayback" 
                     Command="{Binding CommandStartPlayback, UpdateSourceTrigger=PropertyChanged}" 
-                    Content="Start"/>
+                    Content="Start"
+                    Margin="5"/>
 
                 <Button 
                     x:Name="btnStopPlayback" 
                     Command="{Binding CommandStopPlayback, UpdateSourceTrigger=PropertyChanged}" 
-                    Content="Stop"/>
-
+                    Content="Stop"
+                    Margin="5"/>
             </StackPanel>
-
-
-
-
-
         </Grid>
         
         

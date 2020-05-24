@@ -2,6 +2,7 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -9,10 +10,6 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
-
-# Never ignore audio in bin
-!/bin/Debug/audio/
-!/bin/Release/audio/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
@@ -75,3 +72,16 @@ Debug/
 Release/
 packages/
 Artifacts/
+
+# Never ignore audio in bin
+!GalleryOfHeartbeats/
+!GalleryOfHeartbeats/HeartbeatGraph/bin/
+!GalleryOfHeartbeats/HeartbeatGraph/bin/Debug/
+GalleryOfHeartbeats/HeartbeatGraph/bin/Debug/*
+!GalleryOfHeartbeats/HeartbeatGraph/bin/Debug/audio/
+
+!GalleryOfHeartbeats/
+!GalleryOfHeartbeats/HeartbeatGraph/bin/
+!GalleryOfHeartbeats/HeartbeatGraph/bin/Release/
+GalleryOfHeartbeats/HeartbeatGraph/bin/Release/*
+!GalleryOfHeartbeats/HeartbeatGraph/bin/Release/audio/

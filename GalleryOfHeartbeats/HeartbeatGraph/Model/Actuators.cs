@@ -13,16 +13,19 @@ namespace GalleryOfHeartbeats.Model
         private SimpleTcpClient Client;
         private Timer TimerForTurningOffActuators;
 
-        private const int ACTUATOR_DURATION = 500;
+        private const int ACTUATOR_DURATION = 200;
 
-        private const float HEATER_INTENSITY_WHEN_IN = 0;
-        private const float HEATER_INTENSITY_WHEN_OUT = 0.2f;
+        private const float HEATER_INTENSITY_WHEN_IN = 0.7f;
+        private const float HEATER_INTENSITY_WHEN_OUT = 0f;
         private const float FAN_INTENSITY_WHEN_IN = 0.5f;
-        private const float FAN_INTENSITY_WHEN_OUT = 0f;
+        private const float FAN_INTENSITY_WHEN_OUT = 0.2f;
         private const float RED = 0.3f;
         private const float GREEN = 0f;
         private const float BLUE = 0f;
         private const float WHITE = 0.1f;
+
+        private bool HrIsIncreasing = false;
+        private int PrevHr = 60;
 
         public Actuators()
         {
@@ -30,31 +33,46 @@ namespace GalleryOfHeartbeats.Model
             TimerForTurningOffActuators = new Timer();
             TimerForTurningOffActuators.Interval = ACTUATOR_DURATION;
             TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(TurnOffActuators);
+            //Client.WriteLine("SetActiveCeilingAnimation|OFF");
+            //LightIn();
         }
 
-        
-
-        public void OnHeartrateChangeBasic(int previous, int current)
-        {
-            Console.WriteLine("Timer event called in Actuators class: " + previous + " " + current);
-
-            if (previous < current)
-            {
-                Console.WriteLine("HR increased");
-                //TurnOnActuators();
-            }
-            else
-            {
-                Console.WriteLine("HR decreased");
-                //TurnOffActuators();
-            }
-        }
-
-        public void OnHeartrateChangeAdvanced()
+        public void ActivateWithHeartbeat()
         {
             Console.WriteLine("Actuators ON");
             //TurnOnActuators();
             StartActuatorTimer();
+        }
+
+        public void ActivateWhenHrIncreases(int current)
+        {
+            if (PrevHr < current)
+            {
+                HrIsIncreasing = true;
+                PrevHr = current;
+            }
+            else if (PrevHr > current)
+            {
+                HrIsIncreasing = false;
+                PrevHr = current;
+            }
+
+            if (HrIsIncreasing)
+            {
+                Console.WriteLine("Light ON");
+                //LightIn();
+            }
+            else
+            {
+                Console.WriteLine("Light OFF");
+                //LightOut();
+            }
+        }
+
+        public void ResetActuators()
+        {
+            Console.WriteLine("Actuators reset.");
+            //TurnOffActuators();
         }
 
         private void StartActuatorTimer()
@@ -66,18 +84,18 @@ namespace GalleryOfHeartbeats.Model
         {
             HeatIn();
             FanIn();
-            LightIn();
+            //LightIn();
         }
         private void TurnOffActuators(object sender, ElapsedEventArgs e)
         {
-            TurnOffActuators();
+            //TurnOffActuators();
             TimerForTurningOffActuators.Stop();
         }
         private void TurnOffActuators()
         {
             Console.WriteLine("Actuators OFF");
-            //HeatOut();
-            //FanOut();
+            HeatOut();
+            FanOut();
             //LightOut();
         }
 

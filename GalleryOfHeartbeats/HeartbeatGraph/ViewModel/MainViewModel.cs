@@ -364,7 +364,7 @@ namespace GalleryOfHeartbeats.ViewModel
 
             if (HeartbeatTimer.TimeForHeartbeat(CurrentHeartrate))
             {
-                Actuators.OnHeartrateChangeAdvanced();
+                Actuators.ActivateWhenHrIncreases(CurrentHeartrate);
                 AudioPlayer.PlayHeartbeatAudio();
             }
         }

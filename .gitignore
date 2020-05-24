@@ -10,6 +10,10 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
+# Never ignore audio in bin
+!/bin/Debug/audio/
+!/bin/Release/audio/
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 

@@ -20,7 +20,8 @@
         Width="600"
         MinHeight="900"
         MinWidth="600"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>

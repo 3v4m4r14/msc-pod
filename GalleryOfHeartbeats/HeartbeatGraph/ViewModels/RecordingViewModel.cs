@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace GalleryOfHeartbeats.ViewModels
 {
-    class RecordingViewModel : INotifyPropertyChanged
+    class RecordingViewModel : ViewModelBase
     {
         private const string PORT = "COM5";
         private const float STARTING_TIME_IS_ZERO = 0.0f;
@@ -262,14 +262,5 @@ namespace GalleryOfHeartbeats.ViewModels
                 AudioPlayer.PlayHeartbeatAudio();
             }
         }
-
-
-        #region INotifyPropertyChanged Members
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GalleryOfHeartbeats.ViewModels
 {
-    class AboutViewModel
+    class AboutViewModel : ViewModelBase
     {
     }
 }

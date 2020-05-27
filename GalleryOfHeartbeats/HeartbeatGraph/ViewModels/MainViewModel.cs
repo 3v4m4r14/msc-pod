@@ -22,10 +22,11 @@ using System.ComponentModel;
 using System.Windows;
 using System.IO;
 using System.Windows.Threading;
+using GalleryOfHeartbeats.ViewModels;
 
 namespace GalleryOfHeartbeats.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
         private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 500;
@@ -474,13 +475,5 @@ namespace GalleryOfHeartbeats.ViewModel
 
             CurrentRecordingData.Add(CurrentHeartrate);
         }
-
-        #region INotifyPropertyChanged Members
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

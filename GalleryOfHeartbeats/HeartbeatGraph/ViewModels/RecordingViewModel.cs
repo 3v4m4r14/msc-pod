@@ -168,7 +168,7 @@ namespace GalleryOfHeartbeats.ViewModels
             GraphTimerInit();
 
             CommandsInit();
-            GraphTimer.Start();
+            StartGraph();
         }
 
         private void CommandsInit()
@@ -186,7 +186,7 @@ namespace GalleryOfHeartbeats.ViewModels
         private void StartGraph()
         {
             GraphIsRunning = true;
-            RestartGraphTimer();
+            GraphTimer.Start();
         }
 
         #region Graph Timer Logic
@@ -195,12 +195,6 @@ namespace GalleryOfHeartbeats.ViewModels
             GraphTimer = new Timer();
             GraphTimer.Interval = POLLING_INTERVAL;
             GraphTimer.Elapsed += new ElapsedEventHandler(GraphTimerEvent);
-        }
-
-        private void RestartGraphTimer()
-        {
-            GraphTimer.Stop();
-            GraphTimer.Start();
         }
 
         private void GraphTimerEvent(object sender, EventArgs e)

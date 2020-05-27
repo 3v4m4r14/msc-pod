@@ -33,6 +33,10 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
+            <Int32AnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.ZIndex)" Storyboard.TargetName="GridBackground">
+                <DiscreteInt32KeyFrame KeyTime="0" Value="9998"/>
+                <DiscreteInt32KeyFrame KeyTime="0:0:0.5" Value="-9999"/>
+            </Int32AnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">
@@ -43,6 +47,10 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
+            <Int32AnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.ZIndex)" Storyboard.TargetName="GridBackground">
+                <DiscreteInt32KeyFrame KeyTime="0" Value="-9999"/>
+                <DiscreteInt32KeyFrame KeyTime="0:0:0.5" Value="9998"/>
+            </Int32AnimationUsingKeyFrames>
         </Storyboard>
         <DataTemplate x:Name="RecordingViewTemplate" DataType="{x:Type viewmodels:RecordingViewModel}">
             <views:RecordingView DataContext="{Binding}"/>

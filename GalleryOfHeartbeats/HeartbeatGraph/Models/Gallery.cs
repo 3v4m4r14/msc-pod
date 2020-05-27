@@ -46,9 +46,15 @@ namespace GalleryOfHeartbeats.Model
             }
         }
 
+        public bool SelectedItemIsTheSameAs(string itemName)
+        {
+            Console.WriteLine(GetIdOf(this.SelectedItem) + itemName);
+            return GetIdOf(this.SelectedItem).Equals(itemName);
+        }
+
         public void SetSelectedItemById(string id)
         {
-            if (String.IsNullOrEmpty(id)) {
+            if (string.IsNullOrEmpty(id)) {
                 Console.WriteLine("ID is empty");
                 SelectedItem = new GalleryItem();
             }

@@ -24,6 +24,20 @@ namespace GalleryOfHeartbeats.Model
             GetComPorts();
         }
 
+        public Connection(bool connectAutomatically)
+        {
+            Options = new ObservableCollection<string>();
+            GetComPorts();
+
+            if (connectAutomatically)
+            {
+                foreach (string _port in Options)
+                {
+                    if (ConnectToPort(_port)) { break; }
+                }
+            }
+        }
+
         #region Options
         public ObservableCollection<string> Options { get; set; }
         #endregion
@@ -48,7 +62,7 @@ namespace GalleryOfHeartbeats.Model
         private void OnPortChange()
         {
             //check if port is available
-            if (PortCanBeConnectedTo())
+            if (ConnectedToPort())
             {
                 Console.WriteLine("Connected to port " + selectedPort);
             }
@@ -75,8 +89,35 @@ namespace GalleryOfHeartbeats.Model
             return mySerialPort != null && mySerialPort.IsOpen;
         }
 
+        private bool ConnectToPort(string _port)
+        {
+            if (mySerialPort != null && !mySerialPort.IsOpen) {
+            try
+            {
+                mySerialPort = new SerialPort(_port, 115200, Parity.None, 8, StopBits.One);
+
+                mySerialPort.Handshake = Handshake.None;
+                mySerialPort.RtsEnable = false;
+
+                if (!mySerialPort.IsOpen)
+                {
+                    Console.WriteLine("Port could be connected to!" + _port);
+                    mySerialPort.Open();
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                Console.WriteLine(string.Format("a connection to {0} could not be made", selectedPort));
+                return false;
+            }
+        }
+            return false;
+        }
+
         //connect to the serial port
-        private bool PortCanBeConnectedTo()
+        private bool ConnectedToPort()
         {
             try
             {

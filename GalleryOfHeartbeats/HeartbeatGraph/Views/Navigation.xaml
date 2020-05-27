@@ -17,12 +17,12 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow"
-        Height="900"
+        Height="700"
         Width="600"
-        MinHeight="900"
+        MinHeight="700"
         MinWidth="600"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None">
+        >
     <Window.Resources>
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMenu">

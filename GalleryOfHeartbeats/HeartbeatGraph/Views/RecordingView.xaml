@@ -4,9 +4,67 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GalleryOfHeartbeats.Views"
+             xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Red">
-            
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignLightBackground}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="600" d:DesignWidth="400">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="0">
+
+            <DockPanel Margin="30">
+                    <Label Padding="0, 10, 5, 0">Heart rate:</Label>
+
+                    <Label
+                        Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
+                        Padding="0, 10, 0, 0">
+                    </Label>
+
+                </DockPanel>
+
+                <DockPanel Width="300" Height="200">
+                <oxy:PlotView Background="Transparent" Model="{Binding GraphModel}"/>
+            </DockPanel>
+
+            <DockPanel 
+                    Margin="30"
+                    Width="Auto">
+
+                <Label  
+                        Content="Enter name:"
+                        Padding="0, 0, 10, 0">
+                </Label>
+
+                <TextBox 
+                        x:Name="textBox" 
+                        Text="{Binding NameOfUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Height="20" 
+                        MinWidth="40"
+                        Width="Auto"/>
+
+            </DockPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button 
+                    x:Name="btnStartRecording" 
+                    Command="{Binding CommandStartRecording}" 
+                    Content="Start"
+                    Margin="10"/>
+
+                <Button 
+                    x:Name="btnStopRecording" 
+                    Command="{Binding CommandStopRecording}" 
+                    Content="Stop"
+                    Margin="10"/>
+            </StackPanel>
+
+        </StackPanel>
+
     </Grid>
 </UserControl>

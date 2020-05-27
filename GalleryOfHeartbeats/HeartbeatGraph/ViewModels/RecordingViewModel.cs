@@ -118,7 +118,7 @@ namespace GalleryOfHeartbeats.ViewModels
 
             ReloadGallery();
 
-            NameOfUser = string.Empty;
+            Console.WriteLine("Name of user is: " + NameOfUser);
 
             MessageBox.Show(String.Format("Recording saved as '{0} {1}'", CurrentRecordingItem.Name, CurrentRecordingItem.TimeOfRecording));
 

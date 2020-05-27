@@ -50,8 +50,7 @@
                         MinHeight="30" 
                         MinWidth="40"
                         Width="Auto"
-                    Height="Auto"
-                    Style="{StaticResource MaterialDesignTextBox}"/>
+                    Height="Auto"/>
 
             </DockPanel>
 

@@ -5,16 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GalleryOfHeartbeats.Views"
              mc:Ignorable="d" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="800" d:DesignWidth="600">
     <Grid Background="{StaticResource PrimaryHueLightBrush}">
-        <ListBox ItemsSource="{Binding HeartbeatOptions}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid>
+            <ListBox
+                ItemsSource="{Binding HeartbeatOptions}"
+                SelectedItem="{Binding SelectedItemName, Mode=TwoWay}"
+                HorizontalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Width="Auto" Height="60">
+                            <TextBlock Text="{Binding}" Margin="0 0 0 10" Style="{StaticResource MaterialDesignBody1TextBlock}" FontSize="20" Foreground="WhiteSmoke"/>
+                            <ProgressBar Orientation="Horizontal" Value="25" />
+
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
 </UserControl>

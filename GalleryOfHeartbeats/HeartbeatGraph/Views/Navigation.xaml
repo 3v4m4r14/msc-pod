@@ -5,6 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GalleryOfHeartbeats.View"
+        xmlns:viewmodels="clr-namespace:GalleryOfHeartbeats.ViewModels"
+        xmlns:views="clr-namespace:GalleryOfHeartbeats.Views"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -42,6 +44,18 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <DataTemplate x:Name="RecordingViewTemplate" DataType="{x:Type viewmodels:RecordingViewModel}">
+            <views:RecordingView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="GalleryViewTemplate" DataType="{x:Type viewmodels:GalleryViewModel}">
+            <views:GalleryView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="SettingsViewTemplate" DataType="{x:Type viewmodels:SettingsViewModel}">
+            <views:SettingsView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="AboutViewTemplate" DataType="{x:Type viewmodels:AboutViewModel}">
+            <views:AboutView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
@@ -52,7 +66,7 @@
         </EventTrigger>
     </Window.Triggers>
     <Grid>
-        <Grid x:Name="GridBackground" Background="#55313131" Opacity="0"/>
+        
         
         <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Panel.ZIndex="9999" Margin="-250 0 0 0" Background="{StaticResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
@@ -65,25 +79,25 @@
             </Grid.RenderTransform>
             <StackPanel>
                 <ListView Style="{StaticResource MaterialDesignListView}" Margin="0 100">
-                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}">
+                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}" PreviewMouseLeftButtonUp="RecordingView_Clicked">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
                             <materialDesign:PackIcon Kind="Microphone" Style="{StaticResource MenuIconStyle}"/>
                             <TextBlock Text="Record" Style="{StaticResource MenuLabelStyle}"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}">
+                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}" PreviewMouseLeftButtonUp="GalleryView_Clicked">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
                             <materialDesign:PackIcon Kind="Collections" Style="{StaticResource MenuIconStyle}"/>
                             <TextBlock Text="Gallery" Style="{StaticResource MenuLabelStyle}"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}">
+                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}" PreviewMouseLeftButtonUp="SettingsView_Clicked">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
                             <materialDesign:PackIcon Kind="Settings" Style="{StaticResource MenuIconStyle}"/>
                             <TextBlock Text="Settings" Style="{StaticResource MenuLabelStyle}"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}">
+                    <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}" PreviewMouseLeftButtonUp="AboutView_Clicked">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
                             <materialDesign:PackIcon Kind="InfoCircle" Style="{StaticResource MenuIconStyle}"/>
                             <TextBlock Text="About" Style="{StaticResource MenuLabelStyle}"/>
@@ -100,7 +114,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="MenuBar" Background="{StaticResource PrimaryHueMidBrush}">
+            <Grid Grid.Row="0" x:Name="MenuBar" Background="{StaticResource PrimaryHueMidBrush}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Button x:Name="ButtonOpen" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Padding="0" Margin="10, 0">
                         <materialDesign:PackIcon Kind="Menu" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Width="50" Height="50"/>
@@ -115,6 +129,10 @@
                     </Button>
                 </StackPanel>
             </Grid>
+
+            <Grid x:Name="GridBackground" Grid.Row="1" Background="#55313131" Opacity="0" Panel.ZIndex="9998"/>
+            <ContentControl Grid.Row="1" Content="{Binding}"></ContentControl>
+
         </Grid>
     </Grid>
 </Window>

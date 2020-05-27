@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GalleryOfHeartbeats.View
+namespace GalleryOfHeartbeats.Views
 {
     /// <summary>
-    /// Interaction logic for Navigation.xaml
+    /// Interaction logic for GalleryView.xaml
     /// </summary>
-    public partial class Navigation : Window
+    public partial class GalleryView : UserControl
     {
-        public Navigation()
+        public GalleryView()
         {
             InitializeComponent();
-        }
-
-        private void ButtonCloseApp_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
     }
 }

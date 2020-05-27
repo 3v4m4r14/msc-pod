@@ -96,19 +96,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Actuators.cs" />
-    <Compile Include="Model\AudioPlayer.cs" />
-    <Compile Include="Model\Connection.cs" />
-    <Compile Include="Model\Gallery.cs" />
-    <Compile Include="Model\GalleryStruct.cs" />
-    <Compile Include="Model\GalleryItem.cs" />
-    <Compile Include="Model\Graph.cs" />
-    <Compile Include="Model\FileHandler.cs" />
-    <Compile Include="Model\HeartbeatTimer.cs" />
-    <Compile Include="ViewModel\Commands\RelayCommand.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\Navigation.xaml.cs">
+    <Compile Include="Models\Actuators.cs" />
+    <Compile Include="Models\AudioPlayer.cs" />
+    <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Gallery.cs" />
+    <Compile Include="Models\GalleryStruct.cs" />
+    <Compile Include="Models\GalleryItem.cs" />
+    <Compile Include="Models\Graph.cs" />
+    <Compile Include="Models\FileHandler.cs" />
+    <Compile Include="Models\HeartbeatTimer.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\Commands\RelayCommand.cs" />
+    <Compile Include="ViewModels\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RecordingViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GalleryView.xaml.cs">
+      <DependentUpon>GalleryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Navigation.xaml.cs">
       <DependentUpon>Navigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecordingView.xaml.cs">
+      <DependentUpon>RecordingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -122,7 +138,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Navigation.xaml">
+    <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GalleryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Navigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecordingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

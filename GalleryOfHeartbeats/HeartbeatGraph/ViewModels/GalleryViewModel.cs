@@ -1,4 +1,4 @@
-﻿using GalleryOfHeartbeats.Model;
+using GalleryOfHeartbeats.Model;
 using GalleryOfHeartbeats.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -26,6 +26,7 @@ namespace GalleryOfHeartbeats.ViewModels
         private Gallery Gallery;
 
         private float CurrentTime = 0.0f;
+        private Timer GraphTimer;
         private Timer PlaybackTimer;
 
         private bool IsPlayingBack = false;
@@ -66,32 +67,62 @@ namespace GalleryOfHeartbeats.ViewModels
             }
             set
             {
-                Gallery.SetSelectedItemById(value);
-                OnPropertyChanged("SelectedItemName");
+                Console.WriteLine("Selecting: " + value);
+                if (IsPlayingBack && Gallery.SelectedItemIsTheSameAs(value))
+                {
+                    PausePlayback();
+                }
+                else if (!IsPlayingBack && Gallery.SelectedItemIsTheSameAs(value))
+                {
+                    ContinuePlayback();
+                }
+                else {
+                    Gallery.SetSelectedItemById(value);
+                    StartPlayback();
+                    OnPropertyChanged("SelectedItemName");
+                }
             }
         }
-        public RelayCommand CommandStartPlayback { get; private set; }
-        public bool CanStartPlayback(object param)
+
+        private void ContinuePlayback()
+        {
+            IsPlayingBack = true;
+            GraphTimer.Start();
+            PlaybackTimer.Start();
+            Console.WriteLine("Continue");
+        }
+
+        private void PausePlayback()
+        {
+            IsPlayingBack = false;
+            GraphTimer.Stop();
+            PlaybackTimer.Stop();
+            Console.WriteLine("Paused");
+        }
+
+        public bool CanStartPlayback()
         {
             return !string.IsNullOrEmpty(Gallery.SelectedItemName);
         }
-        private void StartPlayback(object param)
+
+
+        private void StartPlayback()
         {
-            IsPlayingBack = true;
+            if (CanStartPlayback()) {
+                IsPlayingBack = true;
 
+                Console.WriteLine("Playing back: " + IsPlayingBack);
 
-            CurrentTime = STARTING_TIME_IS_ZERO;
-            CurrentPlaybackPointer = 0;
-            PlaybackTimer.Start();
+                CurrentPlaybackPointer = 0;
+                PlaybackTimer.Start();
 
+                CurrentTime = STARTING_TIME_IS_ZERO;
+                GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
+                RestartGraphTimer();
+            }    
         }
 
-        public RelayCommand CommandStopPlayback { get; private set; }
-        public bool CanStopPlayback(object param)
-        {
-            return IsPlayingBack;
-        }
-        private void StopPlayback(object param)
+        private void StopPlayback()
         {
             PlaybackTimer.Stop();
             IsPlayingBack = false;
@@ -110,14 +141,10 @@ namespace GalleryOfHeartbeats.ViewModels
             FileHandler = new FileHandler(FILENAME);
             Gallery = FileHandler.GetGalleryFromFile();
 
-            CommandsInit();
+
+            GraphTimerInit();
         }
 
-        private void CommandsInit()
-        {
-            CommandStartPlayback = new RelayCommand(StartPlayback, CanStartPlayback);
-            CommandStopPlayback = new RelayCommand(StopPlayback, CanStopPlayback);
-        }
 
         #region Playback Timer Logic
         private void PlaybackTimerInit()
@@ -141,5 +168,42 @@ namespace GalleryOfHeartbeats.ViewModels
             }
         }
         #endregion
+
+        #region Graph Timer Logic
+        private void GraphTimerInit()
+        {
+            GraphTimer = new Timer();
+            GraphTimer.Interval = POLLING_INTERVAL;
+            GraphTimer.Elapsed += new ElapsedEventHandler(GraphTimerEvent);
+        }
+
+        private void RestartGraphTimer()
+        {
+            GraphTimer.Stop();
+            GraphTimer.Start();
+        }
+
+        private void GraphTimerEvent(object sender, EventArgs e)
+        {
+            if (IsPlayingBack)
+            {
+                if (Gallery.HasNoMoreData(CurrentPlaybackPointer))
+                {
+                    StopPlayback();
+                }
+                else
+                {
+                    GetDataFromGallery();
+                }
+            }
+            //ProvideFeedback();
+        }
+        #endregion
+
+        private void GetDataFromGallery()
+        {
+            CurrentHeartrate = Gallery.GetSelectedItemDataValAt(CurrentPlaybackPointer);
+            CurrentPlaybackPointer++;
+        }
     }
 }

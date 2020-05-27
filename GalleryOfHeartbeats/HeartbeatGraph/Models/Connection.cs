@@ -62,7 +62,7 @@ namespace GalleryOfHeartbeats.Model
         private void OnPortChange()
         {
             //check if port is available
-            if (ConnectedToPort())
+            if (ConnectToSelectedPort())
             {
                 Console.WriteLine("Connected to port " + selectedPort);
             }
@@ -116,8 +116,7 @@ namespace GalleryOfHeartbeats.Model
             return false;
         }
 
-        //connect to the serial port
-        private bool ConnectedToPort()
+        private bool ConnectToSelectedPort()
         {
             try
             {

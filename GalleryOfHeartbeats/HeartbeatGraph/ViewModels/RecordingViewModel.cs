@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace GalleryOfHeartbeats.ViewModels
 {
-    class RecordingViewModel
+    class RecordingViewModel : INotifyPropertyChanged
     {
         private const string PORT = "COM5";
         private const float STARTING_TIME_IS_ZERO = 0.0f;
@@ -117,6 +117,8 @@ namespace GalleryOfHeartbeats.ViewModels
             Console.WriteLine("Recording: " + IsRecording);
 
             ReloadGallery();
+
+            NameOfUser = string.Empty;
 
             Console.WriteLine("Name of user is: " + NameOfUser);
 

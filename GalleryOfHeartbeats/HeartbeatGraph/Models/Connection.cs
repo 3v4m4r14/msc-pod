@@ -91,28 +91,30 @@ namespace GalleryOfHeartbeats.Model
 
         private bool ConnectToPort(string _port)
         {
-            if (mySerialPort != null && !mySerialPort.IsOpen) {
-            try
+            if (mySerialPort == null)
             {
-                mySerialPort = new SerialPort(_port, 115200, Parity.None, 8, StopBits.One);
-
-                mySerialPort.Handshake = Handshake.None;
-                mySerialPort.RtsEnable = false;
-
-                if (!mySerialPort.IsOpen)
+                try
                 {
-                    Console.WriteLine("Port could be connected to!" + _port);
-                    mySerialPort.Open();
-                    return true;
+                    mySerialPort = new SerialPort(_port, 115200, Parity.None, 8, StopBits.One);
+
+                    mySerialPort.Handshake = Handshake.None;
+                    mySerialPort.RtsEnable = false;
+
+                    if (!mySerialPort.IsOpen)
+                    {
+                        Console.WriteLine("Port could be connected to!" + _port);
+                        mySerialPort.Open();
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
+                catch
+                {
+                    Console.WriteLine(string.Format("a connection to {0} could not be made", selectedPort));
+                    return false;
+                }
             }
-            catch
-            {
-                Console.WriteLine(string.Format("a connection to {0} could not be made", selectedPort));
-                return false;
-            }
-        }
+            if(mySerialPort.IsOpen) { return true; }
             return false;
         }
 

@@ -37,16 +37,21 @@
                     Width="Auto">
 
                 <Label  
+                    VerticalAlignment="Top"
                         Content="Enter name:"
-                        Padding="0, 0, 10, 0">
+                        Padding="0, 0, 10, 0"
+                    Style="{StaticResource MaterialDesignLabel}"
+                    FontSize="20">
                 </Label>
 
                 <TextBox 
                         x:Name="textBox" 
                         Text="{Binding NameOfUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Height="20" 
+                        MinHeight="30" 
                         MinWidth="40"
-                        Width="Auto"/>
+                        Width="Auto"
+                    Height="Auto"
+                    Style="{StaticResource MaterialDesignTextBox}"/>
 
             </DockPanel>
 

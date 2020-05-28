@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Input;
 
 namespace GalleryOfHeartbeats.ViewModels
 {
@@ -51,7 +52,7 @@ namespace GalleryOfHeartbeats.ViewModels
         }
         #endregion
 
-        #region Playback
+        #region List items
         public ObservableCollection<GalleryItem> HeartbeatOptions
         {
             get
@@ -75,7 +76,26 @@ namespace GalleryOfHeartbeats.ViewModels
                 
             }
         }
+        #endregion
 
+        private ICommand _command;
+        public ICommand Command
+        {
+            get
+            {
+                return _command ?? (_command = new RelayCommand(x =>
+                {
+                    DoStuff(x as GalleryItem);
+                }));
+            }
+        }
+
+        public void DoStuff(GalleryItem item)
+        {
+            Console.WriteLine("HAHAHAHAHAHAHHAHAHAHAHAHA" + item.Name);
+        }
+
+        #region Playback
         private void ContinuePlayback()
         {
             IsPlayingBack = true;
@@ -96,8 +116,6 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             return !string.IsNullOrEmpty(Gallery.SelectedItemName);
         }
-
-
         private void StartPlayback()
         {
             if (CanStartPlayback()) {

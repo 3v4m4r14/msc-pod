@@ -18,7 +18,7 @@
         <Grid>
             <ListBox
                 ItemsSource="{Binding HeartbeatOptions}"
-                SelectedItem="{Binding SelectedItemName, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                 HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

@@ -59,28 +59,20 @@ namespace GalleryOfHeartbeats.ViewModels
                 return Gallery.GalleryItems;
             }
         }
-        public string SelectedItemName
+        public GalleryItem SelectedItem
         {
             get
             {
-                return Gallery.SelectedItemName;
+                return Gallery.SelectedItem;
             }
             set
             {
                 Console.WriteLine("Selecting: " + value);
-                if (IsPlayingBack && Gallery.SelectedItemIsTheSameAs(value))
-                {
-                    PausePlayback();
-                }
-                else if (!IsPlayingBack && Gallery.SelectedItemIsTheSameAs(value))
-                {
-                    ContinuePlayback();
-                }
-                else {
-                    Gallery.SetSelectedItemById(value);
+                
+                    Gallery.SelectedItem = value;
                     StartPlayback();
                     OnPropertyChanged("SelectedItemName");
-                }
+                
             }
         }
 

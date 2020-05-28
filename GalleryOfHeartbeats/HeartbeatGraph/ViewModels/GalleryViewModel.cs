@@ -60,26 +60,11 @@ namespace GalleryOfHeartbeats.ViewModels
                 return Gallery.GalleryItems;
             }
         }
-        public GalleryItem SelectedItem
-        {
-            get
-            {
-                return Gallery.SelectedItem;
-            }
-            set
-            {
-                Console.WriteLine("Selecting: " + value);
-                
-                    Gallery.SelectedItem = value;
-                    StartPlayback();
-                    OnPropertyChanged("SelectedItemName");
-                
-            }
-        }
+
         #endregion
 
         private ICommand _command;
-        public ICommand Command
+        public ICommand ClickOnListItemCommand
         {
             get
             {
@@ -92,7 +77,24 @@ namespace GalleryOfHeartbeats.ViewModels
 
         public void DoStuff(GalleryItem item)
         {
-            Console.WriteLine("HAHAHAHAHAHAHHAHAHAHAHAHA" + item.Name);
+            Console.WriteLine("Item: " + item.Name + Gallery.SelectedItem.Name);
+
+            if (item.Equals(Gallery.SelectedItem) && IsPlayingBack)
+            {
+                Console.WriteLine("Pausing");
+                PausePlayback();
+            }
+            else if (item.Equals(Gallery.SelectedItem) && !IsPlayingBack)
+            {
+                Console.WriteLine("Continuing");
+                ContinuePlayback();
+            }
+            else
+            {
+                Gallery.SelectedItem = item;
+                StartPlayback();
+            }
+            Gallery.SelectedItem = item;
         }
 
         #region Playback
@@ -114,19 +116,19 @@ namespace GalleryOfHeartbeats.ViewModels
 
         public bool CanStartPlayback()
         {
-            return !string.IsNullOrEmpty(Gallery.SelectedItemName);
+            return Gallery.SelectedItem != null;
         }
         private void StartPlayback()
         {
+            StopPlayback();
+
             if (CanStartPlayback()) {
                 IsPlayingBack = true;
 
                 Console.WriteLine("Playing back: " + IsPlayingBack);
 
-                CurrentPlaybackPointer = 0;
                 PlaybackTimer.Start();
 
-                CurrentTime = STARTING_TIME_IS_ZERO;
                 GraphTimer.Interval = Gallery.SelectedItem.PollingRate;
                 RestartGraphTimer();
             }    
@@ -136,6 +138,8 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             PlaybackTimer.Stop();
             IsPlayingBack = false;
+            CurrentPlaybackPointer = 0;
+            CurrentTime = STARTING_TIME_IS_ZERO;
         }
         #endregion
 

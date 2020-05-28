@@ -24,7 +24,7 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                         <i:InvokeCommandAction
-                            Command="{Binding Command}"
+                            Command="{Binding ClickOnListItemCommand}"
                             CommandParameter="{Binding ElementName=Gallery, Path=SelectedItem}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>

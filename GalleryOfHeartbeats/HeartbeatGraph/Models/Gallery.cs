@@ -20,8 +20,8 @@ namespace GalleryOfHeartbeats.Model
         }
 
 
-        private List<GalleryItem> galleryItems = new List<GalleryItem>();
-        public List<GalleryItem> GalleryItems
+        private ObservableCollection<GalleryItem> galleryItems = new ObservableCollection<GalleryItem>();
+        public ObservableCollection<GalleryItem> GalleryItems
         {
             get
             {

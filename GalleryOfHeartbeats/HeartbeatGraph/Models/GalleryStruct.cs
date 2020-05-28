@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,11 @@ namespace GalleryOfHeartbeats.Model
 {
     class GalleryStruct
     {
-        public List<GalleryItem> GalleryItems { get; set; }
+        public ObservableCollection<GalleryItem> GalleryItems { get; set; }
 
         public GalleryStruct()
         {
-            GalleryItems = new List<GalleryItem>();
+            GalleryItems = new ObservableCollection<GalleryItem>();
         }
 
         public GalleryStruct(Gallery gallery)

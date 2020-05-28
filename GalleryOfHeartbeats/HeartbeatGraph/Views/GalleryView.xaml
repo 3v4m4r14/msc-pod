@@ -22,9 +22,12 @@
                 HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="Auto" Height="60">
-                            <TextBlock Text="{Binding}" Margin="0 0 0 10" Style="{StaticResource MaterialDesignBody1TextBlock}" FontSize="20" Foreground="WhiteSmoke"/>
-                            <ProgressBar Orientation="Horizontal" Value="25" />
+                        <StackPanel Width="Auto" Height="Auto" MinHeight="70">
+                            <TextBlock Text="{Binding Name}" Margin="0 0 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="20" Foreground="WhiteSmoke"/>
+                            <TextBlock Text="{Binding TimeOfRecording}" Margin="0 0 0 10" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="15" Foreground="WhiteSmoke"/>
+
+
+                            <ProgressBar Orientation="Horizontal" Margin="0 10" Value="25" />
 
 
                         </StackPanel>

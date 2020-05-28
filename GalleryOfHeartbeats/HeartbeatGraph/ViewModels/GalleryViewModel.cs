@@ -52,11 +52,11 @@ namespace GalleryOfHeartbeats.ViewModels
         #endregion
 
         #region Playback
-        public ObservableCollection<string> HeartbeatOptions
+        public ObservableCollection<GalleryItem> HeartbeatOptions
         {
             get
             {
-                return Gallery.GetItemsAsStrings();
+                return Gallery.GalleryItems;
             }
         }
         public string SelectedItemName

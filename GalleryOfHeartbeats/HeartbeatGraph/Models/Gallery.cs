@@ -100,7 +100,7 @@ namespace GalleryOfHeartbeats.Model
 
         private static string GetIdOf(GalleryItem item)
         {
-            return item.Name + " " + item.TimeOfRecording;
+            return item.Name + "\n" + item.TimeOfRecording;
         }
 
     }

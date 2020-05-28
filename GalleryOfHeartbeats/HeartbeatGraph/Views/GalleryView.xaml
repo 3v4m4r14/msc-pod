@@ -33,15 +33,16 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <StackPanel Grid.Row="0" Width="Auto" Height="Auto" MinHeight="70" Panel.ZIndex="10">
                                 <TextBlock Text="{Binding Name}" Margin="0 0 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="20" Foreground="WhiteSmoke"/>
                                 <TextBlock Text="{Binding TimeOfRecording}" Margin="0 0 0 10" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="15" Foreground="WhiteSmoke"/>
                             </StackPanel>
-                            <StackPanel Grid.Row="0" Panel.ZIndex="-10">
-                                <ProgressBar Orientation="Horizontal" Height="Auto" MinHeight="70" Margin="0" Value="25"/>
-                            </StackPanel>
+                            <!--<StackPanel Grid.Row="1">
+                                <ProgressBar Orientation="Horizontal" Height="Auto" MinHeight="70" Margin="0" Minimum="0" Maximum="100" Value="{Binding Progress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>-->
 
 
 

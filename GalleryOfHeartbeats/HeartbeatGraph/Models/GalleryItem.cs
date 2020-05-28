@@ -1,4 +1,4 @@
-﻿// Gallery of Heartbeats
+// Gallery of Heartbeats
 // Author: Eva Maria Veitmaa
 // Date: 2020
 
@@ -16,6 +16,7 @@ namespace GalleryOfHeartbeats.Model
         public string TimeOfRecording { get; set; }
         public int PollingRate { get; set; }
         public List<int> Data { get; set; }
+        public int Progress { get; set; } = 10;
 
         override public string ToString()
         {

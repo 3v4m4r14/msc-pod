@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -74,8 +74,20 @@ namespace GalleryOfHeartbeats.Model
 
         public int GetSelectedItemDataValAt(int idx)
         {
-            if (HasNoMoreData(idx)) { return 0; }
+            if (HasNoMoreData(idx)) {
+                SelectedItem.Progress = 100;
+                return 0;
+            }
+            SetProgressPercentage(idx);
             return SelectedItem.Data[idx];
+        }
+
+        private void SetProgressPercentage(int idx)
+        {
+                Console.WriteLine("Data count: " + SelectedItem.Data.Count + " idx: " + idx);
+                SelectedItem.Progress = (int)Math.Round((double)idx / SelectedItem.Data.Count * 100);
+                Console.WriteLine(SelectedItem.Progress);
+            
         }
 
         public bool HasNoMoreData(int idx)

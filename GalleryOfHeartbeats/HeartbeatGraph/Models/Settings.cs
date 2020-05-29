@@ -11,12 +11,12 @@ namespace GalleryOfHeartbeats.Models
     public class Settings
     {
 
-        public PlaybackMode Mode;
-        public float MinHeatIntensity { get; set; } = 0;
+        public PlaybackMode Mode = PlaybackMode.PER_BEAT;
+        public float MinHeatIntensity { get; set; } = 0f;
         public float MaxHeatIntensity { get; set; } = 0.3f;
         public float MinFanIntensity { get; set; } = 0.5f;
         public float MaxFanIntensity { get; set; } = 0.2f;
-        public bool LightOn { get; set; }
+        public bool LightOn { get; set; } = false;
 
         public Settings(PlaybackMode mode, float minHeat, float maxHeat, float minFan, float maxFan, bool lightOn)
         {
@@ -27,6 +27,8 @@ namespace GalleryOfHeartbeats.Models
             this.MaxFanIntensity = maxFan;
             this.LightOn = lightOn;
         }
+
+        public Settings() { }
 
         override public string ToString()
         {

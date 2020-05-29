@@ -12,10 +12,10 @@ namespace GalleryOfHeartbeats.Models
     {
 
         public PlaybackMode Mode;
-        public float MinHeatIntensity { get; set; }
-        public float MaxHeatIntensity { get; set; }
-        public float MinFanIntensity { get; set; }
-        public float MaxFanIntensity { get; set; }
+        public float MinHeatIntensity { get; set; } = 0;
+        public float MaxHeatIntensity { get; set; } = 0.3f;
+        public float MinFanIntensity { get; set; } = 0.5f;
+        public float MaxFanIntensity { get; set; } = 0.2f;
         public bool LightOn { get; set; }
 
         public Settings(PlaybackMode mode, float minHeat, float maxHeat, float minFan, float maxFan, bool lightOn)

@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EnumMatchToBooleanConverter.cs" />
     <Compile Include="Models\Actuators.cs" />
     <Compile Include="Models\AudioPlayer.cs" />
     <Compile Include="Models\Connection.cs" />

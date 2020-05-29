@@ -21,12 +21,12 @@ namespace GalleryOfHeartbeats.View
     /// </summary>
     public partial class Navigation : Window
     {
-        private Settings settings;
+        private Settings Settings;
 
         public Navigation()
         {
             InitializeComponent();
-            settings = new Settings(PlaybackMode.PER_BEAT, 0, 0.9f, 0, 0.6f, true);
+            Settings = new Settings();
         }
 
         private void ButtonCloseApp_Click(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new GalleryViewModel(settings);
+                DataContext = new GalleryViewModel(Settings);
             }
         }
 
@@ -57,7 +57,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new SettingsViewModel(settings);
+                DataContext = new SettingsViewModel(Settings);
             }
         }
 

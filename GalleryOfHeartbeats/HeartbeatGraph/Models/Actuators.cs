@@ -32,11 +32,12 @@ namespace GalleryOfHeartbeats.Model
         public Actuators()
         {
             //Client = new SimpleTcpClient().Connect("127.0.0.1", 3000);
+
             TimerForTurningOffActuators = new Timer();
             TimerForTurningOffActuators.Interval = ACTUATOR_DURATION;
             TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(TurnOffActuators);
+
             //Client.WriteLine("SetActiveCeilingAnimation|OFF");
-            //LightIn();
         }
 
         public Actuators(Settings settings) : this()
@@ -95,7 +96,11 @@ namespace GalleryOfHeartbeats.Model
         {
             HeatIn();
             FanIn();
-            //LightIn();
+            if (WithLight)
+            {
+                //LightIn();
+            }
+
         }
         private void TurnOffActuators(object sender, ElapsedEventArgs e)
         {
@@ -107,7 +112,11 @@ namespace GalleryOfHeartbeats.Model
             Console.WriteLine("Actuators OFF");
             HeatOut();
             FanOut();
-            //LightOut();
+            if (WithLight)
+            {
+                //LightOut();
+            }
+
         }
 
         private void HeatOut()

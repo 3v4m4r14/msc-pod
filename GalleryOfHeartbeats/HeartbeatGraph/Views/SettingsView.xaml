@@ -5,8 +5,95 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GalleryOfHeartbeats.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Green">
-            
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="600" d:DesignWidth="400">
+    <Grid Background="{StaticResource MaterialDesignChipBackground}">
+        <Grid Margin="30 50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Margin="0 10">
+                <Label Style="{StaticResource SettingsLabel}">Feedback mode</Label>
+                <StackPanel Margin="2 0 0 10">
+                    <RadioButton IsChecked="True" Style="{StaticResource MaterialDesignUserForegroundRadioButton}">On heartbeat</RadioButton>
+
+                    <RadioButton Style="{StaticResource MaterialDesignUserForegroundRadioButton}">On increase in heart rate</RadioButton>
+
+                </StackPanel>
+
+                <Separator Style="{DynamicResource MaterialDesignDarkSeparator}"/>
+            </StackPanel>
+
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="0 10" VerticalAlignment="Center">
+                <Label Style="{StaticResource SettingsLabel}">Min heat</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+                <Slider x:Name="MinHeatSlider" Minimum="0" Maximum="100" Value="30" ></Slider>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="2" Margin="0 10">
+                <Label Style="{StaticResource SettingsLabel}">Max heat</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+                <Slider x:Name="MaxHeatSlider" Minimum="0" Maximum="100" Value="30" ></Slider>
+            </StackPanel>
+
+            <Separator Grid.ColumnSpan="2" Grid.Row="3" Style="{DynamicResource MaterialDesignDarkSeparator}"/>
+
+            <StackPanel Grid.Column="0" Grid.Row="4" Margin="0 10" VerticalAlignment="Center">
+                <Label Style="{StaticResource SettingsLabel}">Min fan</Label>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
+                <Slider x:Name="MinFanSlider" Minimum="0" Maximum="100" Value="30" ></Slider>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="5" Margin="0 10">
+                <Label Style="{StaticResource SettingsLabel}">Max fan</Label>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="5" VerticalAlignment="Center">
+                <Slider x:Name="MaxFanSlider" Minimum="0" Maximum="100" Value="30" ></Slider>
+            </StackPanel>
+
+            <Separator Grid.ColumnSpan="2" Grid.Row="6" Style="{DynamicResource MaterialDesignDarkSeparator}"/>
+
+            <StackPanel Grid.Row="7" VerticalAlignment="Center">
+                <Label Style="{StaticResource SettingsLabel}">Light</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="7" VerticalAlignment="Center">
+                <ToggleButton Width="40" Height="40" IsChecked="False" Style="{DynamicResource MaterialDesignActionToggleButton}" HorizontalAlignment="Left">
+                    <materialDesign:PackIcon Kind="Clear"/>
+                    <materialDesign:ToggleButtonAssist.OnContent>
+                        <materialDesign:PackIcon Kind="Check"/>
+                    </materialDesign:ToggleButtonAssist.OnContent>
+                </ToggleButton>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

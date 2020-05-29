@@ -78,15 +78,13 @@ namespace GalleryOfHeartbeats.Model
                 SelectedItem.Progress = 100;
                 return 0;
             }
-            SetProgressPercentage(idx);
+            //SetProgressPercentage(idx);
             return SelectedItem.Data[idx];
         }
 
         private void SetProgressPercentage(int idx)
         {
-                Console.WriteLine("Data count: " + SelectedItem.Data.Count + " idx: " + idx);
                 SelectedItem.Progress = (int)Math.Round((double)idx / SelectedItem.Data.Count * 100);
-                Console.WriteLine(SelectedItem.Progress);
             
         }
 

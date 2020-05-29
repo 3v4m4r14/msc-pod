@@ -1,4 +1,5 @@
-﻿using GalleryOfHeartbeats.ViewModels;
+﻿using GalleryOfHeartbeats.Models;
+using GalleryOfHeartbeats.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,12 @@ namespace GalleryOfHeartbeats.View
     /// </summary>
     public partial class Navigation : Window
     {
+        private Settings settings;
+
         public Navigation()
         {
             InitializeComponent();
+            settings = new Settings(PlaybackMode.PER_BEAT, 0, 0.9f, 0, 0.6f, true);
         }
 
         private void ButtonCloseApp_Click(object sender, RoutedEventArgs e)
@@ -44,7 +48,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new GalleryViewModel();
+                DataContext = new GalleryViewModel(settings);
             }
         }
 
@@ -53,7 +57,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new SettingsViewModel();
+                DataContext = new SettingsViewModel(settings);
             }
         }
 

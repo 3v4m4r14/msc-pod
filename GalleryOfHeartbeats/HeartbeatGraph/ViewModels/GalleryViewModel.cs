@@ -1,4 +1,5 @@
 using GalleryOfHeartbeats.Model;
+using GalleryOfHeartbeats.Models;
 using GalleryOfHeartbeats.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace GalleryOfHeartbeats.ViewModels
 {
     class GalleryViewModel : ViewModelBase
     {
+        private Settings Settings;
+        private PlaybackMode PlaybackMode;
+
         private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 500;
         private const int POD_INTERVAL = 50;
@@ -158,6 +162,29 @@ namespace GalleryOfHeartbeats.ViewModels
 
             GraphTimerInit();
         }
+
+        public GalleryViewModel(Settings settings) : this()
+        {
+            this.Settings = settings;
+
+            Connection = new Connection();
+            Actuators = new Actuators(settings);
+            AudioPlayer = new AudioPlayer();
+            HeartbeatTimer = new HeartbeatTimer();
+
+            PlaybackMode = settings.Mode;
+
+            PlaybackTimerInit();
+
+            FileHandler = new FileHandler(FILENAME);
+            Gallery = FileHandler.GetGalleryFromFile();
+
+
+            GraphTimerInit();
+
+            Console.WriteLine("-----GalleryViewModel-----" + Settings.ToString());
+        }
+
 
 
         #region Playback Timer Logic

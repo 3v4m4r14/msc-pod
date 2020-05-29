@@ -1,4 +1,5 @@
-﻿using SimpleTCP;
+﻿using GalleryOfHeartbeats.Models;
+using SimpleTCP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +16,15 @@ namespace GalleryOfHeartbeats.Model
 
         private const int ACTUATOR_DURATION = 200;
 
-        private const float HEATER_INTENSITY_WHEN_IN = 0.7f;
-        private const float HEATER_INTENSITY_WHEN_OUT = 0f;
-        private const float FAN_INTENSITY_WHEN_IN = 0.5f;
-        private const float FAN_INTENSITY_WHEN_OUT = 0.2f;
+        private float HEATER_INTENSITY_WHEN_IN = 0.7f;
+        private float HEATER_INTENSITY_WHEN_OUT = 0f;
+        private float FAN_INTENSITY_WHEN_IN = 0.5f;
+        private float FAN_INTENSITY_WHEN_OUT = 0.2f;
         private const float RED = 0.3f;
         private const float GREEN = 0f;
         private const float BLUE = 0f;
         private const float WHITE = 0.1f;
+        private bool WithLight = false;
 
         private bool HrIsIncreasing = false;
         private int PrevHr = 60;
@@ -35,6 +37,15 @@ namespace GalleryOfHeartbeats.Model
             TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(TurnOffActuators);
             //Client.WriteLine("SetActiveCeilingAnimation|OFF");
             //LightIn();
+        }
+
+        public Actuators(Settings settings) : this()
+        {
+            HEATER_INTENSITY_WHEN_IN = settings.MaxHeatIntensity;
+            HEATER_INTENSITY_WHEN_OUT = settings.MinHeatIntensity;
+            FAN_INTENSITY_WHEN_IN = settings.MaxFanIntensity;
+            FAN_INTENSITY_WHEN_OUT = settings.MinFanIntensity;
+            WithLight = settings.LightOn;
         }
 
         public void ActivateWithHeartbeat()

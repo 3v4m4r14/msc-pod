@@ -108,6 +108,7 @@
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\FileHandler.cs" />
     <Compile Include="Models\HeartbeatTimer.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />

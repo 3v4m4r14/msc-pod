@@ -77,6 +77,20 @@ namespace GalleryOfHeartbeats.ViewModels
             }
         }
 
+        public bool LightStatus
+        {
+            get
+            {
+                return Settings.LightOn;
+            }
+            set
+            {
+                Settings.LightOn = value;
+                OnPropertyChanged("LightStatus");
+            }
+        }
+
+
         public SettingsViewModel(Settings settings)
         {
             this.Settings = settings;

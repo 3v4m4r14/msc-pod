@@ -127,7 +127,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="7" VerticalAlignment="Center">
-                <ToggleButton Width="40" Height="40" IsChecked="False" Style="{DynamicResource MaterialDesignActionToggleButton}" HorizontalAlignment="Left">
+                <ToggleButton Width="40" Height="40" IsChecked="{Binding LightStatus}" Style="{DynamicResource MaterialDesignActionToggleButton}" HorizontalAlignment="Left">
                     <materialDesign:PackIcon Kind="Clear"/>
                     <materialDesign:ToggleButtonAssist.OnContent>
                         <materialDesign:PackIcon Kind="Check"/>

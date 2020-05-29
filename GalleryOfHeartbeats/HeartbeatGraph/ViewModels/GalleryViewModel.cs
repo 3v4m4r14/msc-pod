@@ -147,23 +147,8 @@ namespace GalleryOfHeartbeats.ViewModels
         }
         #endregion
 
-        public GalleryViewModel()
-        {
-            Connection = new Connection();
-            Actuators = new Actuators();
-            AudioPlayer = new AudioPlayer();
-            HeartbeatTimer = new HeartbeatTimer();
 
-            PlaybackTimerInit();
-
-            FileHandler = new FileHandler(FILENAME);
-            Gallery = FileHandler.GetGalleryFromFile();
-
-
-            GraphTimerInit();
-        }
-
-        public GalleryViewModel(Settings settings) : this()
+        public GalleryViewModel(Settings settings)
         {
             this.Settings = settings;
 
@@ -204,7 +189,15 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             if (HeartbeatTimer.TimeForHeartbeat(CurrentHeartrate))
             {
-                Actuators.ActivateWhenHrIncreases(CurrentHeartrate);
+                if (Settings.Mode.Equals(PlaybackMode.PER_BEAT))
+                {
+                    Actuators.ActivateWithHeartbeat();
+                }
+                else if (Settings.Mode.Equals(PlaybackMode.PER_INCREASE))
+                {
+                    Actuators.ActivateWhenHrIncreases(CurrentHeartrate);
+                }
+                
                 AudioPlayer.PlayHeartbeatAudio();
             }
         }

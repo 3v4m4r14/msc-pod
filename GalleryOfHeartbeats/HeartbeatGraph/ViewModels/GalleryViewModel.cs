@@ -16,14 +16,11 @@ namespace GalleryOfHeartbeats.ViewModels
     class GalleryViewModel : ViewModelBase
     {
         private Settings Settings;
-        private PlaybackMode PlaybackMode;
 
         private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 500;
         private const int POD_INTERVAL = 50;
-        private const string FILENAME = "gallery.json";
 
-        private readonly Connection Connection;
         private readonly FileHandler FileHandler;
         private HeartbeatTimer HeartbeatTimer;
         private Actuators Actuators;
@@ -148,29 +145,43 @@ namespace GalleryOfHeartbeats.ViewModels
         #endregion
 
 
-        public GalleryViewModel(Settings settings)
+        public GalleryViewModel(Settings settings, string filename)
         {
             this.Settings = settings;
 
-            Connection = new Connection();
             Actuators = new Actuators(settings);
             AudioPlayer = new AudioPlayer();
             HeartbeatTimer = new HeartbeatTimer();
 
-            PlaybackMode = settings.Mode;
-
             PlaybackTimerInit();
 
-            FileHandler = new FileHandler(FILENAME);
-            Gallery = FileHandler.GetGalleryFromFile();
+            FileHandler = new FileHandler(filename);
+            UpdateGallery();
 
 
             GraphTimerInit();
 
+        }
+
+        override public void OnLoad()
+        {
+            UpdateGallery();
+            Actuators.UpdateSettings(Settings);
             Console.WriteLine("-----GalleryViewModel-----" + Settings.ToString());
         }
 
+        override public void OffLoad()
+        {
+            StopPlayback();
+            GraphTimer.Stop();
+            PlaybackTimer.Stop();
+            Console.WriteLine("Gallery offloaded");
+        }
 
+        private void UpdateGallery()
+        {
+            Gallery = FileHandler.GetGalleryFromFile();
+        }
 
         #region Playback Timer Logic
         private void PlaybackTimerInit()

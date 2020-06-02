@@ -42,6 +42,11 @@ namespace GalleryOfHeartbeats.Model
 
         public Actuators(Settings settings) : this()
         {
+            UpdateSettings(settings);
+        }
+
+        public void UpdateSettings(Settings settings)
+        {
             HEATER_INTENSITY_WHEN_IN = settings.MaxHeatIntensity;
             HEATER_INTENSITY_WHEN_OUT = settings.MinHeatIntensity;
             FAN_INTENSITY_WHEN_IN = settings.MaxFanIntensity;

@@ -21,12 +21,12 @@ namespace GalleryOfHeartbeats.View
     /// </summary>
     public partial class Navigation : Window
     {
-        private Settings Settings;
+        private NavigationViewModel NavigationViewModel = new NavigationViewModel();
 
         public Navigation()
         {
             InitializeComponent();
-            Settings = new Settings();
+            DataContext = NavigationViewModel;
         }
 
         private void ButtonCloseApp_Click(object sender, RoutedEventArgs e)
@@ -39,7 +39,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new RecordingViewModel();
+                NavigationViewModel.ChangeViewModel(ViewTypes.RECORDING);
             }
         }
 
@@ -48,7 +48,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new GalleryViewModel(Settings);
+                NavigationViewModel.ChangeViewModel(ViewTypes.GALLERY);
             }
         }
 
@@ -57,7 +57,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new SettingsViewModel(Settings);
+                NavigationViewModel.ChangeViewModel(ViewTypes.SETTINGS);
             }
         }
 
@@ -66,7 +66,7 @@ namespace GalleryOfHeartbeats.View
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                DataContext = new AboutViewModel();
+                NavigationViewModel.ChangeViewModel(ViewTypes.ABOUT);
             }
         }
     }

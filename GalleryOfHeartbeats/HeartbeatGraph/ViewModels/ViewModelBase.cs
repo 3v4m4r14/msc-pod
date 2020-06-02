@@ -9,6 +9,15 @@ namespace GalleryOfHeartbeats.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
+        public virtual void OnLoad()
+        {
+            Console.WriteLine("Default onload");
+        }
+        public virtual void OffLoad()
+        {
+            Console.WriteLine("Default offload");
+        }
+
         #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)

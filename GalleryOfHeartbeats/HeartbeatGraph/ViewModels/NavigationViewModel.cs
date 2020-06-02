@@ -11,6 +11,8 @@ namespace GalleryOfHeartbeats.ViewModels
     public enum ViewTypes { ABOUT, GALLERY, RECORDING, SETTINGS, IDLE }
     class NavigationViewModel : ViewModelBase
     {
+        private const string FILENAME = "gallery.json";
+
         private Settings Settings;
 
         private Dictionary<ViewTypes, ViewModelBase> ViewModels;
@@ -37,8 +39,8 @@ namespace GalleryOfHeartbeats.ViewModels
             ViewModels = new Dictionary<ViewTypes, ViewModelBase>()
             {
                 [ViewTypes.ABOUT] = new AboutViewModel(),
-                [ViewTypes.GALLERY] = new GalleryViewModel(Settings),
-                [ViewTypes.RECORDING] = new RecordingViewModel(),
+                [ViewTypes.GALLERY] = new GalleryViewModel(Settings, FILENAME),
+                [ViewTypes.RECORDING] = new RecordingViewModel(FILENAME),
                 [ViewTypes.SETTINGS] = new SettingsViewModel(Settings),
                 [ViewTypes.IDLE] = new IdleViewModel()
             };
@@ -48,7 +50,10 @@ namespace GalleryOfHeartbeats.ViewModels
 
         public void ChangeViewModel(ViewTypes _type)
         {
+            SelectedViewModel.OffLoad();
             SelectedViewModel = ViewModels[_type];
+            SelectedViewModel.OnLoad();
         }
+
     }
 }

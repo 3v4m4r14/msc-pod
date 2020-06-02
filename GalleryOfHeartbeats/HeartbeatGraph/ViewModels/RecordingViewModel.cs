@@ -155,13 +155,13 @@ namespace GalleryOfHeartbeats.ViewModels
         }
         #endregion
 
-        public RecordingViewModel()
+        public RecordingViewModel(string filename)
         {
             Connection = new Connection(PORT);
             AudioPlayer = new AudioPlayer();
             HeartbeatTimer = new HeartbeatTimer();
 
-            FileHandler = new FileHandler(FILENAME);
+            FileHandler = new FileHandler(filename);
             Gallery = FileHandler.GetGalleryFromFile();
 
             CurrentRecordingData = new List<int>();
@@ -170,7 +170,24 @@ namespace GalleryOfHeartbeats.ViewModels
             GraphTimerInit();
 
             CommandsInit();
+        }
+
+        public override void OnLoad()
+        {
+            UpdateGallery();
+            CurrentRecordingData = new List<int>();
+            Graph.ResetGraph();
             StartGraph();
+        }
+
+        public override void OffLoad()
+        {
+            StopGraph();
+        }
+
+        private void UpdateGallery()
+        {
+            Gallery = FileHandler.GetGalleryFromFile();
         }
 
         private void CommandsInit()
@@ -189,6 +206,12 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             GraphIsRunning = true;
             GraphTimer.Start();
+        }
+
+        private void StopGraph()
+        {
+            GraphIsRunning = false;
+            GraphTimer.Stop();
         }
 
         #region Graph Timer Logic

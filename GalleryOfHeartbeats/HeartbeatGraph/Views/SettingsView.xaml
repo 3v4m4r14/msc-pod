@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="GalleryOfHeartbeats.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converter="clr-namespace:GalleryOfHeartbeats"
+             xmlns:local="clr-namespace:GalleryOfHeartbeats.Views"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="600" d:DesignWidth="400">
+    <UserControl.Resources>
+        <converter:EnumMatchToBooleanConverter x:Key="enumConverter" />
+    </UserControl.Resources>
+    <Grid Background="{StaticResource MaterialDesignChipBackground}">
+        <Grid Margin="30 50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Margin="0 10">
+                <Label Style="{StaticResource SettingsLabel}">Feedback mode</Label>
+                <StackPanel Margin="2 0 0 10">
+                    <Viewbox Height="30" HorizontalAlignment="Left" Margin="0 10">
+                        <RadioButton 
+                            GroupName="ModeGroup" 
+                            Style="{StaticResource MaterialDesignUserForegroundRadioButton}" 
+                            IsChecked="{Binding Path=PlaybackMode, Mode=TwoWay, 
+                                 Converter={StaticResource enumConverter},
+                                 ConverterParameter=PER_BEAT}">On heartbeat</RadioButton>
+                    </Viewbox>
+                    <Viewbox Height="30" HorizontalAlignment="Left">
+                        <RadioButton
+                            GroupName="ModeGroup"
+                            Style="{StaticResource MaterialDesignUserForegroundRadioButton}"
+                            IsChecked="{Binding Path=PlaybackMode, Mode=TwoWay, 
+                                 Converter={StaticResource enumConverter},
+                                 ConverterParameter=PER_INCREASE}">On increase in heart rate</RadioButton>
+                    </Viewbox>
+                </StackPanel>
+
+                <Separator Style="{DynamicResource MaterialDesignDarkSeparator}"/>
+            </StackPanel>
+
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="0 10" VerticalAlignment="Center">
+                <Label Style="{StaticResource SettingsLabel}">Min heat</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+                <Slider
+                    x:Name="HeatSlider1" 
+                    Minimum="0" 
+                    Maximum="1" 
+                    TickFrequency="0.01" 
+                    IsSnapToTickEnabled="True" 
+                    Value="{Binding Heat1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="2" Margin="0 10">
+                <Label Style="{StaticResource SettingsLabel}">Max heat</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+                <Slider
+                    x:Name="HeatSlider2" 
+                    Minimum="0" 
+                    Maximum="1" 
+                    TickFrequency="0.01" 
+                    IsSnapToTickEnabled="True" 
+                    Value="{Binding Heat2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            </StackPanel>
+
+            <Separator Grid.ColumnSpan="2" Grid.Row="3" Style="{DynamicResource MaterialDesignDarkSeparator}"/>
+
+            <StackPanel Grid.Column="0" Grid.Row="4" Margin="0 10" VerticalAlignment="Center">
+                <Label Style="{StaticResource SettingsLabel}">Min fan</Label>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
+                <Slider
+                    x:Name="FanSlider1"
+                    Minimum="0" 
+                    Maximum="1" 
+                    TickFrequency="0.01" 
+                    IsSnapToTickEnabled="True" 
+                    Value="{Binding Fan1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="5" Margin="0 10">
+                <Label Style="{StaticResource SettingsLabel}">Max fan</Label>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="5" VerticalAlignment="Center">
+                <Slider 
+                    x:Name="FanSlider2"
+                    Minimum="0" 
+                    Maximum="1" 
+                    TickFrequency="0.01" 
+                    IsSnapToTickEnabled="True" 
+                    Value="{Binding Fan2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            </StackPanel>
+
+            <Separator Grid.ColumnSpan="2" Grid.Row="6" Style="{DynamicResource MaterialDesignDarkSeparator}"/>
+
+            <StackPanel Grid.Row="7" VerticalAlignment="Center">
+                <Label Style="{StaticResource SettingsLabel}">Light</Label>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="7" VerticalAlignment="Center">
+                <ToggleButton Width="40" Height="40" IsChecked="{Binding LightStatus}" Style="{DynamicResource MaterialDesignActionToggleButton}" HorizontalAlignment="Left">
+                    <materialDesign:PackIcon Kind="Clear"/>
+                    <materialDesign:ToggleButtonAssist.OnContent>
+                        <materialDesign:PackIcon Kind="Check"/>
+                    </materialDesign:ToggleButtonAssist.OnContent>
+                </ToggleButton>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

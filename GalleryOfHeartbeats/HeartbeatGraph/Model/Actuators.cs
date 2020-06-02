@@ -1,5 +1,4 @@
-﻿using GalleryOfHeartbeats.Models;
-using SimpleTCP;
+﻿using SimpleTCP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,76 +15,47 @@ namespace GalleryOfHeartbeats.Model
 
         private const int ACTUATOR_DURATION = 200;
 
-        private float HEATER_INTENSITY_WHEN_IN = 0.7f;
-        private float HEATER_INTENSITY_WHEN_OUT = 0f;
-        private float FAN_INTENSITY_WHEN_IN = 0.5f;
-        private float FAN_INTENSITY_WHEN_OUT = 0.2f;
+        private const float HEATER_INTENSITY_WHEN_IN = 0.7f;
+        private const float HEATER_INTENSITY_WHEN_OUT = 0f;
+        private const float FAN_INTENSITY_WHEN_IN = 0.5f;
+        private const float FAN_INTENSITY_WHEN_OUT = 0.2f;
         private const float RED = 0.3f;
         private const float GREEN = 0f;
         private const float BLUE = 0f;
         private const float WHITE = 0.1f;
-        private bool WithLight = false;
-
-        private bool HrIsIncreasing = false;
-        private int PrevHr = 60;
 
         public Actuators()
         {
-           // Client = new SimpleTcpClient().Connect("127.0.0.1", 3000);
-
+            Client = new SimpleTcpClient().Connect("127.0.0.1", 3000);
             TimerForTurningOffActuators = new Timer();
             TimerForTurningOffActuators.Interval = ACTUATOR_DURATION;
             TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(TurnOffActuators);
-
-            //Client.WriteLine("SetActiveCeilingAnimation|OFF");
+            Client.WriteLine("SetActiveCeilingAnimation|OFF");
+            LightIn();
         }
 
-        public Actuators(Settings settings) : this()
-        {
-            HEATER_INTENSITY_WHEN_IN = settings.MaxHeatIntensity;
-            HEATER_INTENSITY_WHEN_OUT = settings.MinHeatIntensity;
-            FAN_INTENSITY_WHEN_IN = settings.MaxFanIntensity;
-            FAN_INTENSITY_WHEN_OUT = settings.MinFanIntensity;
-            WithLight = settings.LightOn;
-        }
 
-        public void ActivateWithHeartbeat()
+        public void OnHeartrateChangeBasic(int previous, int current)
         {
-            Console.WriteLine("Actuators ON");
-            //TurnOnActuators();
-            StartActuatorTimer();
-        }
+            Console.WriteLine("Timer event called in Actuators class: " + previous + " " + current);
 
-        public void ActivateWhenHrIncreases(int current)
-        {
-            if (PrevHr < current)
+            if (previous <= current)
             {
-                HrIsIncreasing = true;
-                PrevHr = current;
-            }
-            else if (PrevHr > current)
-            {
-                HrIsIncreasing = false;
-                PrevHr = current;
-            }
-
-            if (HrIsIncreasing)
-            {
-                Console.WriteLine("Act ON");
-                //TurnOnActuators();
+                Console.WriteLine("HR increased");
+                TurnOnActuators();
             }
             else
             {
-                Console.WriteLine("Act OFF");
-                //TurnOffActuators();
+                Console.WriteLine("HR decreased");
+                TurnOffActuators();
             }
-
         }
 
-        public void ResetActuators()
+        public void OnHeartrateChangeAdvanced()
         {
-            Console.WriteLine("Actuators reset.");
-            //TurnOffActuators();
+            Console.WriteLine("Actuators ON");
+            TurnOnActuators();
+            StartActuatorTimer();
         }
 
         private void StartActuatorTimer()
@@ -97,15 +67,11 @@ namespace GalleryOfHeartbeats.Model
         {
             HeatIn();
             FanIn();
-            if (WithLight)
-            {
-                LightIn();
-            }
-
+            //LightIn();
         }
         private void TurnOffActuators(object sender, ElapsedEventArgs e)
         {
-            //TurnOffActuators();
+            TurnOffActuators();
             TimerForTurningOffActuators.Stop();
         }
         private void TurnOffActuators()
@@ -113,11 +79,7 @@ namespace GalleryOfHeartbeats.Model
             Console.WriteLine("Actuators OFF");
             HeatOut();
             FanOut();
-            if (WithLight)
-            {
-                LightOut();
-            }
-
+            //LightOut();
         }
 
         private void HeatOut()

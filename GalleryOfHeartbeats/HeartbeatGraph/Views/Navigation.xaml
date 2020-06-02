@@ -22,6 +22,8 @@
         MinHeight="800"
         MinWidth="600"
         WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        WindowState="Maximized"
         >
     <Window.Resources>
         <Storyboard x:Key="CloseMenu">

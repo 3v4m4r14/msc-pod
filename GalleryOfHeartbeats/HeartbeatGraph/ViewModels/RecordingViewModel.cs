@@ -16,7 +16,7 @@ namespace GalleryOfHeartbeats.ViewModels
 {
     class RecordingViewModel : ViewModelBase
     {
-        private const string PORT = "COM5";
+        private const string PORT = "COM6";
         private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 500;
         private const string GRAPH_TITLE = "Heart rate (bpm)";
@@ -157,7 +157,7 @@ namespace GalleryOfHeartbeats.ViewModels
 
         public RecordingViewModel()
         {
-            Connection = new Connection(true);
+            Connection = new Connection(PORT);
             AudioPlayer = new AudioPlayer();
             HeartbeatTimer = new HeartbeatTimer();
 

@@ -176,7 +176,7 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             UpdateGallery();
             CurrentRecordingData = new List<int>();
-            Graph.ResetGraph();
+            Graph = new Graph(GRAPH_TITLE);
             StartGraph();
         }
 

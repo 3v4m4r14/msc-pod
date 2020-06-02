@@ -141,7 +141,8 @@
             </Grid>
 
             <Grid x:Name="GridBackground" Grid.Row="1" Background="#55313131" Opacity="0" Panel.ZIndex="9998"/>
-            <ContentControl Grid.Row="1" Content="{Binding}"></ContentControl>
+            
+            <ContentControl Grid.Row="1" Content="{Binding SelectedViewModel}"></ContentControl>
 
         </Grid>
     </Grid>

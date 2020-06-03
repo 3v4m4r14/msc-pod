@@ -138,6 +138,7 @@ namespace GalleryOfHeartbeats.ViewModels
         private void StopPlayback()
         {
             PlaybackTimer.Stop();
+            Actuators.ResetActuators();
             IsPlayingBack = false;
             CurrentPlaybackPointer = 0;
             CurrentTime = STARTING_TIME_IS_ZERO;

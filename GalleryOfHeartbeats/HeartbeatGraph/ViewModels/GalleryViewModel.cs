@@ -112,6 +112,7 @@ namespace GalleryOfHeartbeats.ViewModels
             IsPlayingBack = false;
             GraphTimer.Stop();
             PlaybackTimer.Stop();
+            Actuators.ResetActuators();
             Console.WriteLine("Paused");
         }
 

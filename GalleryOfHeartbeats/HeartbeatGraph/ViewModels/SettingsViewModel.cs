@@ -42,6 +42,10 @@ namespace GalleryOfHeartbeats.ViewModels
             }
             set
             {
+                if (Settings.Mode == PlaybackMode.RECOMMENDED)
+                {
+                    ResetPlaybackMode();
+                }
                 Settings.MinHeatIntensity = value;
                 OnPropertyChanged("Heat1");
             }
@@ -55,6 +59,10 @@ namespace GalleryOfHeartbeats.ViewModels
             }
             set
             {
+                if (Settings.Mode == PlaybackMode.RECOMMENDED)
+                {
+                    ResetPlaybackMode();
+                }
                 Settings.MaxHeatIntensity = value;
                 OnPropertyChanged("Heat2");
             }
@@ -68,6 +76,10 @@ namespace GalleryOfHeartbeats.ViewModels
             }
             set
             {
+                if (Settings.Mode == PlaybackMode.RECOMMENDED)
+                {
+                    ResetPlaybackMode();
+                }
                 Settings.MinFanIntensity = value;
                 OnPropertyChanged("Fan1");
             }
@@ -81,6 +93,10 @@ namespace GalleryOfHeartbeats.ViewModels
             }
             set
             {
+                if (Settings.Mode == PlaybackMode.RECOMMENDED)
+                {
+                    ResetPlaybackMode();
+                }
                 Settings.MaxFanIntensity = value;
                 OnPropertyChanged("Fan2");
             }
@@ -94,9 +110,19 @@ namespace GalleryOfHeartbeats.ViewModels
             }
             set
             {
+                if (Settings.Mode == PlaybackMode.RECOMMENDED)
+                {
+                    ResetPlaybackMode();
+                }
                 Settings.LightOn = value;
                 OnPropertyChanged("LightStatus");
             }
+        }
+
+        public void ResetPlaybackMode()
+        {
+            Settings.Mode = PlaybackMode.PER_BEAT;
+            OnPropertyChanged("PlaybackMode");
         }
 
 

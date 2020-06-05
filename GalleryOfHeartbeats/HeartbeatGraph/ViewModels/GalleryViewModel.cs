@@ -210,6 +210,10 @@ namespace GalleryOfHeartbeats.ViewModels
                 {
                     Actuators.ActivateWhenHrIncreases(CurrentHeartrate);
                 }
+                else if (Settings.Mode.Equals(PlaybackMode.RECOMMENDED))
+                {
+                    Actuators.RecommendedExperience(CurrentHeartrate);
+                }
                 
                 AudioPlayer.PlayHeartbeatAudio();
             }

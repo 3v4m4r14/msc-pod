@@ -13,6 +13,7 @@ namespace GalleryOfHeartbeats.Model
     {
         private SimpleTcpClient Client;
         private Timer TimerForTurningOffActuators;
+        private Timer TimerForTurningOffHeat;
 
         private const int ACTUATOR_DURATION = 200;
 
@@ -36,6 +37,10 @@ namespace GalleryOfHeartbeats.Model
             TimerForTurningOffActuators = new Timer();
             TimerForTurningOffActuators.Interval = ACTUATOR_DURATION;
             TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(TurnOffActuators);
+
+            TimerForTurningOffHeat = new Timer();
+            TimerForTurningOffHeat.Interval = ACTUATOR_DURATION;
+            TimerForTurningOffHeat.Elapsed += new ElapsedEventHandler(TurnOffRecommendedActuators);
 
             //Client.WriteLine("SetActiveCeilingAnimation|OFF");
         }
@@ -63,16 +68,7 @@ namespace GalleryOfHeartbeats.Model
 
         public void ActivateWhenHrIncreases(int current)
         {
-            if (PrevHr < current)
-            {
-                HrIsIncreasing = true;
-                PrevHr = current;
-            }
-            else if (PrevHr > current)
-            {
-                HrIsIncreasing = false;
-                PrevHr = current;
-            }
+            SetHrIsIncreasing(current);
 
             if (HrIsIncreasing)
             {
@@ -85,6 +81,39 @@ namespace GalleryOfHeartbeats.Model
                 //TurnOffActuators();
             }
 
+        }
+
+        private void SetHrIsIncreasing(int current)
+        {
+            if (PrevHr < current)
+            {
+                HrIsIncreasing = true;
+                PrevHr = current;
+            }
+            else if (PrevHr > current)
+            {
+                HrIsIncreasing = false;
+                PrevHr = current;
+            }
+        }
+
+        public void RecommendedExperience(int current)
+        {
+            SetHrIsIncreasing(current);
+            if (HrIsIncreasing)
+            {
+                Console.WriteLine("Rec air ON");
+                //FanIn();
+            }
+            else
+            {
+                Console.WriteLine("Rec air OFF");
+                //FanOut();
+            }
+
+            Console.WriteLine("Rec heat ON");
+            //HeatIn();
+            TimerForTurningOffHeat.Start();
         }
 
         public void ResetActuators()
@@ -112,6 +141,11 @@ namespace GalleryOfHeartbeats.Model
         {
             //TurnOffActuators();
             TimerForTurningOffActuators.Stop();
+        }
+        private void TurnOffRecommendedActuators(object sender, ElapsedEventArgs e)
+        {
+            //HeatOut();
+            TimerForTurningOffHeat.Stop();
         }
         private void TurnOffActuators()
         {

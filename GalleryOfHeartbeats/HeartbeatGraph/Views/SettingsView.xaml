@@ -412,7 +412,7 @@
 
 
             <StackPanel Grid.Column="0" Grid.Row="2" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Min heat</Label>
+                <Label Style="{StaticResource SettingsLabel}">Heat level 1</Label>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
@@ -428,7 +428,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="3" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Max heat</Label>
+                <Label Style="{StaticResource SettingsLabel}">Heat level 2</Label>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
@@ -446,7 +446,7 @@
             <Separator Grid.ColumnSpan="2" Grid.Row="4" Style="{DynamicResource MaterialDesignDarkSeparator}"/>
 
             <StackPanel Grid.Column="0" Grid.Row="5" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Min fan</Label>
+                <Label Style="{StaticResource SettingsLabel}">Air level 1</Label>
 
             </StackPanel>
 
@@ -463,7 +463,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="6" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Max fan</Label>
+                <Label Style="{StaticResource SettingsLabel}">Air level 2</Label>
 
             </StackPanel>
 

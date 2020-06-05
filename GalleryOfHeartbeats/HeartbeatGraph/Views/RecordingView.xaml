@@ -23,11 +23,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" Height="Auto">
-            <Label Padding="0, 10, 5, 0">Heart rate:</Label>
+        <StackPanel Grid.Row="0" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" Width="Auto" Height="Auto">
+            <Label Padding="0, 10, 5, 0"
+                   Style="{StaticResource MaterialDesignLabel}">Heart rate:</Label>
 
             <Label
                         Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
@@ -40,43 +40,47 @@
             <oxy:PlotView Background="Transparent" Model="{Binding GraphModel}"/>
         </DockPanel>
 
-        <StackPanel Grid.Row="2" HorizontalAlignment="Stretch">
-        <DockPanel
-                    Margin="30"
-                    Width="Auto">
+        <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <DockPanel
+                Margin="30 0"
+                Width="Auto"
+                Height="Auto">
 
-            <Label  
-                    VerticalAlignment="Top"
+                <Label  
+                    VerticalAlignment="Center"
                         Content="Enter name:"
                         Padding="0, 0, 10, 0"
                     Style="{StaticResource MaterialDesignLabel}"
                     FontSize="20">
-            </Label>
+                </Label>
 
-            <TextBox 
+                <TextBox 
                         x:Name="textBox" 
                         Text="{Binding NameOfUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         MinHeight="30" 
                         MinWidth="40"
                         Width="Auto"
-                    Height="Auto"/>
+                    Height="Auto"
+                    FontSize="20"/>
 
-        </DockPanel>
-        </StackPanel>
+            </DockPanel>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button 
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 
                     Content="Start"
                     Margin="10"/>
 
-            <Button 
+                <Button 
                     x:Name="btnStopRecording" 
                     Command="{Binding CommandStopRecording}" 
                     Content="Stop"
                     Margin="10"/>
+            </StackPanel>
         </StackPanel>
+
+
 
 
     </Grid>

@@ -29,7 +29,7 @@
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto" MinHeight="30"/>
+                                    <RowDefinition Height="Auto" MinHeight="60"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
@@ -48,7 +48,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                                 <Canvas Background="Transparent" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                                                                    <Rectangle x:Name="PART_SelectionRange" Fill="{TemplateBinding Background}" Height="30" Canvas.Top="0" Width="{TemplateBinding ActualWidth}"/>
+                                                                    <Rectangle x:Name="PART_SelectionRange" Fill="{TemplateBinding Background}" Height="60" Canvas.Top="0" Width="{TemplateBinding ActualWidth}"/>
                                                                 </Canvas>
                                                             </ControlTemplate>
                                                         </Setter.Value>
@@ -69,7 +69,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                                 <Canvas Background="Transparent" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                                                                    <Rectangle x:Name="PART_SelectionRange" Fill="{TemplateBinding Background}" Height="30" Canvas.Top="0" Width="{TemplateBinding ActualWidth}"/>
+                                                                    <Rectangle x:Name="PART_SelectionRange" Fill="{TemplateBinding Background}" Height="60" Canvas.Top="0" Width="{TemplateBinding ActualWidth}"/>
                                                                 </Canvas>
                                                             </ControlTemplate>
                                                         </Setter.Value>
@@ -79,7 +79,7 @@
                                         </RepeatButton>
                                     </Track.IncreaseRepeatButton>
                                     <Track.Thumb>
-                                        <Thumb x:Name="Thumb" Focusable="False" Height="30" OverridesDefaultStyle="True" VerticalAlignment="Center" Width="0">
+                                        <Thumb x:Name="Thumb" Focusable="False" Height="60" OverridesDefaultStyle="True" VerticalAlignment="Center" Width="0">
                                             <Thumb.Template>
                                                 <ControlTemplate TargetType="{x:Type Thumb}">
                                                     <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">

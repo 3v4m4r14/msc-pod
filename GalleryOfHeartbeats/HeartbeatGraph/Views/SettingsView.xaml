@@ -17,7 +17,7 @@
              d:DesignHeight="600" d:DesignWidth="400">
     <UserControl.Resources>
         <converter:EnumMatchToBooleanConverter x:Key="enumConverter" />
-        <Style x:Key="SliderStyle1" TargetType="{x:Type Slider}">
+        <Style x:Key="BiggerSliderStyle" TargetType="{x:Type Slider}">
             <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -423,20 +423,11 @@
                     TickFrequency="0.01" 
                     IsSnapToTickEnabled="True"
                     IsMoveToPointEnabled="True"
-                    Value="0.5" Style="{DynamicResource SliderStyle1}"></Slider>
+                    Value="{Binding Heat1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource BiggerSliderStyle}"></Slider>
             </StackPanel>
 
-            <!--<StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
-                <Slider
-                    x:Name="HeatSlider1" 
-                    Minimum="0" 
-                    Maximum="1" 
-                    TickFrequency="0.01" 
-                    IsSnapToTickEnabled="True" 
-                    Value="{Binding Heat1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SliderStyle1}"></Slider>
-            </StackPanel>-->
-
-            <StackPanel Grid.Column="0" Grid.Row="3" Margin="0 10">
+            <StackPanel Grid.Column="0" Grid.Row="3" Margin="0 10" VerticalAlignment="Center">
                 <Label Style="{StaticResource SettingsLabel}">Max heat</Label>
             </StackPanel>
 
@@ -446,8 +437,10 @@
                     Minimum="0" 
                     Maximum="1" 
                     TickFrequency="0.01" 
-                    IsSnapToTickEnabled="True" 
-                    Value="{Binding Heat2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                    IsSnapToTickEnabled="True"
+                    IsMoveToPointEnabled="True"
+                    Value="{Binding Heat2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource BiggerSliderStyle}"></Slider>
             </StackPanel>
 
             <Separator Grid.ColumnSpan="2" Grid.Row="4" Style="{DynamicResource MaterialDesignDarkSeparator}"/>
@@ -464,10 +457,12 @@
                     Maximum="1" 
                     TickFrequency="0.01" 
                     IsSnapToTickEnabled="True" 
-                    Value="{Binding Fan1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                    IsMoveToPointEnabled="True"
+                    Value="{Binding Fan1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource BiggerSliderStyle}"></Slider>
             </StackPanel>
 
-            <StackPanel Grid.Column="0" Grid.Row="6" Margin="0 10">
+            <StackPanel Grid.Column="0" Grid.Row="6" Margin="0 10" VerticalAlignment="Center">
                 <Label Style="{StaticResource SettingsLabel}">Max fan</Label>
 
             </StackPanel>
@@ -478,8 +473,10 @@
                     Minimum="0" 
                     Maximum="1" 
                     TickFrequency="0.01" 
-                    IsSnapToTickEnabled="True" 
-                    Value="{Binding Fan2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                    IsSnapToTickEnabled="True"
+                    IsMoveToPointEnabled="True"
+                    Value="{Binding Fan2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource BiggerSliderStyle}"></Slider>
             </StackPanel>
 
             <Separator Grid.ColumnSpan="2" Grid.Row="7" Style="{DynamicResource MaterialDesignDarkSeparator}"/>

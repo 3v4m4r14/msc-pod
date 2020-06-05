@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GalleryOfHeartbeats.Models
 {
-    public enum PlaybackMode { PER_BEAT, PER_INCREASE }
+    public enum PlaybackMode { PER_BEAT, PER_INCREASE, RECOMMENDED }
 
     public class Settings
     {
@@ -26,6 +26,16 @@ namespace GalleryOfHeartbeats.Models
             this.MinFanIntensity = minFan;
             this.MaxFanIntensity = maxFan;
             this.LightOn = lightOn;
+        }
+
+        public void GetRecommendedSettings()
+        {
+            this.Mode = PlaybackMode.RECOMMENDED;
+            this.MinHeatIntensity = 0f;
+            this.MaxHeatIntensity = 0.3f;
+            this.MinFanIntensity = 0.5f;
+            this.MaxFanIntensity = 0.2f;
+            this.LightOn = false;
         }
 
         public Settings() { }

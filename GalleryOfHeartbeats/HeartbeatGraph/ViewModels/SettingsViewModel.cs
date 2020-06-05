@@ -20,6 +20,15 @@ namespace GalleryOfHeartbeats.ViewModels
             }
             set
             {
+                if (value == PlaybackMode.RECOMMENDED)
+                {
+                    Settings.GetRecommendedSettings();
+                    OnPropertyChanged("Heat1");
+                    OnPropertyChanged("Heat2");
+                    OnPropertyChanged("Fan1");
+                    OnPropertyChanged("Fan2");
+                    OnPropertyChanged("LightStatus");
+                }
                 Settings.Mode = value;
                 OnPropertyChanged("PlaybackMode");
             }

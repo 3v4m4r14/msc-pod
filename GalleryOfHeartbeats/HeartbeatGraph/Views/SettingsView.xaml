@@ -405,6 +405,14 @@
                                  Converter={StaticResource enumConverter},
                                  ConverterParameter=PER_INCREASE}">On increase in heart rate</RadioButton>
                     </Viewbox>
+                    <Viewbox Height="30" HorizontalAlignment="Left">
+                        <RadioButton
+                            GroupName="ModeGroup"
+                            Style="{StaticResource MaterialDesignUserForegroundRadioButton}"
+                            IsChecked="{Binding Path=PlaybackMode, Mode=TwoWay, 
+                                 Converter={StaticResource enumConverter},
+                                 ConverterParameter=RECOMMENDED}">Designer's special</RadioButton>
+                    </Viewbox>
                 </StackPanel>
             </StackPanel>
 

@@ -1,4 +1,4 @@
-﻿<!--Navigation panel from: https://www.youtube.com/watch?v=PQFyoKKfstM-->    
+<!--Navigation panel from: https://www.youtube.com/watch?v=PQFyoKKfstM-->    
 <Window x:Class="GalleryOfHeartbeats.View.Navigation"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -91,7 +91,16 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ButtonClose" Background="{x:Null}" BorderBrush="{x:Null}" Width="Auto" Height="Auto" Padding="0">
+                    <materialDesign:PackIcon Kind="Close" Width="Auto" Height="Auto"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1">
                 <ListView Style="{StaticResource MaterialDesignListView}" Margin="0 100">
                     <ListViewItem Height="100" Style="{StaticResource MaterialDesignListBoxItem}" PreviewMouseLeftButtonUp="RecordingView_Clicked">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
@@ -119,9 +128,6 @@
                     </ListViewItem>
                 </ListView>
             </StackPanel>
-            <Button x:Name="ButtonClose" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Padding="0">
-                <materialDesign:PackIcon Kind="Close" Width="50" Height="50"/>
-            </Button>
         </Grid>
         <Grid>
             <Grid.RowDefinitions>

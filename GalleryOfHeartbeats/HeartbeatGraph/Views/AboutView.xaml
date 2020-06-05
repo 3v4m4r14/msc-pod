@@ -53,7 +53,7 @@
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50 15">
             <TextBlock FontSize="14" TextWrapping="Wrap" TextAlignment="Center">
-                Heartbeat Archive <materialDesign:PackIcon Kind="Copyright"></materialDesign:PackIcon>
+                Gallery of Heartbeats<materialDesign:PackIcon Kind="Copyright"></materialDesign:PackIcon>
                 2020
             </TextBlock>
         </StackPanel>

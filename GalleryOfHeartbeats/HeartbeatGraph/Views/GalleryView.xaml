@@ -16,11 +16,14 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="800" d:DesignWidth="600">
     <Grid Background="{StaticResource PrimaryHueLightBrush}">
+
         <Grid>
             <ListBox
                 Name="Gallery"
                 ItemsSource="{Binding HeartbeatOptions}"
-                HorizontalContentAlignment="Stretch">
+                HorizontalContentAlignment="Stretch"
+                ScrollViewer.PanningMode="VerticalOnly"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                         <i:InvokeCommandAction
@@ -32,17 +35,14 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Width="Auto" Height="Auto" MinHeight="70" Panel.ZIndex="10">
-                                <TextBlock Text="{Binding Name}" Margin="0 0 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="20" Foreground="WhiteSmoke"/>
-                                <TextBlock Text="{Binding TimeOfRecording}" Margin="0 0 0 10" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="15" Foreground="WhiteSmoke"/>
-                            </StackPanel>
-                            <!--<StackPanel Grid.Row="1">
-                                <ProgressBar Orientation="Horizontal" Height="Auto" MinHeight="70" Margin="0" Minimum="0" Maximum="100" Value="{Binding Progress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>-->
+                            <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="0 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke"/>
+
+                            <TextBlock Grid.Row="1" Text="{Binding TimeOfRecording}" Margin="0 0 0 30" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="38" Foreground="WhiteSmoke"/>
+
 
 
 

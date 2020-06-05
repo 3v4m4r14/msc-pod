@@ -5,12 +5,58 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GalleryOfHeartbeats.Views"
              mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="800" d:DesignWidth="500">
-    <Grid Background="Yellow">
-        <TextBlock Margin="50">
-            Lorem ipsum blabla bla<LineBreak></LineBreak>
-            Eva Maria Veitmaa<LineBreak></LineBreak>
-            2020
-        </TextBlock>
+    <Grid Background="{DynamicResource SecondaryAccentBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="50 10">
+            <Viewbox>
+                <Label>About the "Gallery of Heartbeats"</Label>
+            </Viewbox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="50 0">
+            <TextBlock FontSize="18" TextWrapping="Wrap">
+                We, humans, know each other mostly by our looks or voices.
+                <LineBreak/><LineBreak/>
+                Some people we also know by their body temperature, their scent, or their breathing.
+                <LineBreak/><LineBreak/>
+                Yet the first thing this world knows us by is the heartbeat.
+                <LineBreak/><LineBreak/>
+                For months, the heartbeat is the only thing that describes us, identifies us, tells the world who we are.
+                <LineBreak/><LineBreak/>
+                Once we are born, recognising each other by our heartbeats suddenly stops, reminding of itself only when lying on the chest of a loved one.
+                <LineBreak/><LineBreak/>
+                The heart becomes hidden. Unseen. Unheard. A secret available only to its owner (if they know how to listen).
+                <LineBreak/><LineBreak/>
+                The "Gallery of Heartbeats" lets you share your secret.
+                <LineBreak/><LineBreak/>
+                Record it. Compare it. Feel it. Share it.
+                <LineBreak/><LineBreak/>
+                Yours truly
+                <LineBreak/>
+                Eva Maria Veitmaa
+            </TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50 15">
+            <TextBlock FontSize="14" TextWrapping="Wrap" TextAlignment="Center">
+                Gallery of Heartbeats<materialDesign:PackIcon Kind="Copyright"></materialDesign:PackIcon>
+                2020
+            </TextBlock>
+        </StackPanel>
+
     </Grid>
 </UserControl>

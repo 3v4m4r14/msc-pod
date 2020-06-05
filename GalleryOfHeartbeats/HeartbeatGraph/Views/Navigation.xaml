@@ -82,7 +82,7 @@
         </Grid.RowDefinitions>
         
         
-        <Grid x:Name="GridMenu" Width="250" HorizontalAlignment="Left" Panel.ZIndex="9999" Margin="-250 0 0 0" Background="{StaticResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.5,0.5">
+        <Grid x:Name="GridMenu" Grid.RowSpan="2" Width="250" HorizontalAlignment="Left" Panel.ZIndex="9999" Margin="-250 0 0 0" Background="{StaticResource PrimaryHueDarkBrush}" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -125,21 +125,21 @@
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" x:Name="MenuBar" Background="{StaticResource PrimaryHueMidBrush}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button x:Name="ButtonOpen" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Padding="0" Margin="10, 0">
-                        <materialDesign:PackIcon Kind="Menu" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Width="50" Height="50"/>
+                    <Button x:Name="ButtonOpen" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="Auto" Height="Auto" Padding="0" Margin="10, 0">
+                        <materialDesign:PackIcon Kind="Menu" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Width="Auto" Height="Auto"/>
                     </Button>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button
                     x:Name="ButtonCloseApp"
-                    VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Padding="0" Margin="10, 0"
+                    VerticalAlignment="Top" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" Width="Auto" Height="Auto" Padding="0" Margin="5 0"
                     Click="ButtonCloseApp_Click">
-                        <materialDesign:PackIcon Kind="Power" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Width="40" Height="40"/>
+                        <materialDesign:PackIcon Kind="Power" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Width="Auto" Height="Auto"/>
                     </Button>
                 </StackPanel>
             </Grid>

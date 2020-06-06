@@ -21,17 +21,20 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" Width="Auto" Height="Auto">
             <Label Padding="0, 10, 5, 0"
-                   Style="{StaticResource MaterialDesignLabel}">Heart rate:</Label>
+                   Style="{StaticResource MaterialDesignLabel}"
+                   FontSize="20">Heart rate:</Label>
 
             <Label
                         Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="0, 10, 0, 0">
+                        Padding="0, 10, 0, 0"
+                FontSize="20">
             </Label>
 
         </StackPanel>
@@ -51,7 +54,7 @@
                         Content="Enter name:"
                         Padding="0, 0, 10, 0"
                     Style="{StaticResource MaterialDesignLabel}"
-                    FontSize="20">
+                    FontSize="42">
                 </Label>
 
                 <TextBox 
@@ -61,22 +64,28 @@
                         MinWidth="40"
                         Width="Auto"
                     Height="Auto"
-                    FontSize="20"/>
+                    FontSize="42"/>
 
             </DockPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 30">
                 <Button 
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 
                     Content="Start"
-                    Margin="10"/>
+                    Margin="10"
+                    FontSize="48"
+                    Height="100"
+                    Width="240"/>
 
                 <Button 
                     x:Name="btnStopRecording" 
                     Command="{Binding CommandStopRecording}" 
                     Content="Stop"
-                    Margin="10"/>
+                    Margin="10"
+                    FontSize="48"
+                    Height="100"
+                    Width="240"/>
             </StackPanel>
         </StackPanel>
 

@@ -83,8 +83,8 @@
                                             <Thumb.Template>
                                                 <ControlTemplate TargetType="{x:Type Thumb}">
                                                     <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
-                                                        <Ellipse x:Name="shadow" Fill="{TemplateBinding Foreground}" Height="24" Margin="-12" Opacity="0" UseLayoutRounding="True" Width="24"/>
-                                                        <Ellipse x:Name="grip" Fill="{TemplateBinding Foreground}" Height="12" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="True" Width="12">
+                                                        <Ellipse x:Name="shadow" Fill="{TemplateBinding Foreground}" Height="60" Margin="-12" Opacity="0" UseLayoutRounding="True" Width="24"/>
+                                                        <Ellipse x:Name="grip" Fill="{TemplateBinding Foreground}" Height="60" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="True" Width="12">
                                                             <Ellipse.RenderTransform>
                                                                 <ScaleTransform ScaleY="1" ScaleX="1"/>
                                                             </Ellipse.RenderTransform>
@@ -375,7 +375,7 @@
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="0.4*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -389,7 +389,7 @@
             <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Margin="0 10">
                 <Label Style="{StaticResource SettingsLabel}">Feedback mode</Label>
                 <StackPanel Margin="2 0 0 10">
-                    <Viewbox Height="30" HorizontalAlignment="Left" Margin="0 10">
+                    <Viewbox Height="40" HorizontalAlignment="Left" Margin="0 10">
                         <RadioButton 
                             GroupName="ModeGroup" 
                             Style="{StaticResource MaterialDesignUserForegroundRadioButton}" 
@@ -397,7 +397,7 @@
                                  Converter={StaticResource enumConverter},
                                  ConverterParameter=PER_BEAT}">On heartbeat</RadioButton>
                     </Viewbox>
-                    <Viewbox Height="30" HorizontalAlignment="Left">
+                    <Viewbox Height="40" HorizontalAlignment="Left">
                         <RadioButton
                             GroupName="ModeGroup"
                             Style="{StaticResource MaterialDesignUserForegroundRadioButton}"
@@ -412,7 +412,7 @@
 
 
             <StackPanel Grid.Column="0" Grid.Row="2" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Min heat</Label>
+                <Label Style="{StaticResource SettingsLabel}">Heat level 1</Label>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
@@ -428,7 +428,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="3" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Max heat</Label>
+                <Label Style="{StaticResource SettingsLabel}">Heat level 2</Label>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
@@ -446,7 +446,7 @@
             <Separator Grid.ColumnSpan="2" Grid.Row="4" Style="{DynamicResource MaterialDesignDarkSeparator}"/>
 
             <StackPanel Grid.Column="0" Grid.Row="5" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Min fan</Label>
+                <Label Style="{StaticResource SettingsLabel}">Air level 1</Label>
 
             </StackPanel>
 
@@ -463,7 +463,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="6" Margin="0 10" VerticalAlignment="Center">
-                <Label Style="{StaticResource SettingsLabel}">Max fan</Label>
+                <Label Style="{StaticResource SettingsLabel}">Air level 2</Label>
 
             </StackPanel>
 
@@ -486,10 +486,10 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="8" VerticalAlignment="Center">
-                <ToggleButton Width="40" Height="40" IsChecked="{Binding LightStatus}" Style="{DynamicResource MaterialDesignActionToggleButton}" HorizontalAlignment="Left">
-                    <materialDesign:PackIcon Kind="Clear"/>
+                <ToggleButton Width="100" Height="100" IsChecked="{Binding LightStatus}" Style="{DynamicResource MaterialDesignActionToggleButton}" HorizontalAlignment="Left">
+                    <materialDesign:PackIcon Kind="Clear" Width="80" Height="80"/>
                     <materialDesign:ToggleButtonAssist.OnContent>
-                        <materialDesign:PackIcon Kind="Check"/>
+                        <materialDesign:PackIcon Kind="Check" Width="80" Height="80"/>
                     </materialDesign:ToggleButtonAssist.OnContent>
                 </ToggleButton>
             </StackPanel>

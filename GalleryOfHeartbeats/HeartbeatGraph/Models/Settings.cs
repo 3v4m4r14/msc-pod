@@ -12,8 +12,8 @@ namespace GalleryOfHeartbeats.Models
     {
         private const float REC_MIN_HEAT = 0.1f;
         private const float REC_MAX_HEAT = 0.4f;
-        private const float REC_MIN_AIR = 0.2f;
-        private const float REC_MAX_AIR = 0.5f;
+        private const float REC_MIN_AIR = 0.1f;
+        private const float REC_MAX_AIR = 0.3f;
         private const bool REC_LIGHT = false;
 
         public PlaybackMode Mode = PlaybackMode.RECOMMENDED;

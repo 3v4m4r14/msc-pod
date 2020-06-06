@@ -15,7 +15,7 @@ namespace GalleryOfHeartbeats.Model
         private Timer TimerForTurningOffActuators;
         private Timer TimerForTurningOffHeat;
 
-        private const int ACTUATOR_DURATION = 200;
+        private const int ACTUATOR_DURATION = 300;
         private const int NIL_POWER = 0;
 
         private float HEATER_INTENSITY_WHEN_IN = 0.7f;

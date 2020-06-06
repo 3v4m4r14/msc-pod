@@ -16,6 +16,7 @@ namespace GalleryOfHeartbeats.Model
         private Timer TimerForTurningOffHeat;
 
         private const int ACTUATOR_DURATION = 200;
+        private const int NIL_POWER = 0;
 
         private float HEATER_INTENSITY_WHEN_IN = 0.7f;
         private float HEATER_INTENSITY_WHEN_OUT = 0f;
@@ -32,17 +33,17 @@ namespace GalleryOfHeartbeats.Model
 
         public Actuators()
         {
-           // Client = new SimpleTcpClient().Connect("127.0.0.1", 3000);
+            Client = new SimpleTcpClient().Connect("127.0.0.1", 3000);
 
             TimerForTurningOffActuators = new Timer();
             TimerForTurningOffActuators.Interval = ACTUATOR_DURATION;
-            TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(TurnOffActuators);
+            TimerForTurningOffActuators.Elapsed += new ElapsedEventHandler(PowerDown);
 
             TimerForTurningOffHeat = new Timer();
             TimerForTurningOffHeat.Interval = ACTUATOR_DURATION;
-            TimerForTurningOffHeat.Elapsed += new ElapsedEventHandler(TurnOffRecommendedActuators);
+            TimerForTurningOffHeat.Elapsed += new ElapsedEventHandler(PowerDownRecommendedActuators);
 
-            //Client.WriteLine("SetActiveCeilingAnimation|OFF");
+            Client.WriteLine("SetActiveCeilingAnimation|OFF");
         }
 
         public Actuators(Settings settings) : this()
@@ -62,7 +63,7 @@ namespace GalleryOfHeartbeats.Model
         public void ActivateWithHeartbeat()
         {
             Console.WriteLine("Actuators ON");
-            //TurnOnActuators();
+            PowerUp();
             StartActuatorTimer();
         }
 
@@ -73,12 +74,12 @@ namespace GalleryOfHeartbeats.Model
             if (HrIsIncreasing)
             {
                 Console.WriteLine("Act ON");
-                //TurnOnActuators();
+                PowerUp();
             }
             else
             {
                 Console.WriteLine("Act OFF");
-                //TurnOffActuators();
+                PowerDown();
             }
 
         }
@@ -103,12 +104,12 @@ namespace GalleryOfHeartbeats.Model
             if (HrIsIncreasing)
             {
                 Console.WriteLine("Rec air ON");
-                //FanIn();
+                FanIn();
             }
             else
             {
                 Console.WriteLine("Rec air OFF");
-                //FanOut();
+                FanOut();
             }
 
             Console.WriteLine("Rec heat ON");
@@ -119,7 +120,7 @@ namespace GalleryOfHeartbeats.Model
         public void ResetActuators()
         {
             Console.WriteLine("Actuators reset.");
-            //TurnOffActuators();
+            PowerDown();
         }
 
         private void StartActuatorTimer()
@@ -127,7 +128,7 @@ namespace GalleryOfHeartbeats.Model
             TimerForTurningOffActuators.Start();
         }
 
-        private void TurnOnActuators()
+        private void PowerUp()
         {
             HeatIn();
             FanIn();
@@ -137,17 +138,17 @@ namespace GalleryOfHeartbeats.Model
             }
 
         }
-        private void TurnOffActuators(object sender, ElapsedEventArgs e)
+        private void PowerDown(object sender, ElapsedEventArgs e)
         {
-            //TurnOffActuators();
+            PowerDown();
             TimerForTurningOffActuators.Stop();
         }
-        private void TurnOffRecommendedActuators(object sender, ElapsedEventArgs e)
+        private void PowerDownRecommendedActuators(object sender, ElapsedEventArgs e)
         {
-            //HeatOut();
+            HeatOut();
             TimerForTurningOffHeat.Stop();
         }
-        private void TurnOffActuators()
+        private void PowerDown()
         {
             Console.WriteLine("Actuators OFF");
             HeatOut();
@@ -157,6 +158,22 @@ namespace GalleryOfHeartbeats.Model
                 LightOut();
             }
 
+        }
+
+        public void TurnOff()
+        {
+            Console.WriteLine("All actuators completely OFF");
+            Client.WriteLine("SetHeaterIntensity|LEFT|" + NIL_POWER);
+            Client.WriteLine("SetHeaterIntensity|RIGHT|" + NIL_POWER);
+            Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + NIL_POWER);
+            Client.WriteLine("SetHeaterIntensity|SEAT_RIGHT|" + NIL_POWER);
+            Client.WriteLine("SetHeaterIntensity|FRONT|" + NIL_POWER);
+            Client.WriteLine("SetFanIntensity|FRONT_LEFT|" + NIL_POWER);
+            Client.WriteLine("SetFanIntensity|FRONT_RIGHT|" + NIL_POWER);
+            Client.WriteLine("SetFanIntensity|REAR_LEFT|" + NIL_POWER);
+            Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + NIL_POWER);
+            Client.WriteLine("SetLightColor|LEFT|0|0|0|0");
+            Client.WriteLine("SetLightColor|RIGHT|0|0|0|0");
         }
 
         private void HeatOut()

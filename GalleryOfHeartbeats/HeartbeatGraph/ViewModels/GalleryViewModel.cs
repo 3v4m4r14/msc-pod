@@ -177,6 +177,7 @@ namespace GalleryOfHeartbeats.ViewModels
             StopPlayback();
             GraphTimer.Stop();
             PlaybackTimer.Stop();
+            Actuators.TurnOff();
             Console.WriteLine("Gallery offloaded");
         }
 

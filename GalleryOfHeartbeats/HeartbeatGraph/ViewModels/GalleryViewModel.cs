@@ -140,6 +140,7 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             PlaybackTimer.Stop();
             Actuators.ResetActuators();
+            Actuators.TurnOff();
             IsPlayingBack = false;
             CurrentPlaybackPointer = 0;
             CurrentTime = STARTING_TIME_IS_ZERO;
@@ -209,6 +210,10 @@ namespace GalleryOfHeartbeats.ViewModels
                 else if (Settings.Mode.Equals(PlaybackMode.PER_INCREASE))
                 {
                     Actuators.ActivateWhenHrIncreases(CurrentHeartrate);
+                }
+                else if (Settings.Mode.Equals(PlaybackMode.RECOMMENDED))
+                {
+                    Actuators.RecommendedExperience(CurrentHeartrate);
                 }
                 
                 AudioPlayer.PlayHeartbeatAudio();

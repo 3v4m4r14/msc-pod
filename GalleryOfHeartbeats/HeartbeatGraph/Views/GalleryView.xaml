@@ -23,7 +23,8 @@
                 ItemsSource="{Binding HeartbeatOptions}"
                 HorizontalContentAlignment="Stretch"
                 ScrollViewer.PanningMode="VerticalOnly"
-                ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                Margin="0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                         <i:InvokeCommandAction
@@ -39,9 +40,9 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="0 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke"/>
+                            <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="20 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke"/>
 
-                            <TextBlock Grid.Row="1" Text="{Binding TimeOfRecording}" Margin="0 0 0 30" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="38" Foreground="WhiteSmoke"/>
+                            <TextBlock Grid.Row="1" Text="{Binding TimeOfRecording}" Margin="20 0 0 30" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="38" Foreground="WhiteSmoke"/>
 
 
 

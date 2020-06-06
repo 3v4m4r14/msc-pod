@@ -113,7 +113,7 @@ namespace GalleryOfHeartbeats.Model
             }
 
             Console.WriteLine("Rec heat ON");
-            //HeatIn();
+            HeatIn();
             TimerForTurningOffHeat.Start();
         }
 

@@ -1,4 +1,4 @@
-﻿using GalleryOfHeartbeats.Model;
+using GalleryOfHeartbeats.Model;
 using GalleryOfHeartbeats.ViewModel.Commands;
 using OxyPlot;
 using System;
@@ -177,6 +177,7 @@ namespace GalleryOfHeartbeats.ViewModels
             UpdateGallery();
             CurrentRecordingData = new List<int>();
             Graph = new Graph(GRAPH_TITLE);
+            CurrentTime = 0.0f;
             StartGraph();
         }
 

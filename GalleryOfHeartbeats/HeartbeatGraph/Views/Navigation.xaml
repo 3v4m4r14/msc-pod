@@ -66,6 +66,9 @@
         <DataTemplate x:Name="AboutViewTemplate" DataType="{x:Type viewmodels:AboutViewModel}">
             <views:AboutView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="IdleViewTemplate" DataType="{x:Type viewmodels:IdleViewModel}">
+            <views:IdleView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">

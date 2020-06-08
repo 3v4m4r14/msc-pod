@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace GalleryOfHeartbeats.ViewModels
 
@@ -12,12 +13,16 @@ namespace GalleryOfHeartbeats.ViewModels
     class NavigationViewModel : ViewModelBase
     {
         private const string FILENAME = "gallery.json";
+        private const int IDLE_INTERVAL = 50000;
 
         private Settings Settings;
 
         private Dictionary<ViewTypes, ViewModelBase> ViewModels;
 
         private ViewModelBase selectedViewModel;
+        private ViewModelBase previousViewModel;
+
+        private Timer IdleTimer;
 
         public ViewModelBase SelectedViewModel
         {
@@ -36,6 +41,11 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             Settings = new Settings();
 
+            IdleTimer = new Timer();
+            IdleTimer.Interval = IDLE_INTERVAL;
+            IdleTimer.Elapsed += new ElapsedEventHandler(IdleTimerEvent);
+            IdleTimer.Start();
+
             ViewModels = new Dictionary<ViewTypes, ViewModelBase>()
             {
                 [ViewTypes.ABOUT] = new AboutViewModel(),
@@ -45,14 +55,24 @@ namespace GalleryOfHeartbeats.ViewModels
                 [ViewTypes.IDLE] = new IdleViewModel()
             };
 
-            SelectedViewModel = ViewModels[ViewTypes.ABOUT];
+            SelectedViewModel = ViewModels[ViewTypes.IDLE];
         }
 
         public void ChangeViewModel(ViewTypes _type)
         {
+            
             SelectedViewModel.OffLoad();
             SelectedViewModel = ViewModels[_type];
             SelectedViewModel.OnLoad();
+
+            IdleTimer.Stop();
+            IdleTimer.Start();
+        }
+
+        private void IdleTimerEvent(object sender, EventArgs e)
+        {
+            previousViewModel = SelectedViewModel;
+            ChangeViewModel(ViewTypes.IDLE);
         }
 
     }

@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="GalleryOfHeartbeats.Views.IdleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GalleryOfHeartbeats.Views"
+             mc:Ignorable="d" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="600" d:DesignWidth="350">
+    <Grid Background="{DynamicResource MaterialDesignBody}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40 0 0 0" Height="Auto" Width="Auto">
+            <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
+        </DockPanel>
+        <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Height="Auto" Width="Auto">
+            <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
+        </DockPanel>
+        <DockPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 40 0" Height="Auto" Width="Auto">
+            <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
+        </DockPanel>
+
+        <Viewbox Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="40 30">
+            <TextBlock
+                Style="{DynamicResource MaterialDesignTextBlock}"
+                Foreground="{DynamicResource SecondaryAccentBrush}"
+                FontWeight="DemiBold"
+                 TextAlignment="Center">
+                Close your eyes
+                <LineBreak/><LineBreak/>
+                Listen with your body
+            </TextBlock>
+        </Viewbox>
+    </Grid>
+</UserControl>

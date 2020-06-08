@@ -183,6 +183,7 @@ namespace GalleryOfHeartbeats.ViewModels
 
         public override void OffLoad()
         {
+            StopRecording(new object());
             StopGraph();
         }
 

@@ -40,7 +40,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="20 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke"/>
+                            <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="20 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
 
                             <TextBlock Grid.Row="1" Text="{Binding TimeOfRecording}" Margin="20 0 0 30" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="38" Foreground="WhiteSmoke"/>
 

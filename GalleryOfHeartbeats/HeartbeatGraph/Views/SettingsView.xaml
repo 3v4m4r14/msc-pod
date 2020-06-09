@@ -409,7 +409,8 @@
                                  Converter={StaticResource enumConverter},
                                  ConverterParameter=PER_INCREASE}">On increase in heart rate</RadioButton>
                     </Viewbox>
-                    <Viewbox Height="40" HorizontalAlignment="Left">
+                    
+                    <Viewbox Height="40" HorizontalAlignment="Left" Margin="0 10">
                         <RadioButton
                             GroupName="ModeGroup"
                             Style="{StaticResource MaterialDesignUserForegroundRadioButton}"

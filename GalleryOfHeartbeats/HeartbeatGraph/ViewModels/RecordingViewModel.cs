@@ -19,11 +19,13 @@ namespace GalleryOfHeartbeats.ViewModels
         private const string PORT = "COM5"; //XRBase COM5
         private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 500;
+        private const int PLAYBACK_INTERVAL = 50;
         private const string GRAPH_TITLE = "Heart rate (bpm)";
         private const string FILENAME = "gallery.json";
 
         private float CurrentTime = 0.0f;
         private Timer GraphTimer;
+        private Timer PlaybackTimer;
 
         private bool IsRecording = false;
         private bool GraphIsRunning = false;
@@ -161,6 +163,8 @@ namespace GalleryOfHeartbeats.ViewModels
             AudioPlayer = new AudioPlayer();
             HeartbeatTimer = new HeartbeatTimer();
 
+            PlaybackTimerInit();
+
             FileHandler = new FileHandler(filename);
             Gallery = FileHandler.GetGalleryFromFile();
 
@@ -183,8 +187,23 @@ namespace GalleryOfHeartbeats.ViewModels
 
         public override void OffLoad()
         {
-            StopRecording(new object());
+            if (IsRecording)
+            {
+                StopRecording(new object());
+            }
             StopGraph();
+        }
+
+        private void PlaybackTimerInit()
+        {
+            PlaybackTimer = new Timer();
+            PlaybackTimer.Interval = PLAYBACK_INTERVAL;
+            PlaybackTimer.Elapsed += new ElapsedEventHandler(PlaybackTimerEvent);
+        }
+
+        private void PlaybackTimerEvent(object sender, ElapsedEventArgs e)
+        {
+            ProvideFeedback();
         }
 
         private void UpdateGallery()
@@ -208,12 +227,14 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             GraphIsRunning = true;
             GraphTimer.Start();
+            PlaybackTimer.Start();
         }
 
         private void StopGraph()
         {
             GraphIsRunning = false;
             GraphTimer.Stop();
+            PlaybackTimer.Stop();
         }
 
         #region Graph Timer Logic
@@ -229,7 +250,6 @@ namespace GalleryOfHeartbeats.ViewModels
             GetDataFromSensor();
 
             AddHeartrateToGraph();
-            ProvideFeedback();
         }
         #endregion
 

@@ -13,7 +13,7 @@ namespace GalleryOfHeartbeats.ViewModels
     class NavigationViewModel : ViewModelBase
     {
         private const string FILENAME = "gallery.json";
-        private const int IDLE_INTERVAL = 50000;
+        private const long IDLE_INTERVAL = 600000;
 
         private Settings Settings;
 

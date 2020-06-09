@@ -36,7 +36,7 @@ namespace GalleryOfHeartbeats.ViewModels
         private Graph Graph;
         private Gallery Gallery;
 
-        private GalleryItem CurrentRecordingItem;
+        private GalleryItem CurrentRecordingItem = new GalleryItem();
         private List<int> CurrentRecordingData;
 
         private int PreviousHeartrate = 60;

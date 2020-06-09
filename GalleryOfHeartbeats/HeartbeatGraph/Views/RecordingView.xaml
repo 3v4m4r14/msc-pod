@@ -22,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
@@ -43,7 +44,15 @@
             <oxy:PlotView Background="Transparent" Model="{Binding GraphModel}"/>
         </DockPanel>
 
-        <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <DockPanel Grid.Row="2" HorizontalAlignment="Center" Width="Auto" Height="Auto" Margin="30 10">
+            <Label
+                VerticalAlignment="Center"
+                Content="(Clip the pulse sensor onto your body)"
+                Style="{StaticResource MaterialDesignLabel}"
+                FontSize="28"></Label>
+        </DockPanel>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <DockPanel
                 Margin="30 0"
                 Width="Auto"
@@ -51,7 +60,7 @@
 
                 <Label  
                     VerticalAlignment="Center"
-                        Content="Enter name:"
+                        Content="I am feeling:"
                         Padding="0, 0, 10, 0"
                     Style="{StaticResource MaterialDesignLabel}"
                     FontSize="42">

@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:local="clr-namespace:GalleryOfHeartbeats.Views"
+             xmlns:local="clr-namespace:GalleryOfHeartbeats.Views" 
+             xmlns:converter="clr-namespace:GalleryOfHeartbeats"
              mc:Ignorable="d" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -15,6 +16,9 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="800" d:DesignWidth="600">
+    <UserControl.Resources>
+        <converter:BoolToVisibleOrHidden x:Key="VisibleConverter" Collapse="True" />
+    </UserControl.Resources>
     <Grid Background="{StaticResource MaterialDesignBody}">
 
         <Grid>
@@ -39,8 +43,12 @@
                                 <RowDefinition Height="2*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="7*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                            <Rectangle Grid.RowSpan="2" Width="Auto" Height="Auto" RadiusX="30" RadiusY="30">
+                            <Rectangle Grid.RowSpan="2" Grid.ColumnSpan="2" Width="Auto" Height="Auto" RadiusX="30" RadiusY="30">
                                 <Rectangle.Fill>
                                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                         <GradientStop Color="{DynamicResource Primary900}" Offset="0.0" />
@@ -52,9 +60,21 @@
                                 </Rectangle.Fill>
                             </Rectangle>
 
-                            <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="20 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
+                            <materialDesign:PackIcon
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                Kind="Heart"
+                                Width="Auto"
+                                Height="Auto"
+                                MaxHeight="300"
+                                VerticalAlignment="Center"
+                                Margin="20 0"
+                                Foreground="{DynamicResource MaterialDesignBody}"
+                                Visibility="{Binding Converter={StaticResource VisibleConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1},Path=IsSelected}"/>
 
-                            <TextBlock Grid.Row="1" Text="{Binding TimeOfRecording}" Margin="20 0 0 30" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="38" Foreground="WhiteSmoke"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" Margin="20 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding TimeOfRecording}" Margin="20 0 0 30" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" FontSize="38" Foreground="WhiteSmoke"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

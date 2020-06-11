@@ -21,7 +21,7 @@
             <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkBrush}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Slider}">
@@ -368,14 +368,14 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="{StaticResource MaterialDesignChipBackground}">
+    <Grid Background="{StaticResource PrimaryHueLightBrush}">
         <Grid Margin="30 50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="0.4*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -499,7 +499,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="8" VerticalAlignment="Center">
-                <ToggleButton Width="100" Height="100" IsChecked="{Binding LightStatus}" Style="{DynamicResource MaterialDesignActionToggleButton}" HorizontalAlignment="Left">
+                <ToggleButton Width="100" Height="100" IsChecked="{Binding LightStatus}" Style="{DynamicResource MaterialDesignActionDarkToggleButton}" HorizontalAlignment="Left">
                     <materialDesign:PackIcon Kind="Clear" Width="80" Height="80"/>
                     <materialDesign:ToggleButtonAssist.OnContent>
                         <materialDesign:PackIcon Kind="Check" Width="80" Height="80"/>

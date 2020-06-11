@@ -18,7 +18,8 @@
              d:DesignHeight="800" d:DesignWidth="600">
     <UserControl.Resources>
         <converter:BoolToVisibleOrHidden x:Key="VisibleConverter" Collapse="True" />
-        <!-- Pulse -->
+        
+        <!-- Pulse from https://stackoverflow.com/questions/25877737/advanced-xaml-animation-effects-pulse-marching-ants-rotations-alerts/25978608 -->
         <Storyboard x:Key="PulseAnimation" RepeatBehavior="Forever">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="HeartIcon">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.15"/>

@@ -368,7 +368,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="{StaticResource PrimaryHueLightBrush}">
+    <Grid Background="{StaticResource MaterialDesignChipBackground}">
         <Grid Margin="30 50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>

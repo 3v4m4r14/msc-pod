@@ -20,7 +20,7 @@ namespace GalleryOfHeartbeats.ViewModels
         private const float STARTING_TIME_IS_ZERO = 0.0f;
         private const int POLLING_INTERVAL = 500;
         private const int PLAYBACK_INTERVAL = 50;
-        private const string GRAPH_TITLE = "Heart rate (bpm)";
+        private const string GRAPH_TITLE = "";
         private const string FILENAME = "gallery.json";
 
         private float CurrentTime = 0.0f;
@@ -42,6 +42,20 @@ namespace GalleryOfHeartbeats.ViewModels
         private List<int> CurrentRecordingData;
 
         private int PreviousHeartrate = 60;
+
+        private bool isTimeForHeartbeat = false;
+        public bool IsTimeForHeartbeat
+        {
+            get
+            {
+                return isTimeForHeartbeat;
+            }
+            set
+            {
+                isTimeForHeartbeat = value;
+                OnPropertyChanged("IsTimeForHeartBeat");
+            }
+        }
 
         #region Username (ID) for the Recording
         private string nameOfUser = "";
@@ -204,6 +218,7 @@ namespace GalleryOfHeartbeats.ViewModels
         private void PlaybackTimerEvent(object sender, ElapsedEventArgs e)
         {
             ProvideFeedback();
+            IsTimeForHeartbeat = false;
         }
 
         private void UpdateGallery()
@@ -304,6 +319,7 @@ namespace GalleryOfHeartbeats.ViewModels
         {
             if (HeartbeatTimer.TimeForHeartbeat(CurrentHeartrate))
             {
+                IsTimeForHeartbeat = true;
                 AudioPlayer.PlayHeartbeatAudio();
             }
         }

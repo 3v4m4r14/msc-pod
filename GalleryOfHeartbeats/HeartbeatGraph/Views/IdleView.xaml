@@ -20,16 +20,39 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40 0 0 0" Height="Auto" Width="Auto">
+            
             <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
         </DockPanel>
-        <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Height="Auto" Width="Auto">
+        <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Height="Auto" Width="Auto" RenderTransformOrigin="0.5,0.5">
             <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
+            <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform x:Name="transform" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard x:Name="bloo">
+                                <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.5" Duration="0:0:3"/>
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.5" Duration="0:0:3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        
+
+                    </Style.Triggers>
+                </Style>
+
+            </DockPanel.Style>
         </DockPanel>
         <DockPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 40 0" Height="Auto" Width="Auto">
             <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
@@ -41,9 +64,10 @@
                 Foreground="{DynamicResource SecondaryAccentBrush}"
                 FontWeight="DemiBold"
                  TextAlignment="Center">
-                Close your eyes
-                <LineBreak/><LineBreak/>
-                Listen with your body
+                Record it<LineBreak/>
+                Compare it<LineBreak/>
+                Feel it<LineBreak/>
+                Share it
             </TextBlock>
         </Viewbox>
     </Grid>

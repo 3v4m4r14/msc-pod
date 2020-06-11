@@ -27,7 +27,12 @@ namespace GalleryOfHeartbeats.Model
             };
             GraphModel.Series.Add(lines);
 
-            GraphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { Position = AxisPosition.Left, Minimum = 0, Maximum = 200, MajorStep = 20, MinorStep = 5 });
+            GraphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { 
+                Position = AxisPosition.Left, 
+                Minimum = 0, Maximum = 200, 
+                MajorStep = 20, MinorStep = 5,
+                TextColor = OxyColors.LightGray
+                });
 
             AllPoints = new List<DataPoint> { new DataPoint(0,60) };
         }

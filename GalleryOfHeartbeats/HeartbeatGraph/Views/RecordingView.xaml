@@ -27,7 +27,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+        <StackPanel Grid.Row="1" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto" Panel.ZIndex="999">
             <Viewbox Margin="50" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Label
                         Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
@@ -38,7 +38,7 @@
 
         </StackPanel>
 
-        <DockPanel Grid.Row="1" Width="Auto" Height="Auto" MinHeight="200" VerticalAlignment="Stretch" Margin="30 0" Panel.ZIndex="999">
+        <DockPanel Grid.Row="1" Width="Auto" Height="Auto" MinHeight="200" VerticalAlignment="Stretch" Margin="30 0" Panel.ZIndex="99">
             <oxy:PlotView Background="Transparent" Model="{Binding GraphModel}"/>
         </DockPanel>
 

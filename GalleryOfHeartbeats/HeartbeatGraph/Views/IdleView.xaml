@@ -32,15 +32,16 @@
         <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Height="Auto" Width="Auto" RenderTransformOrigin="0.5,0.5">
             <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
             <DockPanel.Style>
+                <!--https://stackoverflow.com/questions/13035766/listbox-slide-animation-on-new-item-added-->
                 <Style TargetType="DockPanel">
                     <Setter Property="RenderTransform">
                         <Setter.Value>
-                            <ScaleTransform x:Name="transform" />
+                            <ScaleTransform/>
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
                         <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard x:Name="bloo">
+                            <BeginStoryboard>
                                 <Storyboard RepeatBehavior="Forever" AutoReverse="True">
                                     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.5" Duration="0:0:3"/>
                                     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.5" Duration="0:0:3"/>

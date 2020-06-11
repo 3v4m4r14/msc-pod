@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -31,7 +32,19 @@ namespace GalleryOfHeartbeats.ViewModels
         private Timer GraphTimer;
         private Timer PlaybackTimer;
 
-        private bool IsPlayingBack = false;
+        private bool isPlayingBack = false;
+        public bool IsPlayingBack
+        {
+            get
+            {
+                return isPlayingBack;
+            }
+            set
+            {
+                isPlayingBack = value;
+                OnPropertyChanged("IsPlayingBack");
+            }
+        }
 
         private int CurrentPlaybackPointer = 0;
         private int PreviousHeartrate = 60;

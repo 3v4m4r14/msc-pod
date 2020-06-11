@@ -72,39 +72,50 @@
                                 </Rectangle.Fill>
                             </Rectangle>
 
-                            <materialDesign:PackIcon
-                                x:Name="HeartIcon"
+                            <DockPanel 
+                                x:Name="HeartIcon" 
                                 Grid.RowSpan="2"
                                 Grid.Column="1"
-                                Kind="Heart"
                                 Width="Auto"
                                 Height="Auto"
-                                MaxHeight="300"
-                                VerticalAlignment="Center"
                                 Margin="20 0"
-                                Foreground="{DynamicResource MaterialDesignBody}"
+                                VerticalAlignment="Center"
+                                MaxHeight="300"
                                 Visibility="{Binding Converter={StaticResource VisibleConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1},Path=IsSelected}"
                                 RenderTransformOrigin="0.5,0.5">
-                                <materialDesign:PackIcon.RenderTransform>
+
+                                <DockPanel.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
                                         <SkewTransform/>
                                         <RotateTransform/>
                                         <TranslateTransform/>
                                     </TransformGroup>
-                                </materialDesign:PackIcon.RenderTransform>
-                                <materialDesign:PackIcon.Triggers>
-                                    <EventTrigger RoutedEvent="materialDesign:PackIcon.Loaded">
+                                </DockPanel.RenderTransform>
+
+                                <DockPanel.Triggers>
+                                    <EventTrigger RoutedEvent="DockPanel.Loaded">
                                         <BeginStoryboard>
-                                            <Storyboard Storyboard.TargetName="{Binding Name,RelativeSource={RelativeSource AncestorType=materialDesign:PackIcon,Mode=FindAncestor}}">
+                                            <Storyboard Storyboard.TargetName="{Binding Name,RelativeSource={RelativeSource AncestorType=DockPanel,Mode=FindAncestor}}">
                                                 <StaticResourceExtension ResourceKey="PulseAnimation" />
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger>
-                                </materialDesign:PackIcon.Triggers>
-                            </materialDesign:PackIcon>
+                                </DockPanel.Triggers>
+                                
+                                <materialDesign:PackIcon
+                                
+                                
+                                Kind="Heart"
+                                Width="Auto"
+                                Height="Auto"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource MaterialDesignBody}"
+                                >
+                                 
+                                </materialDesign:PackIcon>
+                            </DockPanel>
 
-                            
 
                             <TextBlock  Grid.Row="0" Grid.Column="0" Text="{Binding Name}" Margin="20 20 0 0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontSize="80" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
 

@@ -96,7 +96,7 @@
 
                                 <DockPanel.Style>
                                     <Style TargetType="DockPanel">
-                                        <Setter Property="LayoutTransform">
+                                        <Setter Property="RenderTransform">
                                             <Setter.Value>
                                                 <ScaleTransform x:Name="transform" />
                                             </Setter.Value>
@@ -106,8 +106,8 @@
                                                 <DataTrigger.EnterActions>
                                                     <BeginStoryboard x:Name="bloo">
                                                         <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2" />
-                                                            <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="0" To="1" Duration="0:0:.2"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0" To="1" Duration="0:0:.5"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0" To="1" Duration="0:0:.5"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.EnterActions>

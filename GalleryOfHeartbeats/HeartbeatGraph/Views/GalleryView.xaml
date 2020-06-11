@@ -18,18 +18,6 @@
              d:DesignHeight="800" d:DesignWidth="600">
     <UserControl.Resources>
         <converter:BoolToVisibleOrHidden x:Key="VisibleConverter" Collapse="True" />
-        
-        <!-- Pulse from https://stackoverflow.com/questions/25877737/advanced-xaml-animation-effects-pulse-marching-ants-rotations-alerts/25978608 -->
-        <Storyboard x:Key="PulseAnimation" RepeatBehavior="Forever">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="HeartIcon">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.15"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="HeartIcon">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.15"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
     </UserControl.Resources>
     <Grid Background="{DynamicResource MaterialDesignBody}">
 
@@ -81,18 +69,8 @@
                                 Height="Auto"
                                 Margin="20 0"
                                 VerticalAlignment="Center"
-                                MaxHeight="300"
                                 Visibility="{Binding Converter={StaticResource VisibleConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1},Path=IsSelected}"
                                 RenderTransformOrigin="0.5,0.5">
-
-                                <!--<DockPanel.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </DockPanel.RenderTransform>-->
 
                                 <DockPanel.Style>
                                     <Style TargetType="DockPanel">
@@ -106,8 +84,8 @@
                                                 <DataTrigger.EnterActions>
                                                     <BeginStoryboard x:Name="bloo">
                                                         <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0" To="1" Duration="0:0:.5"/>
-                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0" To="1" Duration="0:0:.5"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.15" Duration="0:0:.5"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.15" Duration="0:0:.5"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.EnterActions>
@@ -121,26 +99,14 @@
                              
                                 </DockPanel.Style>
 
-                                <!--<DockPanel.Triggers>
-                                    <EventTrigger RoutedEvent="DockPanel.Loaded">
-                                        <BeginStoryboard>
-                                            <Storyboard Storyboard.TargetName="{Binding Name,RelativeSource={RelativeSource AncestorType=DockPanel,Mode=FindAncestor}}">
-                                                <StaticResourceExtension ResourceKey="PulseAnimation" />
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </DockPanel.Triggers>-->
-                                
+
                                 <materialDesign:PackIcon
-                                
-                                
                                 Kind="Heart"
                                 Width="Auto"
                                 Height="Auto"
                                 VerticalAlignment="Center"
                                 Foreground="{DynamicResource MaterialDesignBody}"
                                 >
-                                 
                                 </materialDesign:PackIcon>
                             </DockPanel>
 

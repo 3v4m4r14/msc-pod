@@ -7,7 +7,8 @@
     StartupUri="Views/Navigation.xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     d1p1:Ignorable="d" 
-    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
   <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -35,6 +36,29 @@
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="FontSize" Value="36"/>
+            </Style>
+            <Style TargetType="{x:Type xctk:MessageBox}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="{DynamicResource Primary900}" Offset="0.0" />
+                            <GradientStop Color="{DynamicResource Primary500}" Offset="0.3" />
+                            <GradientStop Color="{DynamicResource Primary400}" Offset="0.5" />
+                            <GradientStop Color="{DynamicResource Primary500}" Offset="0.7" />
+                            <GradientStop Color="{DynamicResource Primary900}" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ButtonRegionBackground" Value="{DynamicResource MaterialDesignBodyLight}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignShadowBrush}" />
+                <Setter Property="WindowBorderBrush" Value="{DynamicResource MaterialDesignShadowBrush}" />
+                <Setter Property="WindowBackground" Value="{DynamicResource MaterialDesignBody}" />
+                <Setter Property="WindowOpacity" Value="0.8" />
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}"/>
+                <Setter Property="OkButtonStyle" Value="{DynamicResource MaterialDesignFlatAccentBgButton}"/>
+                <Setter Property="CloseButtonStyle" Value="{DynamicResource MaterialDesignFlatAccentBgButton}"/>
+                <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}"/>
+                <Setter Property="FontSize" Value="30"/>
             </Style>
         </ResourceDictionary>
         

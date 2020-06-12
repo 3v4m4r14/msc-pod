@@ -23,13 +23,11 @@
 
         <Rectangle Grid.RowSpan="3" Width="Auto" Height="Auto">
             <Rectangle.Fill>
-                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="{DynamicResource Accent700}" Offset="0.0" />
-                    <GradientStop Color="{DynamicResource Accent400}" Offset="0.2" />
-                    <GradientStop Color="{DynamicResource Accent200}" Offset="0.5" />
-                    <GradientStop Color="{DynamicResource Accent400}" Offset="0.9" />
+                <RadialGradientBrush GradientOrigin="0.5, 0.5" RadiusX="0.8" RadiusY="0.5">
+                    <GradientStop Color="{DynamicResource Accent200}" Offset="0.0" />
+                    <GradientStop Color="{DynamicResource Accent400}" Offset="0.5" />
                     <GradientStop Color="{DynamicResource Accent700}" Offset="1.0" />
-                </LinearGradientBrush>
+                </RadialGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
 

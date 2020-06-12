@@ -14,12 +14,24 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="800" d:DesignWidth="500">
-    <Grid Background="{DynamicResource SecondaryAccentBrush}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Rectangle Grid.RowSpan="3" Width="Auto" Height="Auto">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{DynamicResource Accent700}" Offset="0.0" />
+                    <GradientStop Color="{DynamicResource Accent400}" Offset="0.2" />
+                    <GradientStop Color="{DynamicResource Accent200}" Offset="0.5" />
+                    <GradientStop Color="{DynamicResource Accent400}" Offset="0.9" />
+                    <GradientStop Color="{DynamicResource Accent700}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="50 10">
             <Viewbox>

@@ -218,7 +218,6 @@ namespace GalleryOfHeartbeats.ViewModels
         private void PlaybackTimerEvent(object sender, ElapsedEventArgs e)
         {
             ProvideFeedback();
-            IsTimeForHeartbeat = false;
         }
 
         private void UpdateGallery()
@@ -317,11 +316,17 @@ namespace GalleryOfHeartbeats.ViewModels
 
         private void ProvideFeedback()
         {
+            
             if (HeartbeatTimer.TimeForHeartbeat(CurrentHeartrate))
             {
                 IsTimeForHeartbeat = true;
                 AudioPlayer.PlayHeartbeatAudio();
             }
+            else
+            {
+                IsTimeForHeartbeat = false;
+            }
+            
         }
     }
 }

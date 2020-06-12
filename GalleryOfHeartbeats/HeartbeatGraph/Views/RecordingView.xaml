@@ -61,14 +61,24 @@
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
+                        <DataTrigger Binding="{Binding IsTimeForHeartbeat}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard x:Name="bloo">
+                                    <Storyboard AutoReverse="True" RepeatBehavior="1x">
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.15" Duration="0:0:.2"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.15" Duration="0:0:.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                        <!--<EventTrigger RoutedEvent="Loaded">
                             <BeginStoryboard x:Name="bloo">
                                 <Storyboard AutoReverse="True" RepeatBehavior="Forever">
                                     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.15" Duration="0:0:.5"/>
                                     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.15" Duration="0:0:.5"/>
                                 </Storyboard>
                             </BeginStoryboard>
-                        </EventTrigger>
+                        </EventTrigger>-->
 
                     </Style.Triggers>
                 </Style>

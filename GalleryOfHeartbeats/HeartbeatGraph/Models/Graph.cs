@@ -27,17 +27,31 @@ namespace GalleryOfHeartbeats.Model
             };
             GraphModel.Series.Add(lines);
 
-            GraphModel.Axes.Add(new OxyPlot.Axes.LinearAxis { 
-                Position = AxisPosition.Left, 
-                Minimum = 0, Maximum = 200, 
-                MajorStep = 20, MinorStep = 5,
-                TextColor = OxyColors.LightGray
-                });
+            GraphModel.Axes.Add(new OxyPlot.Axes.LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Minimum = 0,
+                Maximum = 200,
+                MajorStep = 20,
+                MinorStep = 5,
+                TextColor = OxyColors.LightGray,
+                IsAxisVisible = false
+            });
+
+            GraphModel.Axes.Add(new OxyPlot.Axes.LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                TextColor = OxyColors.LightGray,
+                IsAxisVisible = false
+            });
 
             AllPoints = new List<DataPoint> { new DataPoint(0,60) };
         }
 
-        public PlotModel GraphModel { get; set; } = new PlotModel();
+        public PlotModel GraphModel { get; set; } = new PlotModel()
+        {
+            PlotAreaBorderThickness = new OxyThickness(0)
+        };
         public IList<DataPoint> AllPoints { get; set; }
 
         public void ResetGraph()

@@ -11,7 +11,7 @@ namespace GalleryOfHeartbeats.Model
 {
     public class Graph
     {
-        private static readonly int MAX_DATA_POINTS_SHOWN_AT_ONCE = 120;
+        private static readonly int MAX_DATA_POINTS_SHOWN_AT_ONCE = 60;
 
         OxyPlot.Series.LineSeries lines;
 

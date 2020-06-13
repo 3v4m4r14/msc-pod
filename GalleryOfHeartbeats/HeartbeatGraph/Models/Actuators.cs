@@ -1,4 +1,4 @@
-﻿using GalleryOfHeartbeats.Models;
+using GalleryOfHeartbeats.Models;
 using SimpleTCP;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace GalleryOfHeartbeats.Model
         private float HEATER_INTENSITY_WHEN_OUT = 0f;
         private float FAN_INTENSITY_WHEN_IN = 0.5f;
         private float FAN_INTENSITY_WHEN_OUT = 0.2f;
-        private const float RED = 0.3f;
+        private const float RED = 0.7f;
         private const float GREEN = 0f;
         private const float BLUE = 0f;
         private const float WHITE = 0.1f;
@@ -43,7 +43,7 @@ namespace GalleryOfHeartbeats.Model
             TimerForTurningOffHeat.Interval = ACTUATOR_DURATION;
             TimerForTurningOffHeat.Elapsed += new ElapsedEventHandler(PowerDownRecommendedActuators);
 
-            Client.WriteLine("SetActiveCeilingAnimation|OFF");
+            ToIdleState();
         }
 
         public Actuators(Settings settings) : this()
@@ -146,6 +146,7 @@ namespace GalleryOfHeartbeats.Model
         private void PowerDownRecommendedActuators(object sender, ElapsedEventArgs e)
         {
             HeatOut();
+            LightOut();
             TimerForTurningOffHeat.Stop();
         }
         private void PowerDown()
@@ -153,10 +154,7 @@ namespace GalleryOfHeartbeats.Model
             Console.WriteLine("Actuators OFF");
             HeatOut();
             FanOut();
-            if (WithLight)
-            {
-                LightOut();
-            }
+            LightOut();
 
         }
 
@@ -174,7 +172,16 @@ namespace GalleryOfHeartbeats.Model
             Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + NIL_POWER);
             Client.WriteLine("SetLightColor|LEFT|0|0|0|0");
             Client.WriteLine("SetLightColor|RIGHT|0|0|0|0");
+            Client.WriteLine("SetActiveCeilingAnimation|OFF");
         }
+
+        public void ToIdleState()
+        {
+            TurnOff();
+            LightIn();
+            Client.WriteLine("SetActiveCeilingAnimation|OFF");
+        }
+
 
         private void HeatOut()
         {

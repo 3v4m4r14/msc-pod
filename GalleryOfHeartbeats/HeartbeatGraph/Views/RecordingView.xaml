@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="1" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto" Panel.ZIndex="999">
-            <Viewbox Margin="50" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Viewbox Margin="150" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Label
                         Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
                 Foreground="{DynamicResource MaterialDesignDarkForeground}">

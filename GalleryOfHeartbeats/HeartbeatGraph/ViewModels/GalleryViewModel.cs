@@ -125,7 +125,7 @@ namespace GalleryOfHeartbeats.ViewModels
             IsPlayingBack = false;
             GraphTimer.Stop();
             PlaybackTimer.Stop();
-            Actuators.TurnOff();
+            Actuators.ToIdleState();
             Console.WriteLine("Paused");
         }
 
@@ -152,7 +152,7 @@ namespace GalleryOfHeartbeats.ViewModels
         private void StopPlayback()
         {
             PlaybackTimer.Stop();
-            Actuators.TurnOff();
+            Actuators.ToIdleState();
             IsPlayingBack = false;
             CurrentPlaybackPointer = 0;
             CurrentTime = STARTING_TIME_IS_ZERO;
@@ -190,7 +190,7 @@ namespace GalleryOfHeartbeats.ViewModels
             StopPlayback();
             GraphTimer.Stop();
             PlaybackTimer.Stop();
-            Actuators.TurnOff();
+            Actuators.ToIdleState();
             Console.WriteLine("Gallery offloaded");
         }
 

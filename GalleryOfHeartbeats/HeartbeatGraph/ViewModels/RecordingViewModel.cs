@@ -138,7 +138,9 @@ namespace GalleryOfHeartbeats.ViewModels
 
             Console.WriteLine("Name of user is: " + NameOfUser);
 
-            MessageBox.Show(String.Format("Recording saved as '{0} {1}'", CurrentRecordingItem.Name, CurrentRecordingItem.TimeOfRecording));
+
+            MessageBoxResult result = Xceed.Wpf.Toolkit.MessageBox.Show(string.Format("Recording saved as '{0} {1}'", CurrentRecordingItem.Name, CurrentRecordingItem.TimeOfRecording));
+
 
 
         }

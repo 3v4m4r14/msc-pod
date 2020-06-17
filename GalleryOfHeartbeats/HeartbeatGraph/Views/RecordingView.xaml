@@ -15,7 +15,7 @@
         Background="{DynamicResource MaterialDesignLightBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="600" d:DesignWidth="400">
-    <Grid>
+    <Grid Background="{DynamicResource MaterialDesignBody}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -27,28 +27,82 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" Width="Auto" Height="Auto">
-            <Label Padding="0, 10, 5, 0"
-                   Style="{StaticResource MaterialDesignLabel}"
-                   FontSize="20">Heart rate:</Label>
-
-            <Label
+        <StackPanel Grid.Row="1" Margin="30 0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto" Panel.ZIndex="999">
+            <Viewbox Margin="50" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Label
                         Content="{Binding CurrentHeartrate, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="0, 10, 0, 0"
-                FontSize="20">
-            </Label>
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                </Label>
+            </Viewbox>
+            
 
         </StackPanel>
 
-        <DockPanel Grid.Row="1" Width="Auto" Height="Auto" MinHeight="200" VerticalAlignment="Stretch" Margin="30 0">
+        <DockPanel Grid.Row="1" Width="Auto" Height="Auto" MinHeight="200" VerticalAlignment="Stretch" Margin="30 0" Panel.ZIndex="99">
             <oxy:PlotView Background="Transparent" Model="{Binding GraphModel}"/>
         </DockPanel>
+
+        <DockPanel 
+            x:Name="HeartIcon"
+            Grid.Row="1"
+            Width="Auto"
+            Height="Auto"
+            Margin="20 0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            RenderTransformOrigin="0.5,0.5"
+            Panel.ZIndex="-999">
+
+            <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsTimeForHeartbeat}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard x:Name="bloo">
+                                    <Storyboard AutoReverse="True" RepeatBehavior="1x">
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.15" Duration="0:0:.2"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.15" Duration="0:0:.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                        <!--<EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard x:Name="bloo">
+                                <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.15" Duration="0:0:.5"/>
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.15" Duration="0:0:.5"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>-->
+
+                    </Style.Triggers>
+                </Style>
+
+            </DockPanel.Style>
+
+
+            <materialDesign:PackIcon
+                                Kind="Heart"
+                                Width="Auto"
+                                Height="Auto"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                >
+            </materialDesign:PackIcon>
+        </DockPanel>
+
 
         <DockPanel Grid.Row="2" HorizontalAlignment="Center" Width="Auto" Height="Auto" Margin="30 10">
             <Label
                 VerticalAlignment="Center"
                 Content="(Clip the pulse sensor onto your body)"
                 Style="{StaticResource MaterialDesignLabel}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}"
                 FontSize="28"></Label>
         </DockPanel>
 
@@ -63,6 +117,7 @@
                         Content="I am feeling:"
                         Padding="0, 0, 10, 0"
                     Style="{StaticResource MaterialDesignLabel}"
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
                     FontSize="42">
                 </Label>
 
@@ -73,7 +128,8 @@
                         MinWidth="40"
                         Width="Auto"
                     Height="Auto"
-                    FontSize="42"/>
+                    FontSize="42"
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
 
             </DockPanel>
 
@@ -85,7 +141,8 @@
                     Margin="10"
                     FontSize="48"
                     Height="100"
-                    Width="240"/>
+                    Width="240"
+                    Style="{DynamicResource MaterialDesignRaisedAccentButton}"/>
 
                 <Button 
                     x:Name="btnStopRecording" 
@@ -94,7 +151,8 @@
                     Margin="10"
                     FontSize="48"
                     Height="100"
-                    Width="240"/>
+                    Width="240"
+                    Style="{DynamicResource MaterialDesignRaisedAccentButton}"/>
             </StackPanel>
         </StackPanel>
 

@@ -160,7 +160,8 @@ namespace GalleryOfHeartbeats.Model
 
         public void TurnOff()
         {
-            Console.WriteLine("All actuators completely OFF");
+            Client.WriteLine("SetLightColor|LEFT|0|0|0|0");
+            Client.WriteLine("SetLightColor|RIGHT|0|0|0|0");
             Client.WriteLine("SetHeaterIntensity|LEFT|" + NIL_POWER);
             Client.WriteLine("SetHeaterIntensity|RIGHT|" + NIL_POWER);
             Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + NIL_POWER);
@@ -170,8 +171,6 @@ namespace GalleryOfHeartbeats.Model
             Client.WriteLine("SetFanIntensity|FRONT_RIGHT|" + NIL_POWER);
             Client.WriteLine("SetFanIntensity|REAR_LEFT|" + NIL_POWER);
             Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + NIL_POWER);
-            Client.WriteLine("SetLightColor|LEFT|0|0|0|0");
-            Client.WriteLine("SetLightColor|RIGHT|0|0|0|0");
             Client.WriteLine("SetActiveCeilingAnimation|OFF");
         }
 
@@ -179,7 +178,6 @@ namespace GalleryOfHeartbeats.Model
         {
             TurnOff();
             LightIn();
-            Client.WriteLine("SetActiveCeilingAnimation|OFF");
         }
 
 

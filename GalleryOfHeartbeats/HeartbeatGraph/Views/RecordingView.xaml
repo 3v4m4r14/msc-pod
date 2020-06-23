@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignLightBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="600" d:DesignWidth="400">
+             d:DesignHeight="1920" d:DesignWidth="1080">
     <Grid Background="{DynamicResource MaterialDesignBody}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -38,7 +38,7 @@
 
         </StackPanel>
 
-        <DockPanel Grid.Row="1" Width="Auto" Height="Auto" MinHeight="200" VerticalAlignment="Stretch" Margin="30 0" Panel.ZIndex="99">
+        <DockPanel Grid.Row="1" Width="Auto" Height="Auto" MinHeight="200" VerticalAlignment="Stretch" Margin="0" Panel.ZIndex="99">
             <oxy:PlotView Background="Transparent" Model="{Binding GraphModel}"/>
         </DockPanel>
 
@@ -106,7 +106,7 @@
                 FontSize="28"></Label>
         </DockPanel>
 
-        <StackPanel Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <StackPanel Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="70">
             <DockPanel
                 Margin="30 0"
                 Width="Auto"
@@ -137,7 +137,7 @@
                 <Button 
                     x:Name="btnStartRecording" 
                     Command="{Binding CommandStartRecording}" 
-                    Content="Start"
+                    Content="Record"
                     Margin="10"
                     FontSize="48"
                     Height="100"

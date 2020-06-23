@@ -35,7 +35,7 @@
             <Style x:Key="SettingsLabel" TargetType="{x:Type Label}">
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="FontSize" Value="36"/>
+                <Setter Property="FontSize" Value="46"/>
             </Style>
             <Style TargetType="{x:Type xctk:MessageBox}">
                 <Setter Property="Background">

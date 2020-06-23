@@ -14,7 +14,7 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="600" d:DesignWidth="400">
+             d:DesignHeight="1920" d:DesignWidth="1080">
     <UserControl.Resources>
         <converter:EnumMatchToBooleanConverter x:Key="enumConverter" />
         <Style x:Key="BiggerSliderStyle" TargetType="{x:Type Slider}">
@@ -369,7 +369,7 @@
     </UserControl.Resources>
 
     <Grid Background="{StaticResource MaterialDesignChipBackground}">
-        <Grid Margin="30 50">
+        <Grid Margin="70 100 70 150">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -388,9 +388,9 @@
 
             <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Margin="0 10">
                 <Label Style="{StaticResource SettingsLabel}">Feedback mode</Label>
-                <StackPanel Margin="2 0 0 10">
+                <StackPanel Margin="2 50 0 10">
 
-                    <Viewbox Height="40" HorizontalAlignment="Left" Margin="0 10">
+                    <Viewbox Height="60" HorizontalAlignment="Left" Margin="0 10">
 
                         <RadioButton 
                             GroupName="ModeGroup" 
@@ -400,7 +400,7 @@
                                  ConverterParameter=PER_BEAT}">On heartbeat</RadioButton>
                     </Viewbox>
 
-                    <Viewbox Height="40" HorizontalAlignment="Left">
+                    <Viewbox Height="60" HorizontalAlignment="Left">
 
                         <RadioButton
                             GroupName="ModeGroup"
@@ -410,7 +410,7 @@
                                  ConverterParameter=PER_INCREASE}">On increase in heart rate</RadioButton>
                     </Viewbox>
                     
-                    <Viewbox Height="40" HorizontalAlignment="Left" Margin="0 10">
+                    <Viewbox Height="60" HorizontalAlignment="Left" Margin="0 10">
                         <RadioButton
                             GroupName="ModeGroup"
                             Style="{StaticResource MaterialDesignUserForegroundRadioButton}"

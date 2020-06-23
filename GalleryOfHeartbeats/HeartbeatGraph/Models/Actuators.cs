@@ -43,6 +43,8 @@ namespace GalleryOfHeartbeats.Model
             TimerForTurningOffHeat.Interval = ACTUATOR_DURATION;
             TimerForTurningOffHeat.Elapsed += new ElapsedEventHandler(PowerDownRecommendedActuators);
 
+
+            Client.WriteLine("SetActiveCeilingAnimation|OFF");
             ToIdleState();
         }
 
@@ -103,16 +105,13 @@ namespace GalleryOfHeartbeats.Model
             SetHrIsIncreasing(current);
             if (HrIsIncreasing)
             {
-                Console.WriteLine("Rec air ON");
                 FanIn();
             }
             else
             {
-                Console.WriteLine("Rec air OFF");
                 FanOut();
             }
 
-            Console.WriteLine("Rec heat ON");
             HeatIn();
             TimerForTurningOffHeat.Start();
         }
@@ -160,8 +159,8 @@ namespace GalleryOfHeartbeats.Model
 
         public void TurnOff()
         {
-            Client.WriteLine("SetLightColor|LEFT|0|0|0|0");
-            Client.WriteLine("SetLightColor|RIGHT|0|0|0|0");
+            TimerForTurningOffActuators.Stop();
+            TimerForTurningOffHeat.Stop();
             Client.WriteLine("SetHeaterIntensity|LEFT|" + NIL_POWER);
             Client.WriteLine("SetHeaterIntensity|RIGHT|" + NIL_POWER);
             Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + NIL_POWER);
@@ -171,7 +170,6 @@ namespace GalleryOfHeartbeats.Model
             Client.WriteLine("SetFanIntensity|FRONT_RIGHT|" + NIL_POWER);
             Client.WriteLine("SetFanIntensity|REAR_LEFT|" + NIL_POWER);
             Client.WriteLine("SetFanIntensity|REAR_RIGHT|" + NIL_POWER);
-            Client.WriteLine("SetActiveCeilingAnimation|OFF");
         }
 
         public void ToIdleState()

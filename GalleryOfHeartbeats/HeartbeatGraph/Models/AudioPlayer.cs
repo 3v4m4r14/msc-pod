@@ -20,7 +20,7 @@ namespace GalleryOfHeartbeats.Model
         {
             string audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "audio");
 
-            slowHeartbeatPlayer.Open(new Uri(Path.Combine(audioPath, "bpm_80.wav")));
+            slowHeartbeatPlayer.Open(new Uri(Path.Combine(audioPath, "bpm_80_l.wav")));
             fastHeartbeatPlayer.Open(new Uri(Path.Combine(audioPath, "bpm_0_100.wav")));
         }
 

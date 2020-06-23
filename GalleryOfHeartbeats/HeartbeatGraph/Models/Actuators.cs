@@ -159,8 +159,6 @@ namespace GalleryOfHeartbeats.Model
 
         public void TurnOff()
         {
-            TimerForTurningOffActuators.Stop();
-            TimerForTurningOffHeat.Stop();
             Client.WriteLine("SetHeaterIntensity|LEFT|" + NIL_POWER);
             Client.WriteLine("SetHeaterIntensity|RIGHT|" + NIL_POWER);
             Client.WriteLine("SetHeaterIntensity|SEAT_LEFT|" + NIL_POWER);
@@ -174,6 +172,8 @@ namespace GalleryOfHeartbeats.Model
 
         public void ToIdleState()
         {
+            TimerForTurningOffActuators.Stop();
+            TimerForTurningOffHeat.Stop();
             TurnOff();
             LightIn();
         }

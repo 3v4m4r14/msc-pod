@@ -13,12 +13,13 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="600" d:DesignWidth="350">
+             d:DesignHeight="1920" d:DesignWidth="1080">
     <Grid Background="{DynamicResource MaterialDesignBody}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -60,7 +61,7 @@
             <materialDesign:PackIcon Kind="Heart" Height="Auto" Width="Auto" Foreground="{DynamicResource SecondaryAccentBrush}"></materialDesign:PackIcon>
         </DockPanel>
 
-        <Viewbox Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10 10">
+        <Viewbox Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="100 10">
             <TextBlock
                 Style="{DynamicResource MaterialDesignTextBlock}"
                 Foreground="{DynamicResource MaterialDesignDarkForeground}"
@@ -71,7 +72,7 @@
         </Viewbox>
 
 
-        <Viewbox Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="40 30">
+        <Viewbox Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 50">
             <TextBlock
                 Style="{DynamicResource MaterialDesignTextBlock}"
                 Foreground="{DynamicResource SecondaryAccentBrush}"

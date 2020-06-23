@@ -125,8 +125,8 @@ namespace GalleryOfHeartbeats.ViewModels
             IsPlayingBack = false;
             GraphTimer.Stop();
             PlaybackTimer.Stop();
-            Actuators.ToIdleState();
             Console.WriteLine("Paused");
+            Actuators.ToIdleState();
         }
 
         public bool CanStartPlayback()
@@ -152,10 +152,10 @@ namespace GalleryOfHeartbeats.ViewModels
         private void StopPlayback()
         {
             PlaybackTimer.Stop();
-            Actuators.ToIdleState();
             IsPlayingBack = false;
             CurrentPlaybackPointer = 0;
             CurrentTime = STARTING_TIME_IS_ZERO;
+            Actuators.ToIdleState();
         }
         #endregion
 
@@ -190,7 +190,6 @@ namespace GalleryOfHeartbeats.ViewModels
             StopPlayback();
             GraphTimer.Stop();
             PlaybackTimer.Stop();
-            Actuators.ToIdleState();
             Console.WriteLine("Gallery offloaded");
         }
 

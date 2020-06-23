@@ -118,7 +118,7 @@
                         Padding="0, 0, 10, 0"
                     Style="{StaticResource MaterialDesignLabel}"
                     Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                    FontSize="42">
+                    FontSize="54">
                 </Label>
 
                 <TextBox 
@@ -128,7 +128,7 @@
                         MinWidth="40"
                         Width="Auto"
                     Height="Auto"
-                    FontSize="42"
+                    FontSize="54"
                     Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
 
             </DockPanel>

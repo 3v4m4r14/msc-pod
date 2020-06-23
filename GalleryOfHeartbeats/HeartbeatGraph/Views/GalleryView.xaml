@@ -15,7 +15,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="800" d:DesignWidth="600">
+             d:DesignHeight="1920" d:DesignWidth="1080">
     <UserControl.Resources>
         <converter:BoolToVisibleOrHidden x:Key="VisibleConverter" Collapse="True" />
     </UserControl.Resources>
@@ -28,7 +28,7 @@
                 HorizontalContentAlignment="Stretch"
                 ScrollViewer.PanningMode="VerticalOnly"
                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                Margin="0">
+                Margin="20">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                         <i:InvokeCommandAction

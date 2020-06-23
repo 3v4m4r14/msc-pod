@@ -13,11 +13,11 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="800" d:DesignWidth="500">
+             d:DesignHeight="1920" d:DesignWidth="1080">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -31,13 +31,13 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="50 10">
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="100 70">
             <Viewbox>
                 <Label>About the "Gallery of Heartbeats"</Label>
             </Viewbox>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Vertical" Margin="50 0">
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Vertical" Margin="120 0">
             <TextBlock FontSize="32" TextWrapping="Wrap">
                 We, humans, know each other mostly by our looks or voices.
                 <LineBreak/><LineBreak/>

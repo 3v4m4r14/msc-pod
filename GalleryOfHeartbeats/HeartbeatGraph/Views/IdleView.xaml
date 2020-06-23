@@ -72,12 +72,14 @@
         </Viewbox>
 
 
-        <Viewbox Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 50">
+        <Viewbox Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 0">
             <TextBlock
                 Style="{DynamicResource MaterialDesignTextBlock}"
                 Foreground="{DynamicResource SecondaryAccentBrush}"
                 FontWeight="DemiBold"
-                 TextAlignment="Center">
+                 TextAlignment="Center"
+                LineStackingStrategy="BlockLineHeight"
+                LineHeight="25">
                 Record it<LineBreak/>
                 Compare it<LineBreak/>
                 Feel it<LineBreak/>

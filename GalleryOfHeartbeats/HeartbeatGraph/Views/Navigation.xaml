@@ -98,15 +98,15 @@
             </Grid.RenderTransform>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="3.2*"/>
-                <RowDefinition Height="10.8*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="14*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="ButtonClose" Background="{x:Null}" BorderBrush="{x:Null}" Width="Auto" Height="Auto" Padding="0">
                     <materialDesign:PackIcon Kind="Close" Width="Auto" Height="Auto" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
                 </Button>
             </StackPanel>
-            <ListView Grid.Row="2" Style="{StaticResource MaterialDesignListView}" Margin="0 100" Height="Auto" Width="Auto">
+            <ListView Grid.Row="2" Style="{StaticResource MaterialDesignListView}" Margin="0 50" Height="Auto" Width="Auto">
                 <ListViewItem Height="150" Style="{StaticResource MaterialDesignListBoxItem}" PreviewMouseLeftButtonUp="RecordingView_Clicked">
                     <StackPanel Orientation="Horizontal" Margin="10 0">
                         <materialDesign:PackIcon Kind="Microphone" Style="{StaticResource MenuIconStyle}"/>
